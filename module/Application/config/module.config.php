@@ -44,11 +44,96 @@ return [
                     ],
                 ],
             ],
+            'contacts' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/contacts',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'contacts',
+                    ],
+                ],
+            ],
+            'mortgage' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/mortgage',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'mortgage',
+                    ],
+                ],
+            ],
+            'news' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/news[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\NewsController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
+            'flat' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/flat[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\FlatController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
+            'favorites' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/favorites',
+                    'defaults' => [
+                        'controller' => Controller\FlatController::class,
+                        'action'     => 'favorites',
+                    ],
+                ],
+            ],
+            'complex' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/complex[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\ComplexController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
+            'map' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/map',
+                    'defaults' => [
+                        'controller' => Controller\ComplexController::class,
+                        'action'     => 'map',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\ComplexController::class => InvokableFactory::class,
+            Controller\FlatController::class => InvokableFactory::class,
+            Controller\NewsController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [
