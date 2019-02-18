@@ -18,6 +18,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Resident
 {
+    const SELL    = 0;
+    const COMING  = 1;
+    const SOLD    = 2;
+
     /**
      * @ORM\Id
      * @ORM\Column(name="id")
@@ -88,6 +92,11 @@ class Resident
      * @ORM\Column(name="total_flat")
      */
     protected $total_flat;
+
+    /**
+     * @ORM\Column(name="state"
+     */
+    protected $state;
 
     /**
      * Returns resident ID.
@@ -268,6 +277,35 @@ class Resident
             return $image;
         //else
             //return "/main/images/content/no-image.jpg";
+    }
+
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
+    public static function getStateList()
+    {
+        return [
+            self::SELL => 'В продаже',
+            self::COMING => 'Скоро в продаже',
+            self::SOLD => 'Сдан'
+
+        ];
+    }
+
+    public function getStateAsString()
+    {
+        $list = self::getStateList();
+        if (isset($list[$this->tag]))
+            return $list[$this->tag];
+
+        return 'Не указан';
     }
 
 }

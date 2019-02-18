@@ -1,0 +1,59 @@
+<?php
+$this->headTitle('Список ЖК');
+
+$this->pageBreadcrumbs()->setItems([
+            'Главная'=>$this->url('home'),
+            'Квартиры'=>$this->url('resident'),
+            ]);
+?>
+
+<h1>ЖК</h1>
+
+<p>
+<a class="btn btn-default" href="
+    <?= $this->url('resident', ['action'=>'add']); ?>">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Новая квартира
+      </a>
+</p>
+
+<table class="table table-striped">
+
+        <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+        </tr>
+
+    <?php foreach ($residents as $resident): ?>
+
+      <tr>
+        <td>
+          <a href="<?= $this->url('resident', ['action'=>'view', 'id'=>$resident->getId()]); ?>">
+            <?= $this->escapeHtml($resident->getId()); ?>
+          </a>
+        </td>
+        <td><?= $this->escapeHtml($resident->getName()); ?></a></td>
+          <td>
+            <a class="btn btn-default" href="<?= $this->url('resident',
+                    ['action'=>'edit', 'id'=>$resident->getId()]); ?>">
+                Редактировать
+            </a>
+          </td><td>
+            <a class="btn btn-default" href="<?= $this->url('resident',
+                      ['action'=>'delete', 'id'=>$resident->getId()]); ?>"  onclick="return confirm('Вы уверены?')">
+              Удалить
+            </a>
+        </td>
+      </tr>
+
+    <?php endforeach; ?>
+
+  <?= $this->paginationControl($residents,
+                    'Sliding',
+                    'resident/partial/paginator',
+                    array('route' => 'residents')); ?>
+
+    </table>
+
+

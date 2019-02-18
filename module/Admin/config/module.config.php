@@ -23,11 +23,22 @@ return [
                     // route defined above here.
                 ],
             ],
+            'resident' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/resident[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\ResidentController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\ResidentController::class => Controller\Factory\ResidentControllerFactory::class,
         ],
     ],
     'view_manager' => [

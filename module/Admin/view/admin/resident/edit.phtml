@@ -1,0 +1,116 @@
+<?php
+$this->headTitle('Изменить информацию о ЖК');
+
+$this->pageBreadcrumbs()->setItems([
+    'Главная'=>$this->url('home'),
+    'ЖК'=>$this->url('resident'),
+    'Изменить ЖК'=>$this->url('resident', ['action'=>'edit', 'id'=> $resident->getId()])
+]);
+
+$form->get('name')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Name'
+]);
+
+$form->get('tittle')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Tittle'
+]);
+
+$form->get('Description')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Description'
+]);
+
+$form->get('metro')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Metro'
+]);
+
+$form->get('address')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Address'
+]);
+
+$form->get('housing')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'House count'
+]);
+
+$form->get('total_flat')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Total flat'
+]);
+
+$form->get('state')->setAttributes([
+    'class'=>'form-control',
+]);
+
+$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<h1>Добавить ЖК</h1>
+
+<p>
+    Пожалуйста заполните следующую форму и нажмите кнопку <i>Добавить</i>.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('name')); ?>
+            <?= $this->formElement($form->get('name')); ?>
+            <?= $this->formElementErrors($form->get('name')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('tittle')); ?>
+            <?= $this->formElement($form->get('tittle')); ?>
+            <?= $this->formElementErrors($form->get('tittle')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('description')); ?>
+            <?= $this->formElement($form->get('description')); ?>
+            <?= $this->formElementErrors($form->get('description')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('metro')); ?>
+            <?= $this->formElement($form->get('metro')); ?>
+            <?= $this->formElementErrors($form->get('metro')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('address')); ?>
+            <?= $this->formElement($form->get('address')); ?>
+            <?= $this->formElementErrors($form->get('address')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('housing')); ?>
+            <?= $this->formElement($form->get('housing')); ?>
+            <?= $this->formElementErrors($form->get('housing')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('total_flat')); ?>
+            <?= $this->formElement($form->get('total_flat')); ?>
+            <?= $this->formElementErrors($form->get('total_flat')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('state')); ?>
+            <?= $this->formElement($form->get('state')); ?>
+            <?= $this->formElementErrors($form->get('state')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+
+        <?= $this->form()->closeTag(); ?>
+    </div>
+</div>
