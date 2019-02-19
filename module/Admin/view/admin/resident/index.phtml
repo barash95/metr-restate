@@ -12,7 +12,7 @@ $this->pageBreadcrumbs()->setItems([
 <p>
 <a class="btn btn-default" href="
     <?= $this->url('resident', ['action'=>'add']); ?>">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Новая квартира
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Новый ЖК
       </a>
 </p>
 
@@ -51,8 +51,8 @@ $this->pageBreadcrumbs()->setItems([
 
   <?= $this->paginationControl($residents,
                     'Sliding',
-                    'resident/partial/paginator',
-                    array('route' => 'residents')); ?>
+                    'application/partial/paginator',
+                    array('route' => 'resident')); ?>
 
     </table>
 

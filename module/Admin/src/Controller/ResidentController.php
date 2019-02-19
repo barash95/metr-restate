@@ -54,7 +54,7 @@ class ResidentController extends AbstractActionController
         $paginator->setCurrentPageNumber($page);
 
         return new ViewModel([
-            'flats' => $paginator
+            'residents' => $paginator
         ]);
     }
 

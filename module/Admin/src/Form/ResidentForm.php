@@ -145,22 +145,6 @@ class ResidentForm extends Form
         // Create main input filter
         $inputFilter = $this->getInputFilter();
 
-        $inputFilter->add([
-          'name'     => 'housing',
-          'required' => true,
-          'filters'  => [
-            ['name' => 'StringTrim'],
-          ],
-          'validators' => [
-            [
-              'name'    => 'StringLength',
-              'options' => [
-                'min' => 1,
-                'max' => 4
-              ],
-            ],
-          ],
-        ]);
 
         $inputFilter->add([
           'name'     => 'housing',

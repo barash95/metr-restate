@@ -94,7 +94,7 @@ class Resident
     protected $total_flat;
 
     /**
-     * @ORM\Column(name="state"
+     * @ORM\Column(name="state")
      */
     protected $state;
 
@@ -302,8 +302,8 @@ class Resident
     public function getStateAsString()
     {
         $list = self::getStateList();
-        if (isset($list[$this->tag]))
-            return $list[$this->tag];
+        if (isset($list[$this->state]))
+            return $list[$this->state];
 
         return 'Не указан';
     }

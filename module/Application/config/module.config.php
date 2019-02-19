@@ -136,6 +136,14 @@ return [
             Controller\NewsController::class => InvokableFactory::class,
         ],
     ],
+    'view_helpers' => [
+        'factories' => [
+            View\Helper\Breadcrumbs::class => InvokableFactory::class,
+        ],
+        'aliases' => [
+            'pageBreadcrumbs' => View\Helper\Breadcrumbs::class,
+        ],
+    ],
     'view_manager' => [
         'display_not_found_reason' => true,
         'display_exceptions'       => true,

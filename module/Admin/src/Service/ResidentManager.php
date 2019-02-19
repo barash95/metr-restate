@@ -2,9 +2,8 @@
 namespace Admin\Service;
 
 use Admin\Entity\Resident;
-
 /**
- * This service is responsible for adding/editing flats
+ * This service is responsible for adding/editing resident
  */
 class ResidentManager
 {

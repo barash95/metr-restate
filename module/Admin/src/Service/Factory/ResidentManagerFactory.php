@@ -17,6 +17,6 @@ class ResidentManagerFactory
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
                         
-        return new FlatManager($entityManager);
+        return new ResidentManager($entityManager);
     }
 }
