@@ -1,0 +1,23 @@
+<?php if ($this->pageCount): ?>
+
+<nav class="text-center">
+  <ul class="pagination">
+
+    <!-- Numbered page links -->
+    <?php foreach ($this->pagesInRange as $page): ?>
+      <?php if ($page != $this->current):
+            $query = array_merge(['page'=>$page], $this->fromQuery);
+      ?>
+        <li>
+          <a href="<?= $this->url($this->route, ['action'=>$this->action, 'id'=>$this->id], ['query'=>$query]); ?>"><?= $this->escapeHtml($page); ?></a>
+        </li>
+      <?php else: ?>
+        <li>
+          <span aria-hidden="true"><b><?= $this->escapeHtml($page); ?></b></span>
+        </li>
+      <?php endif; ?>
+    <?php endforeach; ?>
+
+  </ul>
+</nav>
+<?php endif; ?>
