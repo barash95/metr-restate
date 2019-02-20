@@ -1,0 +1,56 @@
+<?php
+$this->headTitle('Добавить Map');
+
+$form->get('res_id')->setAttributes([
+    'class'=>'form-control',
+]);
+
+$form->get('x_pos')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'x_pos'
+]);
+
+$form->get('y_pos')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'y_pos'
+]);
+
+$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<h1>Добавить ЖК</h1>
+
+<p>
+    Пожалуйста заполните следующую форму и нажмите кнопку <i>Добавить</i>.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('res_id')); ?>
+            <?= $this->formElement($form->get('res_id')); ?>
+            <?= $this->formElementErrors($form->get('res_id')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('x_pos')); ?>
+            <?= $this->formElement($form->get('x_pos')); ?>
+            <?= $this->formElementErrors($form->get('x_pos')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('y_pos')); ?>
+            <?= $this->formElement($form->get('y_pos')); ?>
+            <?= $this->formElementErrors($form->get('y_pos')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+        
+        <?= $this->form()->closeTag(); ?>
+    </div>    
+</div>   
+

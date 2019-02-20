@@ -139,9 +139,11 @@ return [
     'view_helpers' => [
         'factories' => [
             View\Helper\Breadcrumbs::class => InvokableFactory::class,
+            View\Helper\ResidentialName::class => View\Helper\Factory\ResidentialNameFactory::class,
         ],
         'aliases' => [
             'pageBreadcrumbs' => View\Helper\Breadcrumbs::class,
+            'residentialName' => View\Helper\ResidentialName::class,
         ],
     ],
     'view_manager' => [

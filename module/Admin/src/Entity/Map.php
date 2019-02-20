@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Map
 {
     /**
+     * @ORM\Id
      * @ORM\Column(name="res_id")
      */
     protected $res_id;

@@ -10,7 +10,7 @@ use Zend\InputFilter\InputFilter;
  * This form is used to collect resident's information. The form
  * can work in two scenarios - 'create' and 'update'.
  */
-class ResidentForm extends Form
+class MapForm extends Form
 {
     /**
      * Scenario ('create' or 'update').
@@ -26,14 +26,16 @@ class ResidentForm extends Form
     
     /**
      * Current resident.
-     * @var resident\Entity\resident
+     * @var resident\Entity\Map
      */
-    private $resident = null;
+    private $map = null;
+
+    private $residents;
     
     /**
      * Constructor.     
      */
-    public function __construct($scenario = 'create', $entityManager = null, $resident = null)
+    public function __construct($scenario = 'create', $entityManager = null, $map = null, $residents)
     {
         // Define form name
         parent::__construct('resident-form');
@@ -47,8 +49,8 @@ class ResidentForm extends Form
         // Save parameters for internal use.
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
-        $this->resident = $resident;
-
+        $this->map = $map;
+        $this->residents = $residents;
         $this->addElements();
         $this->addInputFilter();          
     }
@@ -59,74 +61,29 @@ class ResidentForm extends Form
     protected function addElements() 
     {
         $this->add([
-          'type'  => 'text',
-          'name' => 'name',
-          'options' => [
-            'label' => 'Название ЖК',
-          ],
-        ]);
-
-        $this->add([            
-            'type'  => 'text',
-            'name' => 'tittle',
-            'options' => [
-                'label' => 'Заголовок',
-            ],
-        ]);
-
-        $this->add([
-          'type'  => 'textarea',
-          'name' => 'description',
-          'options' => [
-            'label' => 'Описание',
-          ],
-        ]);
-
-        $this->add([            
-            'type'  => 'text',
-            'name' => 'metro',
-            'options' => [
-                'label' => 'Ближайшее метро',
-            ],
-        ]);
-
-        $this->add([
-          'type'  => 'text',
-          'name' => 'address',
-          'options' => [
-            'label' => 'Адрес ЖК',
-          ],
-        ]);
-
-        $this->add([
-          'type'  => 'number',
-          'name' => 'housing',
-          'options' => [
-            'label' => 'Корпусов',
-          ],
-        ]);
-
-        $this->add([
-          'type'  => 'number',
-          'name' => 'total_flat',
-          'options' => [
-            'label' => 'Всего кв',
-          ],
-        ]);
-
-        $this->add([
           'type'  => 'select',
-          'name' => 'state',
+          'name' => 'res_id',
           'options' => [
-            'label' => 'Статус',
-            'value_options' => [
-              0 => 'В продаже',
-              1 => 'Скоро в продаже',
-              2 => 'Сдан',
-            ]
+            'label' => 'ЖК',
+            'value_options' => $this->residents
           ],
         ]);
 
+        $this->add([            
+            'type'  => 'text',
+            'name' => 'x_pos',
+            'options' => [
+                'label' => 'X-POS',
+            ],
+        ]);
+
+        $this->add([
+          'type'  => 'text',
+          'name' => 'y_pos',
+          'options' => [
+            'label' => 'Y-POS',
+          ],
+        ]);
         // Add the Submit button
         $this->add([
             'type'  => 'submit',
@@ -145,32 +102,11 @@ class ResidentForm extends Form
         // Create main input filter
         $inputFilter = $this->getInputFilter();
 
-
         $inputFilter->add([
-          'name'     => 'housing',
+          'name'     => 'res_id',
           'required' => true,
           'filters'  => [
             ['name' => 'ToInt'],
-          ],
-          'validators' => [
-            [
-              'name'    => 'Between',
-              'options' => [
-                'min' => 1,
-                'max' => 10
-              ],
-            ],
-          ],
-        ]);
-
-        $inputFilter->add([
-          'name'     => 'state',
-          'required' => true,
-          'filters'  => [
-            ['name' => 'ToInt'],
-          ],
-          'validators' => [
-            ['name'=>'InArray', 'options'=>['haystack'=>[0, 1, 2]]]
           ],
         ]);
 

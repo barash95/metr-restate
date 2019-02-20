@@ -34,17 +34,29 @@ return [
                     ],
                 ],
             ],
+            'mapping' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/mapping[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\MapController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\ResidentController::class => Controller\Factory\ResidentControllerFactory::class,
+            Controller\MapController::class => Controller\Factory\MapControllerFactory::class,
         ],
     ],
     'service_manager' => [
         'factories' => [
             Service\ResidentManager::class => Service\Factory\ResidentManagerFactory::class,
+            Service\MapManager::class => Service\Factory\MapManagerFactory::class,
         ],
     ],
     'view_manager' => [

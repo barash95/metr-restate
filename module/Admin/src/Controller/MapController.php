@@ -8,16 +8,17 @@
 
 namespace Admin\Controller;
 
+use Admin\Entity\Map;
 use Admin\Entity\Resident;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
-use Admin\Form\ResidentForm;
+use Admin\Form\MapForm;
 
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
 
-class ResidentController extends AbstractActionController
+class MapController extends AbstractActionController
 {
     /**
      * Entity manager.
@@ -27,17 +28,17 @@ class ResidentController extends AbstractActionController
 
     /**
      * Flat manager.
-     * @var Admin\Service\ResidentManager
+     * @var Admin\Service\mapManager
      */
-    private $residentManager;
+    private $mapManager;
 
     /**
      * Constructor.
      */
-    public function __construct($entityManager, $residentManager)
+    public function __construct($entityManager, $mapManager)
     {
         $this->entityManager = $entityManager;
-        $this->residentManager = $residentManager;
+        $this->mapManager = $mapManager;
     }
 
 
@@ -45,34 +46,31 @@ class ResidentController extends AbstractActionController
     {
         $page = $this->params()->fromQuery('page', 1);
 
-        $query = $this->entityManager->getRepository(Resident::class)
-            ->findAllResident();
+        $query = $this->entityManager->getRepository(Map::class)
+            ->findAllMap();
 
         $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
         $paginator = new Paginator($adapter);
         $paginator->setDefaultItemCountPerPage(10);
         $paginator->setCurrentPageNumber($page);
-
         return new ViewModel([
-            'residents' => $paginator,
+            'maps' => $paginator,
         ]);
     }
 
     public function addAction()
     {
-
+        $resident = $this->entityManager->getRepository(Resident::class)
+            ->getResidentList();
         // Create flat form
-        $form = new ResidentForm('create', $this->entityManager);
+        $form = new MapForm('create', $this->entityManager, null,$resident);
 
         // Check if flat has submitted the form
         if ($this->getRequest()->isPost()) {
 
             // Make certain to merge the files info!
             $request = $this->getRequest();
-            $data = array_merge_recursive(
-                $request->getPost()->toArray(),
-                $request->getFiles()->toArray()
-            );
+            $data = $request->getPost()->toArray();
 
             $form->setData($data);
 
@@ -83,38 +81,16 @@ class ResidentController extends AbstractActionController
                 $data = $form->getData();
 
                 // Add flat.
-                $resident = $this->residentManager->addResident($data);
+                $map = $this->mapManager->addMap($data);
 
                 // Redirect to "view" page
-                return $this->redirect()->toRoute('resident',
-                    ['action'=>'view', 'id'=>$resident->getId()]);
+                return $this->redirect()->toRoute('mapping',
+                    ['action'=>'index']);
             }
         }
 
         return new ViewModel([
             'form' => $form
-        ]);
-    }
-
-    public function viewAction()
-    {
-        $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id<1) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-
-        // Find a resident with such ID.
-        $resident = $this->entityManager->getRepository(Resident::class)
-            ->find($id);
-
-        if ($resident == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-
-        return new ViewModel([
-            'resident' => $resident
         ]);
     }
 
@@ -127,26 +103,24 @@ class ResidentController extends AbstractActionController
             return;
         }
 
-        $resident = $this->entityManager->getRepository(Resident::class)
+        $map = $this->entityManager->getRepository(Map::class)
             ->find($id);
 
-        if ($resident == null) {
+        if ($map == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
+        $resident = $this->entityManager->getRepository(Resident::class)
+            ->getResidentList();
+        // Create map form
+        $form = new mapForm('update', $this->entityManager, $map, $resident);
 
-        // Create resident form
-        $form = new ResidentForm('update', $this->entityManager, $resident);
-
-        // Check if resident has submitted the form
+        // Check if map has submitted the form
         if ($this->getRequest()->isPost()) {
 
             // Make certain to merge the files info!
             $request = $this->getRequest();
-            $data = array_merge_recursive(
-                $request->getPost()->toArray(),
-                $request->getFiles()->toArray()
-            );
+            $data = $request->getPost()->toArray();
 
             $form->setData($data);
 
@@ -156,29 +130,23 @@ class ResidentController extends AbstractActionController
                 // Get filtered and validated data
                 $data = $form->getData();
 
-                // Update the flat.
-                $this->residentManager->updateResident($resident, $data);
+                $this->mapManager->updateMap($map, $data);
 
                 // Redirect to "view" page
-                return $this->redirect()->toRoute('resident',
-                    ['action'=>'view', 'id'=>$resident->getId()]);
+                return $this->redirect()->toRoute('mapping',
+                    ['action'=>'index']);
             }
         } else {
 
             $form->setData(array(
-                'name'=>$resident->getName(),
-                'tittle'=>$resident->getTittle(),
-                'description'=>$resident->getDescription(),
-                'metro'=>$resident->getMetro(),
-                'housing'=>$resident->getHousing(),
-                'address'=>$resident->getAddress(),
-                'total_flat'=>$resident->getTotalFlat(),
-                'state'=>$resident->getState(),
+                'resident'=>$map->getResId(),
+                'x_pos'=>$map->getX(),
+                'y_pos'=>$map->getY(),
             ));
         }
 
         return new ViewModel(array(
-            'resident' => $resident,
+            'map' => $map,
             'form' => $form
         ));
     }
@@ -191,14 +159,14 @@ class ResidentController extends AbstractActionController
             return;
         }
 
-        $resident = $this->entityManager->getReference(Resident::class, $id);
+        $map = $this->entityManager->getReference(Map::class, $id);
 
         // Remove it and flush
-        $this->entityManager->delete($resident);
+        $this->entityManager->delete($map);
         $this->entityManager->flush();
 
         // Redirect to "view" page
-        return $this->redirect()->toRoute('resident', ['action'=>'index']);
+        return $this->redirect()->toRoute('mapping', ['action'=>'index']);
     }
 
 }

@@ -1,0 +1,58 @@
+<?php
+$this->headTitle('Список карт');
+
+$this->pageBreadcrumbs()->setItems([
+            'Главная'=>$this->url('home'),
+            'Квартиры'=>$this->url('mapping'),
+            ]);
+?>
+
+<h1>ЖК</h1>
+
+<p>
+<a class="btn btn-default" href="
+    <?= $this->url('mapping', ['action'=>'add']); ?>">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Новая карта
+      </a>
+</p>
+
+<table class="table table-striped">
+
+        <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+        </tr>
+
+    <?php foreach ($maps as $map): ?>
+
+      <tr>
+        <td>
+            <?= $this->residentialName()->render($map->getResId()); ?>
+        </td>
+        <td><?= $this->escapeHtml($map->getX()); ?></a></td>
+          <td><?= $this->escapeHtml($map->getY()); ?></a></td>
+          <td>
+            <a class="btn btn-default" href="<?= $this->url('mapping',
+                    ['action'=>'edit', 'id'=>$map->getResId()]); ?>">
+                Редактировать
+            </a>
+          </td><td>
+            <a class="btn btn-default" href="<?= $this->url('mapping',
+                      ['action'=>'delete', 'id'=>$map->getResId()]); ?>"  onclick="return confirm('Вы уверены?')">
+              Удалить
+            </a>
+        </td>
+      </tr>
+
+    <?php endforeach; ?>
+
+  <?= $this->paginationControl($maps,
+                    'Sliding',
+                    'application/partial/paginator',
+                    array('route' => 'mapping')); ?>
+
+    </table>
+
+

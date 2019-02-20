@@ -33,6 +33,11 @@ class Flat
     protected $id;
 
     /**
+     * @ORM\Column(name="external_id")
+     */
+    protected $ex_id;
+
+    /**
      * @ORM\Column(name="res_id")
      */
     protected $res_id;
@@ -85,6 +90,16 @@ class Flat
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    public function getExId()
+    {
+        return $this->ex_idid;
+    }
+
+    public function setExId($ex_id)
+    {
+        $this->ex_id = $ex_id;
     }
 
     public function getResId()
