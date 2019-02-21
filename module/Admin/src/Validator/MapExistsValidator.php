@@ -1,13 +1,12 @@
 <?php
-namespace Flat\Validator;
+namespace Admin\Validator;
 
 use Zend\Validator\AbstractValidator;
-use Flat\Entity\Flat;
-use Client\Entity\Client;
+use Admin\Entity\Map;
 /**
- * This validator class is designed for checking if flat meets certain conditions
+ * This validator class is designed for checking if map meets certain conditions
  */
-class ClientNotExistsValidator extends AbstractValidator
+class MapExistsValidator extends AbstractValidator
 {
     /**
      * Available validator options.
@@ -15,20 +14,18 @@ class ClientNotExistsValidator extends AbstractValidator
      */
     protected $options = array(
         'entityManager' => null,
-        'flat' => null
+        'map' => null
     );
     
     // Validation failure message IDs.
-    const NOT_SCALAR  = 'notScalar';
-    const CLIENT_NOT_EXIST  = 'wrongClientId';
+    const EXIST  = 'exist';
         
     /**
      * Validation failure messages.
      * @var array
      */
     protected $messageTemplates = array(
-        self::NOT_SCALAR  => "ID клиента должен быть скалярным значением",
-        self::CLIENT_NOT_EXIST  => "Клиент с таким ID не найден"
+        self::EXIST  => "Карта для этого ЖК уже существует"
     );
     
     /**
@@ -40,8 +37,8 @@ class ClientNotExistsValidator extends AbstractValidator
         if(is_array($options)) {            
             if(isset($options['entityManager']))
                 $this->options['entityManager'] = $options['entityManager'];
-            if(isset($options['flat']))
-                $this->options['flat'] = $options['flat'];
+            if(isset($options['map']))
+                $this->options['map'] = $options['map'];
         }
         
         // Call the parent class constructor
@@ -49,28 +46,23 @@ class ClientNotExistsValidator extends AbstractValidator
     }
         
     /**
-     * Check if client exists in the db
+     * Check if map exists in the db
      */
-    public function isValid($value) 
+    public function isValid($value)
     {
-        if(!is_scalar($value)) {
-            $this->error(self::NOT_SCALAR);
-            return false; 
-        }
-
         if ($value=='') return true;
 
         // Get Doctrine entity manager.
         $entityManager = $this->options['entityManager'];
+        $map = $entityManager->getRepository(Map::class)
+                                ->findOneByResId($value);
 
-        $client = $entityManager->getRepository(Client::class)
-                                ->findOneById($value);
-
-        $isValid = ($client!=null);
-
+        $isValid = ($map['res_id']!=null);
+        $this->setMessage($this->messageTemplates[self::EXIST]);
         // If there were an error, set error message.
-        if(!$isValid) {
-          $this->error(self::CLIENT_NOT_EXIST);
+        if($isValid) {
+          $this->error(self::EXIST);
+          //return false;
         }
 
         // Return validation result.

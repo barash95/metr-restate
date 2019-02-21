@@ -30,6 +30,7 @@ class ResidentManager
         $resident = new Resident();
 
         $resident->setName($data['name']);
+        $resident->setLink($data['link']);
         $resident->setTittle($data['tittle']);
         $resident->setDescription($data['description']);
         $resident->setTittle1($data['tittle1']);
@@ -59,6 +60,7 @@ class ResidentManager
     public function updateResident($resident, $data)
     {
         $resident->setName($data['name']);
+        $resident->setLink($data['link']);
         $resident->setTittle($data['tittle']);
         $resident->setDescription($data['description']);
         $resident->setTittle1($data['tittle1']);

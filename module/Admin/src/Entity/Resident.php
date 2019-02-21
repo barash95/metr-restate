@@ -35,6 +35,11 @@ class Resident
     protected $name;
 
     /**
+     * @ORM\Column(name="link")
+     */
+    protected $link;
+
+    /**
      * @ORM\Column(name="tittle")
      */
     protected $tittle;
@@ -128,6 +133,16 @@ class Resident
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    public function setLink($link)
+    {
+        $this->link = $link;
     }
 
     public function getTittle()

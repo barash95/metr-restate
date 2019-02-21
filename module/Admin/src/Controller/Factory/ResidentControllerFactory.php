@@ -8,6 +8,7 @@
 
 namespace Admin\Controller\Factory;
 
+use Admin\Service\FlatManager;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Admin\Controller\ResidentController;
@@ -23,8 +24,9 @@ class ResidentControllerFactory implements FactoryInterface
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $residentManager = $container->get(ResidentManager::class);
+        $flatManager = $container->get(FlatManager::class);
 
         // Instantiate the controller and inject dependencies
-        return new ResidentController($entityManager, $residentManager);
+        return new ResidentController($entityManager, $residentManager, $flatManager);
     }
 }

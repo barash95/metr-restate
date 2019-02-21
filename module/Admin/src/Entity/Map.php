@@ -20,6 +20,12 @@ class Map
 {
     /**
      * @ORM\Id
+     * @ORM\Column(name="id")
+     * @ORM\GeneratedValue
+     */
+    protected $id;
+
+    /**
      * @ORM\Column(name="res_id")
      */
     protected $res_id;
@@ -33,6 +39,16 @@ class Map
      * @ORM\Column(name="y_pos")
      */
     protected $y_pos;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     public function getResId()
     {

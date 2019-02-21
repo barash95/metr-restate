@@ -12,6 +12,11 @@ $form->get('name')->setAttributes([
     'placeholder'=>'Name'
 ]);
 
+$form->get('link')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Link'
+]);
+
 $form->get('tittle')->setAttributes([
     'class'=>'form-control',
     'placeholder'=>'Tittle'
@@ -19,7 +24,8 @@ $form->get('tittle')->setAttributes([
 
 $form->get('description')->setAttributes([
     'class'=>'form-control',
-    'placeholder'=>'Description'
+    'placeholder'=>'Description',
+    'rows' => 4
 ]);
 
 $form->get('metro')->setAttributes([
@@ -46,6 +52,56 @@ $form->get('state')->setAttributes([
     'class'=>'form-control',
 ]);
 
+$form->get('tittle1')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'tittle1'
+]);
+
+$form->get('description1')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'description1'
+]);
+
+$form->get('complex1')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'complex1'
+]);
+
+$form->get('tittle2')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'tittle2'
+]);
+
+$form->get('description2')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'description2'
+]);
+
+$form->get('complex2')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'complex2'
+]);
+
+$form->get('tittle3')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'tittle3'
+]);
+
+$form->get('description3')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'description3'
+]);
+
+$form->get('complex3')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'complex3'
+]);
+
+$form->get('complex')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'complex'
+]);
+
 $form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
 
 $form->prepare();
@@ -58,13 +114,20 @@ $form->prepare();
 </p>
 
 <div class="row">
+    <?= $this->form()->openTag($form); ?>
+
     <div class="col-md-6">
-        <?= $this->form()->openTag($form); ?>
 
         <div class="form-group">
             <?= $this->formLabel($form->get('name')); ?>
             <?= $this->formElement($form->get('name')); ?>
             <?= $this->formElementErrors($form->get('name')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('link')); ?>
+            <?= $this->formElement($form->get('link')); ?>
+            <?= $this->formElementErrors($form->get('link')); ?>
         </div>
 
         <div class="form-group">
@@ -108,10 +171,75 @@ $form->prepare();
             <?= $this->formElement($form->get('state')); ?>
             <?= $this->formElementErrors($form->get('state')); ?>
         </div>
-        
-        <?= $this->formElement($form->get('submit')); ?>
-        
-        <?= $this->form()->closeTag(); ?>
-    </div>    
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('complex')); ?>
+            <?= $this->formElement($form->get('complex')); ?>
+            <?= $this->formElementErrors($form->get('complex')); ?>
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('tittle1')); ?>
+            <?= $this->formElement($form->get('tittle1')); ?>
+            <?= $this->formElementErrors($form->get('tittle1')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('description1')); ?>
+            <?= $this->formElement($form->get('description1')); ?>
+            <?= $this->formElementErrors($form->get('description1')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('complex1')); ?>
+            <?= $this->formElement($form->get('complex1')); ?>
+            <?= $this->formElementErrors($form->get('complex1')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('tittle2')); ?>
+            <?= $this->formElement($form->get('tittle2')); ?>
+            <?= $this->formElementErrors($form->get('tittle2')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('description2')); ?>
+            <?= $this->formElement($form->get('description2')); ?>
+            <?= $this->formElementErrors($form->get('description2')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('complex2')); ?>
+            <?= $this->formElement($form->get('complex2')); ?>
+            <?= $this->formElementErrors($form->get('complex2')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('tittle3')); ?>
+            <?= $this->formElement($form->get('tittle3')); ?>
+            <?= $this->formElementErrors($form->get('tittle3')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('description3')); ?>
+            <?= $this->formElement($form->get('description3')); ?>
+            <?= $this->formElementErrors($form->get('description3')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('complex3')); ?>
+            <?= $this->formElement($form->get('complex3')); ?>
+            <?= $this->formElementErrors($form->get('complex3')); ?>
+        </div>
+
+    </div>
+
+    <?= $this->formElement($form->get('submit')); ?>
+
+    <?= $this->form()->closeTag(); ?>
 </div>   
 

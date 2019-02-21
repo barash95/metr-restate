@@ -35,12 +35,12 @@ $this->pageBreadcrumbs()->setItems([
           <td><?= $this->escapeHtml($map->getY()); ?></a></td>
           <td>
             <a class="btn btn-default" href="<?= $this->url('mapping',
-                    ['action'=>'edit', 'id'=>$map->getResId()]); ?>">
+                    ['action'=>'edit', 'id'=>$map->getId()]); ?>">
                 Редактировать
             </a>
           </td><td>
             <a class="btn btn-default" href="<?= $this->url('mapping',
-                      ['action'=>'delete', 'id'=>$map->getResId()]); ?>"  onclick="return confirm('Вы уверены?')">
+                      ['action'=>'delete', 'id'=>$map->getId()]); ?>"  onclick="return confirm('Вы уверены?')">
               Удалить
             </a>
         </td>

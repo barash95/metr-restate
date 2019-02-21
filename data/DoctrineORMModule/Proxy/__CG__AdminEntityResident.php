@@ -64,10 +64,10 @@ class Resident extends \Admin\Entity\Resident implements \Doctrine\ORM\Proxy\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'name', 'tittle', 'description', 'tittle1', 'tittle2', 'tittle3', 'description1', 'description2', 'description3', 'metro', 'address', 'housing', 'total_flat', 'state'];
+            return ['__isInitialized__', 'id', 'name', 'link', 'tittle', 'description', 'tittle1', 'tittle2', 'tittle3', 'description1', 'description2', 'description3', 'metro', 'address', 'housing', 'total_flat', 'state'];
         }
 
-        return ['__isInitialized__', 'id', 'name', 'tittle', 'description', 'tittle1', 'tittle2', 'tittle3', 'description1', 'description2', 'description3', 'metro', 'address', 'housing', 'total_flat', 'state'];
+        return ['__isInitialized__', 'id', 'name', 'link', 'tittle', 'description', 'tittle1', 'tittle2', 'tittle3', 'description1', 'description2', 'description3', 'metro', 'address', 'housing', 'total_flat', 'state'];
     }
 
     /**
@@ -219,6 +219,28 @@ class Resident extends \Admin\Entity\Resident implements \Doctrine\ORM\Proxy\Pro
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
 
         return parent::setName($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLink()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLink', []);
+
+        return parent::getLink();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLink($link)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLink', [$link]);
+
+        return parent::setLink($link);
     }
 
     /**

@@ -26,7 +26,7 @@ class ResidentForm extends Form
     
     /**
      * Current resident.
-     * @var resident\Entity\resident
+     * @var Admin\Entity\Resident
      */
     private $resident = null;
     
@@ -66,6 +66,14 @@ class ResidentForm extends Form
           ],
         ]);
 
+        $this->add([
+            'type'  => 'text',
+            'name' => 'link',
+            'options' => [
+                'label' => 'Ссылка на фид',
+            ],
+        ]);
+
         $this->add([            
             'type'  => 'text',
             'name' => 'tittle',
@@ -81,6 +89,55 @@ class ResidentForm extends Form
             'label' => 'Описание',
           ],
         ]);
+
+        $this->add([
+            'type'  => 'text',
+            'name' => 'tittle1',
+            'options' => [
+                'label' => 'Заголовок 1 для плиток',
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'textarea',
+            'name' => 'description1',
+            'options' => [
+                'label' => 'Описание 1 для плиток',
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'text',
+            'name' => 'tittle2',
+            'options' => [
+                'label' => 'Заголовок 2 для плиток',
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'textarea',
+            'name' => 'description2',
+            'options' => [
+                'label' => 'Описание 2 для плиток',
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'text',
+            'name' => 'tittle3',
+            'options' => [
+                'label' => 'Заголовок 3 для плиток',
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'textarea',
+            'name' => 'description3',
+            'options' => [
+                'label' => 'Описание 3 для плиток',
+            ],
+        ]);
+
 
         $this->add([            
             'type'  => 'text',
@@ -126,6 +183,51 @@ class ResidentForm extends Form
             ]
           ],
         ]);
+
+        $this->add([
+            'type'  => 'file',
+            'name' => 'complex',
+            'attributes' => [
+                'id' => 'file'
+            ],
+            'options' => [
+                'label' => 'Картинка ЖК (*.jpeg, *.jpg)',
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'file',
+            'name' => 'complex1',
+            'attributes' => [
+                'id' => 'file'
+            ],
+            'options' => [
+                'label' => 'Для плиток (*.jpeg, *.jpg)',
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'file',
+            'name' => 'complex2',
+            'attributes' => [
+                'id' => 'file'
+            ],
+            'options' => [
+                'label' => 'Для плиток (*.jpeg, *.jpg)',
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'file',
+            'name' => 'complex3',
+            'attributes' => [
+                'id' => 'file'
+            ],
+            'options' => [
+                'label' => 'Для плиток (*.jpeg, *.jpg)',
+            ],
+        ]);
+
 
         // Add the Submit button
         $this->add([
@@ -176,9 +278,118 @@ class ResidentForm extends Form
 
 
         // we require plans only for add resident
-        $required = true;
+        $required = false;
         if ($this->scenario=='update'){
           $required = false;
         }
+
+        $inputFilter->add([
+            'type'     => 'Zend\InputFilter\FileInput',
+            'name'     => 'complex',
+            'required' => $required,
+            'validators' => [
+                ['name'    => 'FileUploadFile'],
+                [
+                    'name'    => 'FileMimeType',
+                    'options' => [
+                        'mimeType'  => ['image/jpg', 'image/jpeg'] // only *.jpeg files are allowed here
+                    ]
+                ],
+            ],
+            'filters'  => [
+                [
+                    'name' => 'FileRenameUpload',
+                    'options' => [
+                        'target' => './public/data/upload',
+                        'useUploadName' => true,
+                        'useUploadExtension' => true,
+                        'overwrite' => true,
+                        'randomize' => false
+                    ]
+                ]
+            ],
+        ]);
+
+        $inputFilter->add([
+            'type'     => 'Zend\InputFilter\FileInput',
+            'name'     => 'complex1',
+            'required' => false,
+            'validators' => [
+                ['name'    => 'FileUploadFile'],
+                [
+                    'name'    => 'FileMimeType',
+                    'options' => [
+                        'mimeType'  => ['image/jpeg', 'image/jpeg']
+                    ]
+                ],
+            ],
+            'filters'  => [
+                [
+                    'name' => 'FileRenameUpload',
+                    'options' => [
+                        'target' => './public/data/upload',
+                        'useUploadName' => true,
+                        'useUploadExtension' => true,
+                        'overwrite' => true,
+                        'randomize' => false
+                    ]
+                ]
+            ],
+        ]);
+
+        $inputFilter->add([
+            'type'     => 'Zend\InputFilter\FileInput',
+            'name'     => 'complex2',
+            'required' => false,
+            'validators' => [
+                ['name'    => 'FileUploadFile'],
+                [
+                    'name'    => 'FileMimeType',
+                    'options' => [
+                        'mimeType'  => ['image/jpeg', 'image/jpeg']
+                    ]
+                ],
+            ],
+            'filters'  => [
+                [
+                    'name' => 'FileRenameUpload',
+                    'options' => [
+                        'target' => './public/data/upload',
+                        'useUploadName' => true,
+                        'useUploadExtension' => true,
+                        'overwrite' => true,
+                        'randomize' => false
+                    ]
+                ]
+            ],
+        ]);
+
+        $inputFilter->add([
+            'type'     => 'Zend\InputFilter\FileInput',
+            'name'     => 'complex3',
+            'required' => false,
+            'validators' => [
+                ['name'    => 'FileUploadFile'],
+                [
+                    'name'    => 'FileMimeType',
+                    'options' => [
+                        'mimeType'  => ['image/jpeg', 'image/jpeg']
+                    ]
+                ],
+            ],
+            'filters'  => [
+                [
+                    'name' => 'FileRenameUpload',
+                    'options' => [
+                        'target' => './public/data/upload',
+                        'useUploadName' => true,
+                        'useUploadExtension' => true,
+                        'overwrite' => true,
+                        'randomize' => false
+                    ]
+                ]
+            ],
+        ]);
+
     }           
 }

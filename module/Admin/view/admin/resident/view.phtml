@@ -1,5 +1,5 @@
 <?php
-$this->headTitle('Карточка квартиры');
+$this->headTitle('Карточка ЖК');
 ?>
 
 
@@ -9,18 +9,23 @@ $this->headTitle('Карточка квартиры');
         <a class="btn btn-default" href="/resident/edit/<?=$resident->getId();?>">
             <span class="glyphicon glyphicon-pencil"></span> Редактировать
         </a>
+        <a href="/mapping/add?res_id=<?=$resident->getId();?>";>Добавить карту</a>
     </div>
 </div>
 <div class="row">
     <div class="col-md-6">
         <table class="table table-striped table-bordered">
             <tr>
+                <th>ID:</th>
+                <td><?= $this->escapeHtml($resident->getId()) ?></th>
+            </tr>
+            <tr>
                 <th>Жк:</th>
                 <td><?= $resident->getName() ?></th>
             </tr>
             <tr>
-                <th>ID:</th>
-                <td><?= $this->escapeHtml($resident->getId()) ?></th>
+                <th>Фид:</th>
+                <td><?= $resident->getLink() ?></th>
             </tr>
             <tr>
                 <th>Заголовок:</th>
@@ -49,6 +54,34 @@ $this->headTitle('Карточка квартиры');
             <tr>
               <th>Статус:</th>
               <td><?= $this->escapeHtml($resident->getStateAsString()) ?></th>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>Заголовок 1:</th>
+                <td><?= $this->escapeHtml($resident->getTittle1()) ?></th>
+            </tr>
+            <tr>
+                <th>Описание 1:</th>
+                <td><?= $this->escapeHtml($resident->getDescription1()) ?></th>
+            </tr>
+            <tr>
+                <th>Заголовок 2:</th>
+                <td><?= $this->escapeHtml($resident->getTittle2()) ?></th>
+            </tr>
+            <tr>
+                <th>Описание 2:</th>
+                <td><?= $this->escapeHtml($resident->getDescription2()) ?></th>
+            </tr>
+            <tr>
+                <th>Заголовок 3:</th>
+                <td><?= $this->escapeHtml($resident->getTittle3()) ?></th>
+            </tr>
+            <tr>
+                <th>Описание 3:</th>
+                <td><?= $this->escapeHtml($resident->getDescription3()) ?></th>
             </tr>
         </table>
     </div>

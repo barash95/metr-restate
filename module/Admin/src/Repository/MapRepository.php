@@ -22,4 +22,17 @@ class MapRepository extends EntityRepository
         return $queryBuilder->getQuery();
     }
 
+    public function findOneByResId($id)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('m.res_id')->from(Map::class, 'm');
+
+        $queryBuilder->where('m.res_id = :id')->setParameter('id', $id);
+
+        $query = $queryBuilder->getQuery();
+        $res = $query->execute();
+        if(is_array($res) && isset($res[0])) $res = $res[0]; else $res = null;
+        return $res;
+    }
 }

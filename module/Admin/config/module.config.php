@@ -57,6 +57,7 @@ return [
         'factories' => [
             Service\ResidentManager::class => Service\Factory\ResidentManagerFactory::class,
             Service\MapManager::class => Service\Factory\MapManagerFactory::class,
+            Service\FlatManager::class => Service\Factory\FlatManagerFactory::class,
         ],
     ],
     'view_manager' => [

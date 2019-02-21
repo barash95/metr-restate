@@ -1,13 +1,14 @@
 <?php
 namespace Admin\Form;
 
+use Admin\Validator\MapExistsValidator;
 use Zend\Form\Form;
 use Zend\Form\Element\Select;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
 
 /**
- * This form is used to collect resident's information. The form
+ * This form is used to collect map's information. The form
  * can work in two scenarios - 'create' and 'update'.
  */
 class MapForm extends Form
@@ -26,7 +27,7 @@ class MapForm extends Form
     
     /**
      * Current resident.
-     * @var resident\Entity\Map
+     * @var Admin\Entity\Map
      */
     private $map = null;
 
@@ -35,10 +36,10 @@ class MapForm extends Form
     /**
      * Constructor.     
      */
-    public function __construct($scenario = 'create', $entityManager = null, $map = null, $residents)
+    public function __construct($scenario = 'create', $entityManager = null, $map = null, $residents = null)
     {
         // Define form name
-        parent::__construct('resident-form');
+        parent::__construct('map-form');
      
         // Set POST method for this form
         $this->setAttribute('method', 'post');
@@ -51,6 +52,7 @@ class MapForm extends Form
         $this->entityManager = $entityManager;
         $this->map = $map;
         $this->residents = $residents;
+
         $this->addElements();
         $this->addInputFilter();          
     }
@@ -102,14 +104,38 @@ class MapForm extends Form
         // Create main input filter
         $inputFilter = $this->getInputFilter();
 
-        $inputFilter->add([
+        /*$inputFilter->add([
           'name'     => 'res_id',
           'required' => true,
+            'validators' => [
+                [
+                    'name' => MapExistsValidator::class,
+                    'options' => [
+                        'entityManager' => $this->entityManager,
+                        'map' => $this->map
+                    ]
+                ]
+            ],
           'filters'  => [
             ['name' => 'ToInt'],
           ],
+        ]);*/
+
+        $inputFilter->add([
+            'name'     => 'x_pos',
+            'required' => true,
+            'filters'  => [
+                ['name' => 'ToFloat'],
+            ],
         ]);
 
+        $inputFilter->add([
+            'name'     => 'y_pos',
+            'required' => true,
+            'filters'  => [
+                ['name' => 'ToFloat'],
+            ],
+        ]);
 
         // we require plans only for add resident
         $required = true;

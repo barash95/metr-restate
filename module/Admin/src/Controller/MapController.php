@@ -60,6 +60,7 @@ class MapController extends AbstractActionController
 
     public function addAction()
     {
+        $res_id = $this->params()->fromQuery('res_id', '');
         $resident = $this->entityManager->getRepository(Resident::class)
             ->getResidentList();
         // Create flat form
@@ -87,6 +88,10 @@ class MapController extends AbstractActionController
                 return $this->redirect()->toRoute('mapping',
                     ['action'=>'index']);
             }
+        } else {
+            $data['res_id'] = $res_id;
+
+            $form->setData($data);
         }
 
         return new ViewModel([
@@ -126,10 +131,8 @@ class MapController extends AbstractActionController
 
             // Validate form
             if($form->isValid()) {
-
                 // Get filtered and validated data
                 $data = $form->getData();
-
                 $this->mapManager->updateMap($map, $data);
 
                 // Redirect to "view" page
@@ -139,7 +142,7 @@ class MapController extends AbstractActionController
         } else {
 
             $form->setData(array(
-                'resident'=>$map->getResId(),
+                'res_id'=>$map->getResId(),
                 'x_pos'=>$map->getX(),
                 'y_pos'=>$map->getY(),
             ));
@@ -162,7 +165,7 @@ class MapController extends AbstractActionController
         $map = $this->entityManager->getReference(Map::class, $id);
 
         // Remove it and flush
-        $this->entityManager->delete($map);
+        $this->entityManager->remove($map);
         $this->entityManager->flush();
 
         // Redirect to "view" page
