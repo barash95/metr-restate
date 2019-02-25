@@ -70,5 +70,12 @@ class FlatManager
         return true;
     }
 
+    public function addOrUpdateFlat($data)
+    {
+        $flat = $this->entityManager->getRepository(Flat::class)->findByExId($data['res_id'],$data['ex_id']);
+        if(count($flat)>0) $this->updateFlat($flat[0], $data);
+        else $this->addFlat($data);
+    }
+
 }
 

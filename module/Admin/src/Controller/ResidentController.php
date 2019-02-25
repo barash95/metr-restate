@@ -8,6 +8,7 @@
 
 namespace Admin\Controller;
 
+use Admin\Entity\Flat;
 use Admin\Entity\Resident;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -250,23 +251,27 @@ class ResidentController extends AbstractActionController
     public function parseAction()
     {
         //$simple = file_get_contents("http://zs.spb.ru/xml/metr?resident=2");
-        /**
-         * Парсишь страницу в $simple и преобразовываешь в массив flats
-         * Элементы со страницы в $flat['element_name'] там их немного
-         * Само добавление работает
+        $info = simplexml_load_file("http://zs.spb.ru/xml/metr");
+        $info = json_decode(json_encode((array)$info), TRUE);
+
+        $res_id = 1;
+
+        $list_flats = $this->entityManager->getRepository(Flat::class)->getFlatList($res_id);
+        foreach($list_flats as $flat)
+            $old_flats[$flat['ex_id']] = $flat['id'];
+        $flats = $info['flats']['flat'];
         foreach ($flats as $flat) {
-            $data['ex_id'] = $flat['flat_id'];
-            $data['res_id'] = 1;
-            $data['house'] = $flat['house'];
-            $data['floor'] = $flat['floor'];
-            $data['section'] = $flat['section'];
-            $data['number'] = $flat['apartment'];
-            $data['size'] = $flat['room'];
-            $data['square'] = $flat['area'];
-            $data['price'] = $flat['price'];
-            $this->flatManager->addFlat($data);
+            $flat['res_id'] = $res_id;
+            $this->flatManager->addOrUpdateFlat($flat);
+            unset($old_flats[$flat['ex_id']]);
         }
-         */
+        foreach ($old_flats as $id => $flat){
+            $remove_flat = $this->entityManager->getReference(Flat::class, $id);
+            $this->entityManager->remove($remove_flat);
+            $this->entityManager->flush();
+
+        }
+
         return $this->redirect()->toRoute('resident',
             ['action'=>'index']);
     }

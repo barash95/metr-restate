@@ -21,4 +21,34 @@ class FlatRepository extends EntityRepository
 
         return $queryBuilder->getQuery();
     }
+
+    public function getFlatList($res_id = null)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('f.id', 'f.ex_id')->from(Flat::class, 'f');
+
+        if (!is_null($res_id))
+            $queryBuilder->where('f.res_id = :res_id')->setParameter('res_id', $res_id);
+
+        $query = $queryBuilder->getQuery();
+        $res = $query->execute();
+
+        return $res;
+    }
+
+    public function findByExId($res_id, $ex_id = null)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('f')->from(Flat::class, 'f');
+
+        $queryBuilder->where('f.res_id = :res_id')->setParameter('res_id', $res_id);
+        $queryBuilder->andWhere('f.ex_id = :ex_id')->setParameter('ex_id', $ex_id);
+
+        $query = $queryBuilder->getQuery();
+        $res = $query->execute();
+
+        return $res;
+    }
 }

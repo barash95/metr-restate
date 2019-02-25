@@ -51,7 +51,6 @@ class MapExistsValidator extends AbstractValidator
     public function isValid($value)
     {
         if ($value=='') return true;
-
         // Get Doctrine entity manager.
         $entityManager = $this->options['entityManager'];
         $map = $entityManager->getRepository(Map::class)
