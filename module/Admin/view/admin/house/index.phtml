@@ -1,0 +1,62 @@
+<?php
+$this->headTitle('Список корпусов');
+?>
+
+<h1>ЖК</h1>
+
+<p>
+<a class="btn btn-default" href="
+    <?= $this->url('housing', ['action'=>'add']); ?>">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Новый корпус
+      </a>
+</p>
+
+<table class="table table-striped">
+
+        <tr>
+        <th>ID</th>
+        <th>ЖК</th>
+        <th>Корпус</th>
+        <th>Продано кв</th>
+        <th></th>
+        <th></th>
+        </tr>
+
+    <?php foreach ($housing as $house): ?>
+
+      <tr>
+        <td>
+          <a href="<?= $this->url('housing', ['action'=>'view', 'id'=>$house->getId()]); ?>">
+            <?= $this->escapeHtml($house->getId()); ?>
+          </a>
+        </td>
+          <td>
+              <?= $this->residentialName()->render($house->getResId()); ?>
+          </td>
+        <td><?= $this->escapeHtml($house->getHouse()); ?></a></td>
+          <td>
+              <?= $this->saleFlatCount()->render($house->getResId(), $house->getHouse()); ?>
+          </td>
+          <td>
+            <a class="btn btn-default" href="<?= $this->url('housing',
+                    ['action'=>'edit', 'id'=>$house->getId()]); ?>">
+                Редактировать
+            </a>
+          </td><td>
+            <a class="btn btn-default" href="<?= $this->url('housing',
+                      ['action'=>'delete', 'id'=>$house->getId()]); ?>"  onclick="return confirm('Вы уверены?')">
+              Удалить
+            </a>
+        </td>
+      </tr>
+
+    <?php endforeach; ?>
+
+  <?= $this->paginationControl($housing,
+                    'Sliding',
+                    'application/partial/paginator',
+                    array('route' => 'housing', 'fromQuery' => $fromQuery)); ?>
+
+    </table>
+
+

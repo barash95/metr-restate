@@ -13,10 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * This class represents a house.
  * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="\Admin\Repository\HouseRepository")
  * @ORM\Table(name="housing")
  */
 
-class Housing
+class House
 {
     /**
      * @ORM\Id
@@ -100,7 +101,7 @@ class Housing
         return $this->section;
     }
 
-    public function setSeciton($section)
+    public function setSection($section)
     {
         $this->section = $section;
     }

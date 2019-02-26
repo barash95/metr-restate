@@ -1,0 +1,103 @@
+<?php
+$this->headTitle('Добавить корпус');
+
+$form->get('res_id')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'res_id'
+]);
+
+$form->get('house')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'house'
+]);
+
+$form->get('floor')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'floor'
+]);
+
+$form->get('section')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'section'
+]);
+
+$form->get('total_flat')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'total_flat'
+]);
+
+$form->get('year')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'year'
+]);
+
+$form->get('image')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'load file'
+]);
+
+$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<h1>Добавить корпус</h1>
+
+<p>
+    Пожалуйста заполните следующую форму и нажмите кнопку <i>Добавить</i>.
+</p>
+
+<div class="row">
+    <?= $this->form()->openTag($form); ?>
+
+    <div class="col-md-6">
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('res_id')); ?>
+            <?= $this->formElement($form->get('res_id')); ?>
+            <?= $this->formElementErrors($form->get('res_id')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('house')); ?>
+            <?= $this->formElement($form->get('house')); ?>
+            <?= $this->formElementErrors($form->get('house')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('floor')); ?>
+            <?= $this->formElement($form->get('floor')); ?>
+            <?= $this->formElementErrors($form->get('floor')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('section')); ?>
+            <?= $this->formElement($form->get('section')); ?>
+            <?= $this->formElementErrors($form->get('section')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('total_flat')); ?>
+            <?= $this->formElement($form->get('total_flat')); ?>
+            <?= $this->formElementErrors($form->get('total_flat')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('year')); ?>
+            <?= $this->formElement($form->get('year')); ?>
+            <?= $this->formElementErrors($form->get('year')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('image')); ?>
+            <?= $this->formElement($form->get('image')); ?>
+            <?= $this->formElementErrors($form->get('image')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+
+    </div>
+
+    <?= $this->form()->closeTag(); ?>
+</div>   
+

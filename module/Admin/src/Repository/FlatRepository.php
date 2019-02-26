@@ -51,4 +51,16 @@ class FlatRepository extends EntityRepository
 
         return $res;
     }
+
+    public function getFlatInHouse($res_id = null, $house = null)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('f')->from(Flat::class, 'f');
+        $queryBuilder->where('f.res_id = :res_id')->setParameter('res_id', $res_id);
+        $queryBuilder->andWhere('f.house = :house')->setParameter('house', $house);
+        $query = $queryBuilder->getQuery();
+        $res = $query->execute();
+        return count($res);
+    }
 }

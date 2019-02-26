@@ -52,7 +52,7 @@ $this->pageBreadcrumbs()->setItems([
   <?= $this->paginationControl($residents,
                     'Sliding',
                     'application/partial/paginator',
-                    array('route' => 'resident')); ?>
+                    array('route' => 'resident', 'fromQuery' => $fromQuery)); ?>
 
     </table>
 

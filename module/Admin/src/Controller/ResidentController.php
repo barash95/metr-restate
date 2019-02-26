@@ -9,6 +9,7 @@
 namespace Admin\Controller;
 
 use Admin\Entity\Flat;
+use Admin\Entity\House;
 use Admin\Entity\Resident;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -53,6 +54,9 @@ class ResidentController extends AbstractActionController
     {
         $page = $this->params()->fromQuery('page', 1);
 
+        $fromQuery = $this->params()->fromQuery();
+        if (isset($fromQuery['page'])) unset($fromQuery['page']);
+
         $query = $this->entityManager->getRepository(Resident::class)
             ->findAllResident();
 
@@ -63,6 +67,7 @@ class ResidentController extends AbstractActionController
 
         return new ViewModel([
             'residents' => $paginator,
+            'fromQuery' => $fromQuery
         ]);
     }
 
@@ -133,13 +138,16 @@ class ResidentController extends AbstractActionController
         $resident = $this->entityManager->getRepository(Resident::class)
             ->find($id);
 
+        $housing = $this->entityManager->getRepository(House::class)->getHouseByResId($id);
+
         if ($resident == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
 
         return new ViewModel([
-            'resident' => $resident
+            'resident' => $resident,
+            'housing' => $housing
         ]);
     }
 
@@ -269,7 +277,6 @@ class ResidentController extends AbstractActionController
             $remove_flat = $this->entityManager->getReference(Flat::class, $id);
             $this->entityManager->remove($remove_flat);
             $this->entityManager->flush();
-
         }
 
         return $this->redirect()->toRoute('resident',

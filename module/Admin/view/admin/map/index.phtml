@@ -51,7 +51,7 @@ $this->pageBreadcrumbs()->setItems([
   <?= $this->paginationControl($maps,
                     'Sliding',
                     'application/partial/paginator',
-                    array('route' => 'mapping')); ?>
+                    array('route' => 'mapping', 'fromQuery' => $fromQuery)); ?>
 
     </table>
 

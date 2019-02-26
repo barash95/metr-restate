@@ -44,6 +44,16 @@ return [
                     ],
                 ],
             ],
+            'housing' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/housing[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\HouseController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -51,6 +61,7 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\ResidentController::class => Controller\Factory\ResidentControllerFactory::class,
             Controller\MapController::class => Controller\Factory\MapControllerFactory::class,
+            Controller\HouseController::class => Controller\Factory\HouseControllerFactory::class,
         ],
     ],
     'service_manager' => [
@@ -58,6 +69,7 @@ return [
             Service\ResidentManager::class => Service\Factory\ResidentManagerFactory::class,
             Service\MapManager::class => Service\Factory\MapManagerFactory::class,
             Service\FlatManager::class => Service\Factory\FlatManagerFactory::class,
+            Service\HouseManager::class => Service\Factory\HouseManagerFactory::class,
         ],
     ],
     'view_manager' => [
