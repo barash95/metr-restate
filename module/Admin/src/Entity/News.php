@@ -83,12 +83,12 @@ class News
         $this->description = $description;
     }
 
-    public function getCreatedDate()
+    public function getDate()
     {
         return $this->date;
     }
 
-    public function setCreatedDate($date)
+    public function setDate($date)
     {
         $this->date = $date;
     }
@@ -100,6 +100,7 @@ class News
 
     public function setResId($res_id)
     {
+        if($res_id != 0)
         $this->res_id = $res_id;
     }
 

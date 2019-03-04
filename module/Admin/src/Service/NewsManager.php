@@ -29,9 +29,9 @@ class NewsManager
   {
     $news = new News();
 
-    $news->setTitle($data['title']);
+    $news->setTittle($data['tittle']);
     $news->setDescription($data['description']);
-    $news->setCreatedDate($data['date_created']);
+    $news->setDate($data['date']);
     $news->setResId($data['res_id']);
 
     // Add the entity to the entity manager.
@@ -48,9 +48,9 @@ class NewsManager
    */
   public function updateNews($news, $data)
   {
-      $news->setTitle($data['title']);
+      $news->setTittle($data['tittle']);
       $news->setDescription($data['description']);
-      $news->setCreatedDate($data['date_created']);
+      $news->setDate($data['date']);
       $news->setResId($data['res_id']);
 
     // Apply changes to database.

@@ -25,6 +25,7 @@ class ResidentialName extends AbstractHelper
 
     public function render($residential_id)
     {
+        if(!is_null($residential_id))
         return $this->entityManager->getRepository(Resident::class)->getNameById($residential_id);
     }
 }

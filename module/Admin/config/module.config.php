@@ -74,6 +74,16 @@ return [
                     ],
                 ],
             ],
+            'anews' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/anews[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\NewsController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -84,6 +94,7 @@ return [
             Controller\HouseController::class => Controller\Factory\HouseControllerFactory::class,
             Controller\VideoController::class => Controller\Factory\VideoControllerFactory::class,
             Controller\MortgageController::class => Controller\Factory\MortgageControllerFactory::class,
+            Controller\NewsController::class => Controller\Factory\NewsControllerFactory::class,
         ],
     ],
     'service_manager' => [
@@ -94,6 +105,7 @@ return [
             Service\HouseManager::class => Service\Factory\HouseManagerFactory::class,
             Service\VideoManager::class => Service\Factory\VideoManagerFactory::class,
             Service\MortgageManager::class => Service\Factory\MortgageManagerFactory::class,
+            Service\NewsManager::class => Service\Factory\NewsManagerFactory::class,
         ],
     ],
     'view_manager' => [

@@ -13,10 +13,6 @@ use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
 use Admin\Form\MortgageForm;
 
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
-use Zend\Paginator\Paginator;
-
 class MortgageController extends AbstractActionController
 {
     /**
@@ -39,7 +35,6 @@ class MortgageController extends AbstractActionController
         $this->entityManager = $entityManager;
         $this->mortgageManager = $mortgageManager;
     }
-
 
     public function indexAction()
     {

@@ -1,0 +1,55 @@
+<?php
+$this->headTitle('Список новостей');
+?>
+<h1>ЖК</h1>
+
+<p>
+<a class="btn btn-default" href="
+    <?= $this->url('anews', ['action'=>'add']); ?>">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Новая новость
+      </a>
+</p>
+
+<table class="table table-striped">
+
+        <tr>
+        <th>ЖК</th>
+        <th>Tittle</th>
+        <th>Date</th>
+        <th></th>
+        <th></th>
+        </tr>
+
+    <?php foreach ($news as $new): ?>
+
+      <tr>
+        <td>
+            <?= $this->residentialName()->render($new->getResId()); ?>
+        </td>
+        <td>
+            <a href="<?= $this->url('anews',['action'=>'view', 'id'=>$new->getId()]); ?>">
+            <?= $this->escapeHtml($new->getTittle()); ?></a></td>
+          <td><?= $this->escapeHtml($new->getDate()); ?></a></td>
+          <td>
+            <a class="btn btn-default" href="<?= $this->url('anews',
+                    ['action'=>'edit', 'id'=>$new->getId()]); ?>">
+                Редактировать
+            </a>
+          </td><td>
+            <a class="btn btn-default" href="<?= $this->url('anews',
+                      ['action'=>'delete', 'id'=>$new->getId()]); ?>"  onclick="return confirm('Вы уверены?')">
+              Удалить
+            </a>
+        </td>
+      </tr>
+
+    <?php endforeach; ?>
+
+  <?= $this->paginationControl($news,
+                    'Sliding',
+                    'application/partial/paginator',
+                    array('route' => 'anews', 'fromQuery' => $fromQuery)); ?>
+
+    </table>
+
+
