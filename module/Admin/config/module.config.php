@@ -64,6 +64,16 @@ return [
                     ],
                 ],
             ],
+            'mortgage' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/mortgage[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\MortgageController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -73,6 +83,7 @@ return [
             Controller\MapController::class => Controller\Factory\MapControllerFactory::class,
             Controller\HouseController::class => Controller\Factory\HouseControllerFactory::class,
             Controller\VideoController::class => Controller\Factory\VideoControllerFactory::class,
+            Controller\MortgageController::class => Controller\Factory\MortgageControllerFactory::class,
         ],
     ],
     'service_manager' => [
@@ -82,6 +93,7 @@ return [
             Service\FlatManager::class => Service\Factory\FlatManagerFactory::class,
             Service\HouseManager::class => Service\Factory\HouseManagerFactory::class,
             Service\VideoManager::class => Service\Factory\VideoManagerFactory::class,
+            Service\MortgageManager::class => Service\Factory\MortgageManagerFactory::class,
         ],
     ],
     'view_manager' => [

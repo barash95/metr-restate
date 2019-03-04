@@ -107,13 +107,13 @@ class ResidentController extends AbstractActionController
                     rename(ROOT_PATH."/public/data/upload/".$files['complex']['name'], $dest."/complex.jpeg");
                 }
                 if (isset($files['complex1']) && $files['complex1']['name']>''){
-                    rename(ROOT_PATH."/public/data/upload/".$files['complex1']['name'], $dest."/complex1.jpeg");
+                    rename(ROOT_PATH."/public/data/upload/".$files['complex1']['name'], $dest."/complex1.png");
                 }
                 if (isset($files['complex2']) && $files['complex2']['name']>''){
-                    rename(ROOT_PATH."/public/data/upload/".$files['complex2']['name'], $dest."/complex2.jpeg");
+                    rename(ROOT_PATH."/public/data/upload/".$files['complex2']['name'], $dest."/complex2.png");
                 }
                 if (isset($files['complex3']) && $files['complex3']['name']>''){
-                    rename(ROOT_PATH."/public/data/upload/".$files['complex3']['name'], $dest."/complex3.jpeg");
+                    rename(ROOT_PATH."/public/data/upload/".$files['complex3']['name'], $dest."/complex3.png");
                 }
 
                 // Redirect to "view" page
@@ -203,13 +203,13 @@ class ResidentController extends AbstractActionController
                     rename(ROOT_PATH."/public/data/upload/".$files['complex']['name'], $dest."/complex.jpeg");
                 }
                 if (isset($files['complex1']) && $files['complex1']['name']>''){
-                    rename(ROOT_PATH."/public/data/upload/".$files['complex1']['name'], $dest."/complex1.jpeg");
+                    rename(ROOT_PATH."/public/data/upload/".$files['complex1']['name'], $dest."/complex1.png");
                 }
                 if (isset($files['complex2']) && $files['complex2']['name']>''){
-                    rename(ROOT_PATH."/public/data/upload/".$files['complex2']['name'], $dest."/complex2.jpeg");
+                    rename(ROOT_PATH."/public/data/upload/".$files['complex2']['name'], $dest."/complex2.png");
                 }
                 if (isset($files['complex3']) && $files['complex3']['name']>''){
-                    rename(ROOT_PATH."/public/data/upload/".$files['complex3']['name'], $dest."/complex3.jpeg");
+                    rename(ROOT_PATH."/public/data/upload/".$files['complex3']['name'], $dest."/complex3.png");
                 }
                 // Redirect to "view" page
                 return $this->redirect()->toRoute('resident',

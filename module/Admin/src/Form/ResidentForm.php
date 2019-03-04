@@ -202,7 +202,7 @@ class ResidentForm extends Form
                 'id' => 'file'
             ],
             'options' => [
-                'label' => 'Для плиток (*.jpeg, *.jpg)',
+                'label' => 'Для плиток (*.png)',
             ],
         ]);
 
@@ -213,7 +213,7 @@ class ResidentForm extends Form
                 'id' => 'file'
             ],
             'options' => [
-                'label' => 'Для плиток (*.jpeg, *.jpg)',
+                'label' => 'Для плиток (*.png)',
             ],
         ]);
 
@@ -224,7 +224,7 @@ class ResidentForm extends Form
                 'id' => 'file'
             ],
             'options' => [
-                'label' => 'Для плиток (*.jpeg, *.jpg)',
+                'label' => 'Для плиток (*.png)',
             ],
         ]);
 
@@ -319,7 +319,7 @@ class ResidentForm extends Form
                 [
                     'name'    => 'FileMimeType',
                     'options' => [
-                        'mimeType'  => ['image/jpeg', 'image/jpeg']
+                        'mimeType'  => ['image/png']
                     ]
                 ],
             ],
@@ -346,7 +346,7 @@ class ResidentForm extends Form
                 [
                     'name'    => 'FileMimeType',
                     'options' => [
-                        'mimeType'  => ['image/jpeg', 'image/jpeg']
+                        'mimeType'  => ['image/png']
                     ]
                 ],
             ],
@@ -373,7 +373,7 @@ class ResidentForm extends Form
                 [
                     'name'    => 'FileMimeType',
                     'options' => [
-                        'mimeType'  => ['image/jpeg', 'image/jpeg']
+                        'mimeType'  => ['image/png']
                     ]
                 ],
             ],

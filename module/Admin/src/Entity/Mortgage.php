@@ -59,14 +59,14 @@ class Mortgage
         return $this->name;
     }
 
-    public function setTittle($name)
+    public function setName($name)
     {
         $this->name = $name;
     }
 
     public function getPercent()
     {
-        return $this->Percent;
+        return $this->percent;
     }
 
     public function setPercent($percent)

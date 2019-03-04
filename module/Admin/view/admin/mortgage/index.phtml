@@ -1,0 +1,51 @@
+<?php
+$this->headTitle('Список банков');
+?>
+<h1>Банки</h1>
+
+<p>
+<a class="btn btn-default" href="
+    <?= $this->url('mortgage', ['action'=>'add']); ?>">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Новый банк
+      </a>
+</p>
+
+<table class="table table-striped">
+
+        <tr>
+        <th>Id</th>
+        <th>Банк</th>
+        <th>Процент</th>
+        <th>Срок</th>
+        <th></th>
+        <th></th>
+        </tr>
+
+    <?php foreach ($mortgages as $mortgage): ?>
+
+      <tr>
+        <td>
+            <?= $this->escapeHtml($mortgage->getId()); ?>
+        </td>
+        <td><?= $this->escapeHtml($mortgage->getName()); ?></a></td>
+          <td><?= $this->escapeHtml($mortgage->getPercent()); ?></a></td>
+          <td><?= $this->escapeHtml($mortgage->getYear()); ?></a></td>
+          <td>
+            <a class="btn btn-default" href="<?= $this->url('mortgage',
+                    ['action'=>'edit', 'id'=>$mortgage->getId()]); ?>">
+                Редактировать
+            </a>
+          </td><td>
+            <a class="btn btn-default" href="<?= $this->url('mortgage',
+                      ['action'=>'delete', 'id'=>$mortgage->getId()]); ?>"  onclick="return confirm('Вы уверены?')">
+              Удалить
+            </a>
+        </td>
+      </tr>
+
+    <?php endforeach; ?>
+
+
+    </table>
+
+

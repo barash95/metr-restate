@@ -10,21 +10,21 @@ namespace Admin\Controller\Factory;
 
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Admin\Controller\MapController;
-use Admin\Service\MapManager;
+use Admin\Controller\MortgageController;
+use Admin\Service\MortgageManager;
 
 /**
  * This is the factory for ResidentController. Its purpose is to instantiate the
  * controller and inject dependencies into it.
  */
-class MapControllerFactory implements FactoryInterface
+class MortgageControllerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        $mapManager = $container->get(MapManager::class);
+        $mortgageManager = $container->get(MortgageManager::class);
 
         // Instantiate the controller and inject dependencies
-        return new MapController($entityManager, $mapManager);
+        return new MortgageController($entityManager, $mortgageManager);
     }
 }

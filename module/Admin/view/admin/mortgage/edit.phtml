@@ -1,0 +1,79 @@
+<?php
+$this->headTitle('Добавить банк');
+
+$form->get('name')->setAttributes([
+    'class'=>'form-control',
+    'id' => 'name'
+]);
+
+$form->get('percent')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'percent'
+]);
+
+$form->get('year')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'year'
+]);
+
+$form->get('money')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'money'
+]);
+
+$form->get('icon')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'icon'
+]);
+
+$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<h1>Добавить банк</h1>
+
+<p>
+    Пожалуйста заполните следующую форму и нажмите кнопку <i>Добавить</i>.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('name')); ?>
+            <?= $this->formElement($form->get('name')); ?>
+            <?= $this->formElementErrors($form->get('name')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('percent')); ?>
+            <?= $this->formElement($form->get('percent')); ?>
+            <?= $this->formElementErrors($form->get('percent')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('year')); ?>
+            <?= $this->formElement($form->get('year')); ?>
+            <?= $this->formElementErrors($form->get('year')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('money')); ?>
+            <?= $this->formElement($form->get('money')); ?>
+            <?= $this->formElementErrors($form->get('money')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('icon')); ?>
+            <?= $this->formElement($form->get('icon')); ?>
+            <?= $this->formElementErrors($form->get('icon')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+
+        <?= $this->form()->closeTag(); ?>
+    </div>
+</div>
+

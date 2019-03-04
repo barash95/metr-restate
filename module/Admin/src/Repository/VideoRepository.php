@@ -28,7 +28,7 @@ class VideoRepository extends EntityRepository
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('v')->from(Video::class, 'v');
         $queryBuilder->where('v.res_id = :res_id')->setParameter('res_id', $res_id);
-        $queryBuilder->orderBy('v.date', 'ASC');
+        $queryBuilder->orderBy('v.date', 'DESC');
 
         $query = $queryBuilder->getQuery();
         $res = $query->execute();
