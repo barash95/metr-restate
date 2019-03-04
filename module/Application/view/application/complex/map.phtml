@@ -1,1 +1,56 @@
-<?php echo '<h1>Map</h1>';
+<style>
+
+    #map {
+       height: 700px;
+        margin-top: 100px;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<span class="metadata-marker" style="display: none;" data-region_tag="html-body"></span>
+<div id="map"></div>
+<script>
+    var map;
+    function initMap() {
+        var coordinates = {lat: 59.938696, lng: 30.336523},
+            popupContent = '<p class="content">Что угодно</p>',
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 59.938696, lng: 30.336523},
+            zoom: 10
+        });
+        <?php
+        foreach($maps as $map){
+            echo "coordinates{$map->getId()} = {lat: {$map->getX()}, lng: {$map->getY()}},
+             name{$map->getId()}= '<p class=\"content\">{$this->residentialName()->render($map->getResId())}</p>',
+             marker{$map->getId()} = new google.maps.Marker({
+                position: coordinates{$map->getId()},
+                map: map,
+                animation: google.maps.Animation.DROP
+                });
+                infowindow{$map->getId()} = new google.maps.InfoWindow({
+                    content: name{$map->getId()}
+                });
+                marker{$map->getId()}.addListener('click', function(){
+                    infowindow{$map->getId()}.open(map, marker{$map->getId()});
+                    });\n";
+        }
+        ?>
+        marker = new google.maps.Marker({
+            position: coordinates,
+            map: map,
+            animation: google.maps.Animation.DROP
+        });
+
+        infowindow = new google.maps.InfoWindow({
+            content: popupContent
+        });
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSsXnkXckJMgWpFR7U1QkIeHNGSRQrhFA&callback=initMap" async defer></script>

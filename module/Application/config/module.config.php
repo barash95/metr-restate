@@ -131,7 +131,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
-            Controller\ComplexController::class => InvokableFactory::class,
+            Controller\ComplexController::class => Controller\Factory\ComplexControllerFactory::class,
             Controller\FlatController::class => InvokableFactory::class,
             Controller\NewsController::class => InvokableFactory::class,
         ],

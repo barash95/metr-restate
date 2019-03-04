@@ -8,12 +8,27 @@
 
 namespace Application\Controller;
 
+use Admin\Entity\Map;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 
 class ComplexController extends AbstractActionController
 {
+    /**
+     * Entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+    private $entityManager;
+
+    /**
+     * Constructor.
+     */
+    public function __construct($entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     public function indexAction()
     {
         return new ViewModel();
@@ -26,6 +41,11 @@ class ComplexController extends AbstractActionController
 
     public function mapAction()
     {
-        return new ViewModel();
+        $query = $this->entityManager->getRepository(Map::class)
+            ->findAllMap();
+        $maps = $query->execute();
+        return new ViewModel([
+            'maps' => $maps,
+        ]);
     }
 }
