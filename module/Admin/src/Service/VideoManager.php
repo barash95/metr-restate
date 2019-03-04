@@ -2,53 +2,63 @@
 namespace Admin\Service;
 
 use Admin\Entity\Video;
-
 /**
- * This service is responsible for all gallery management
+ * This service is responsible for adding/editing video
  */
 class VideoManager
 {
-  /**
-   * Doctrine entity manager.
-   * @var Doctrine\ORM\EntityManager
-   */
-  private $entityManager;
+    /**
+     * Doctrine entity manager.
+     * @var Doctrine\ORM\EntityManager
+     */
+    private $entityManager;
 
-  /**
-   * Constructs the service.
-   */
-  public function __construct($entityManager)
-  {
-    $this->entityManager = $entityManager;
-  }
-
-  public function addVideo($data){
-    $video = new Video();
-
-    $video->setTittle($data['tittle']);
-    $video->setResId($data['res_id']);
-    $video->setDate($data['upload_date']);
-    $video->setLink($data['link']);
-
-    // Add the entity to the entity manager.
-    $this->entityManager->persist($video);
-
-    // Apply changes to database.
-    $this->entityManager->flush();
-
-    return $video;
-  }
-
-  public function removeFile($id){
-    $videos = $this->entityManager->getReference(Gallery::class, $id);
-
-    if ($videos->getFileType()==0) {
-      $video = ROOT_PATH . "/public" . $videos->getFilePath();
-      unlink($video);
+    /**
+     * Constructs the service.
+     */
+    public function __construct($entityManager)
+    {
+        $this->entityManager = $entityManager;
     }
 
-    $this->entityManager->remove($videos);
-    $this->entityManager->flush();
-  }
+    /**
+     * This method adds a new video.
+     */
+    public function addVideo($data)
+    {
+        // Create new video entity.
+        $video = new Video();
+
+        $video->setResId($data['res_id']);
+        $video->setTittle($data['tittle']);
+        $video->setLink($data['link']);
+        $video->setDate($data['date']);
+
+        // Add the entity to the entity manager.
+        $this->entityManager->persist($video);
+
+        // Apply changes to database.
+        $this->entityManager->flush();
+
+        return $video;
+    }
+
+    /**
+     * This method updates data of an existing flat.
+     */
+    public function updateVideo($video, $data)
+    {
+
+        $video->setResId($data['res_id']);
+        $video->setTittle($data['tittle']);
+        $video->setLink($data['link']);
+        $video->setDate($data['date']);
+
+        // Apply changes to database.
+        $this->entityManager->flush();
+
+        return true;
+    }
+
 }
 

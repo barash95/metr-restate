@@ -54,6 +54,16 @@ return [
                     ],
                 ],
             ],
+            'video' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/video[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\VideoController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -62,6 +72,7 @@ return [
             Controller\ResidentController::class => Controller\Factory\ResidentControllerFactory::class,
             Controller\MapController::class => Controller\Factory\MapControllerFactory::class,
             Controller\HouseController::class => Controller\Factory\HouseControllerFactory::class,
+            Controller\VideoController::class => Controller\Factory\VideoControllerFactory::class,
         ],
     ],
     'service_manager' => [
@@ -70,6 +81,7 @@ return [
             Service\MapManager::class => Service\Factory\MapManagerFactory::class,
             Service\FlatManager::class => Service\Factory\FlatManagerFactory::class,
             Service\HouseManager::class => Service\Factory\HouseManagerFactory::class,
+            Service\VideoManager::class => Service\Factory\VideoManagerFactory::class,
         ],
     ],
     'view_manager' => [

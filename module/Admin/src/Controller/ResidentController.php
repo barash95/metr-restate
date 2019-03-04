@@ -11,6 +11,7 @@ namespace Admin\Controller;
 use Admin\Entity\Flat;
 use Admin\Entity\House;
 use Admin\Entity\Resident;
+use Admin\Entity\Video;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
 use Admin\Form\ResidentForm;
@@ -139,6 +140,7 @@ class ResidentController extends AbstractActionController
             ->find($id);
 
         $housing = $this->entityManager->getRepository(House::class)->getHouseByResId($id);
+        $video = $this->entityManager->getRepository(Video::class)->getByResId($id);
 
         if ($resident == null) {
             $this->getResponse()->setStatusCode(404);
@@ -147,7 +149,8 @@ class ResidentController extends AbstractActionController
 
         return new ViewModel([
             'resident' => $resident,
-            'housing' => $housing
+            'housing' => $housing,
+            'videos' => $video
         ]);
     }
 

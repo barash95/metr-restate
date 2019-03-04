@@ -1,0 +1,55 @@
+<?php
+$this->headTitle('Список видео');
+?>
+<h1>Видео</h1>
+
+<p>
+<a class="btn btn-default" href="
+    <?= $this->url('video', ['action'=>'add']); ?>">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Новое видео
+      </a>
+</p>
+
+<table class="table table-striped">
+
+        <tr>
+        <th>ЖК</th>
+        <th>Заголовок</th>
+        <th>Ссылка</th>
+        <th>Дата</th>
+        <th></th>
+        <th></th>
+        </tr>
+
+    <?php foreach ($videos as $video): ?>
+
+      <tr>
+        <td>
+            <?= $this->residentialName()->render($video->getResId()); ?>
+        </td>
+        <td><?= $this->escapeHtml($video->getTittle()); ?></a></td>
+          <td><?= $this->escapeHtml($video->getLink()); ?></a></td>
+          <td><?= $this->escapeHtml($video->getDate()); ?></a></td>
+          <td>
+            <a class="btn btn-default" href="<?= $this->url('video',
+                    ['action'=>'edit', 'id'=>$video->getId()]); ?>">
+                Редактировать
+            </a>
+          </td><td>
+            <a class="btn btn-default" href="<?= $this->url('video',
+                      ['action'=>'delete', 'id'=>$video->getId()]); ?>"  onclick="return confirm('Вы уверены?')">
+              Удалить
+            </a>
+        </td>
+      </tr>
+
+    <?php endforeach; ?>
+
+  <?= $this->paginationControl($videos,
+                    'Sliding',
+                    'application/partial/paginator',
+                    array('route' => 'video', 'fromQuery' => $fromQuery)); ?>
+
+    </table>
+
+
