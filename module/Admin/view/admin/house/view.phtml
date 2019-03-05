@@ -43,6 +43,14 @@ $this->headTitle('Карточка корпуса');
                 <td><?= $this->saleFlatCount()->render($house->getResId(), $house->getHouse()) ?></th>
             </tr>
             <tr>
+                <th>Статус строительства:</th>
+                <td><?= $this->escapeHtml($house->getStateAsString()) ?></th>
+            </tr>
+            <tr>
+                <th>Продажа:</th>
+                <td><?= $this->escapeHtml($house->getSellAsString()) ?></th>
+            </tr>
+            <tr>
               <th>Год сдачи:</th>
               <td><?= $this->escapeHtml($house->getYear()) ?></th>
             </tr>

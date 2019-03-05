@@ -195,6 +195,8 @@ class HouseController extends AbstractActionController
                 'section'=>$house->getSection(),
                 'total_flat'=>$house->getTotalFlat(),
                 'year'=>$house->getYear(),
+                'state'=>$house->getState(),
+                'sell'=>$house->getSell(),
             ));
         }
 

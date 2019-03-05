@@ -19,6 +19,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 class House
 {
+    const SELL                    = 1;
+    const NOT_SELL                = 0;
+
+    const BUILD                   = 0;
+    const FINISH                  = 1;
+
     /**
      * @ORM\Id
      * @ORM\Column(name="id")
@@ -55,6 +61,16 @@ class House
      * @ORM\Column(name="year")
      */
     protected $year;
+
+    /**
+     * @ORM\Column(name="state")
+     */
+    protected $state;
+
+    /**
+     * @ORM\Column(name="sell")
+     */
+    protected $sell;
 
     public function getId()
     {
@@ -124,6 +140,60 @@ class House
     public function setYear($year)
     {
         $this->year = $year;
+    }
+
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
+    public function getSell()
+    {
+        return $this->sell;
+    }
+
+    public function setSell($sell)
+    {
+        $this->sell = $sell;
+    }
+
+    public static function getStateList()
+    {
+        return [
+            self::BUILD => 'Строится',
+            self::FINISH => 'Построен'
+        ];
+    }
+
+    public function getStateAsString()
+    {
+        $list = self::getStateList();
+        if (isset($list[$this->state]))
+            return $list[$this->state];
+
+        return 'Не найден';
+    }
+
+    public static function getSellList()
+    {
+        return [
+            self::SELL => 'В продаже',
+            self::NOT_SELL => 'Не продается'
+        ];
+    }
+
+    public function getSellAsString()
+    {
+        $list = self::getSellList();
+        if (isset($list[$this->state]))
+            return $list[$this->state];
+
+        return 'Не найден';
     }
 
 

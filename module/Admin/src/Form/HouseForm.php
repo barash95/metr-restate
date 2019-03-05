@@ -1,4 +1,5 @@
 <?php
+
 namespace Admin\Form;
 
 use Zend\Form\Form;
@@ -14,16 +15,16 @@ class HouseForm extends Form
 {
     /**
      * Scenario ('create' or 'update').
-     * @var string 
+     * @var string
      */
     private $scenario;
-    
+
     /**
      * Entity manager.
-     * @var Doctrine\ORM\EntityManager 
+     * @var Doctrine\ORM\EntityManager
      */
     private $entityManager = null;
-    
+
     /**
      * Current house.
      * @var Admin\Entity\House
@@ -31,21 +32,21 @@ class HouseForm extends Form
     private $house = null;
 
     private $residents;
-    
+
     /**
-     * Constructor.     
+     * Constructor.
      */
     public function __construct($scenario = 'create', $entityManager = null, $house = null, $residents = null)
     {
         // Define form name
         parent::__construct('house-form');
-     
+
         // Set POST method for this form
         $this->setAttribute('method', 'post');
 
         // Set binary content encoding.
         $this->setAttribute('enctype', 'multipart/form-data');
-        
+
         // Save parameters for internal use.
         $this->scenario = $scenario;
         $this->entityManager = $entityManager;
@@ -53,16 +54,16 @@ class HouseForm extends Form
         $this->residents = $residents;
 
         $this->addElements();
-        $this->addInputFilter();          
+        $this->addInputFilter();
     }
-    
+
     /**
      * This method adds elements to form (input fields and submit button).
      */
-    protected function addElements() 
+    protected function addElements()
     {
         $this->add([
-            'type'  => 'select',
+            'type' => 'select',
             'name' => 'res_id',
             'options' => [
                 'label' => 'ЖК',
@@ -71,15 +72,15 @@ class HouseForm extends Form
         ]);
 
         $this->add([
-            'type'  => 'number',
+            'type' => 'number',
             'name' => 'house',
             'options' => [
                 'label' => 'Номер корпуса',
             ],
         ]);
 
-        $this->add([            
-            'type'  => 'number',
+        $this->add([
+            'type' => 'number',
             'name' => 'floor',
             'options' => [
                 'label' => 'Кол-во этажей',
@@ -87,15 +88,15 @@ class HouseForm extends Form
         ]);
 
         $this->add([
-          'type'  => 'number',
-          'name' => 'section',
-          'options' => [
-            'label' => 'Кол-во секций',
-          ],
+            'type' => 'number',
+            'name' => 'section',
+            'options' => [
+                'label' => 'Кол-во секций',
+            ],
         ]);
 
         $this->add([
-            'type'  => 'number',
+            'type' => 'number',
             'name' => 'total_flat',
             'options' => [
                 'label' => 'Квартир в корпусе',
@@ -103,7 +104,7 @@ class HouseForm extends Form
         ]);
 
         $this->add([
-            'type'  => 'number',
+            'type' => 'number',
             'name' => 'year',
             'options' => [
                 'label' => 'Год сдачи',
@@ -111,7 +112,31 @@ class HouseForm extends Form
         ]);
 
         $this->add([
-            'type'  => 'file',
+            'type' => 'select',
+            'name' => 'state',
+            'options' => [
+                'label' => 'Статус',
+                'value_options' => [
+                    0 => 'Строится',
+                    1 => 'Построен'
+                ]
+            ],
+        ]);
+
+        $this->add([
+            'type' => 'select',
+            'name' => 'sell',
+            'options' => [
+                'label' => 'Статус',
+                'value_options' => [
+                    0 => 'Не продается',
+                    1 => 'В продаже'
+                ]
+            ],
+        ]);
+
+        $this->add([
+            'type' => 'file',
             'name' => 'image',
             'attributes' => [
                 'id' => 'file'
@@ -123,64 +148,64 @@ class HouseForm extends Form
 
         // Add the Submit button
         $this->add([
-            'type'  => 'submit',
+            'type' => 'submit',
             'name' => 'submit',
-            'attributes' => [                
+            'attributes' => [
                 'value' => 'Добавить'
             ],
         ]);
     }
-    
+
     /**
      * This method creates input filter (used for form filtering/validation).
      */
-    private function addInputFilter() 
+    private function addInputFilter()
     {
         // Create main input filter
         $inputFilter = $this->getInputFilter();
 
 
         $inputFilter->add([
-          'name'     => 'house',
-          'required' => true,
-          'filters'  => [
-            ['name' => 'ToInt'],
-          ],
-        ]);
-
-        $inputFilter->add([
-           'name'     => 'floor',
-           'required' => true,
-           'filters'  => [
-               ['name' => 'ToInt'],
-           ],
-        ]);
-
-            $inputFilter->add([
-                'name'     => 'section',
-                'required' => true,
-                'filters'  => [
-                    ['name' => 'ToInt'],
-                ],
-            ]);
-
-                $inputFilter->add([
-                    'name'     => 'total_flat',
-                    'required' => true,
-                    'filters'  => [
-                        ['name' => 'ToInt'],
-                    ]
-                ]);
-
-        $inputFilter->add([
-            'name'     => 'year',
+            'name' => 'house',
             'required' => true,
-            'filters'  => [
+            'filters' => [
+                ['name' => 'ToInt'],
+            ],
+        ]);
+
+        $inputFilter->add([
+            'name' => 'floor',
+            'required' => true,
+            'filters' => [
+                ['name' => 'ToInt'],
+            ],
+        ]);
+
+        $inputFilter->add([
+            'name' => 'section',
+            'required' => true,
+            'filters' => [
+                ['name' => 'ToInt'],
+            ],
+        ]);
+
+        $inputFilter->add([
+            'name' => 'total_flat',
+            'required' => true,
+            'filters' => [
+                ['name' => 'ToInt'],
+            ]
+        ]);
+
+        $inputFilter->add([
+            'name' => 'year',
+            'required' => true,
+            'filters' => [
                 ['name' => 'ToInt'],
             ],
             'validators' => [
                 [
-                    'name'    => 'Between',
+                    'name' => 'Between',
                     'options' => [
                         'min' => 2000,
                         'max' => 2050
@@ -189,26 +214,48 @@ class HouseForm extends Form
             ],
         ]);
 
+        $inputFilter->add([
+            'name' => 'state',
+            'required' => true,
+            'filters' => [
+                ['name' => 'ToInt'],
+            ],
+            'validators' => [
+                ['name' => 'InArray', 'options' => ['haystack' => [0, 1]]]
+            ],
+        ]);
+
+        $inputFilter->add([
+            'name' => 'sell',
+            'required' => true,
+            'filters' => [
+                ['name' => 'ToInt'],
+            ],
+            'validators' => [
+                ['name' => 'InArray', 'options' => ['haystack' => [0, 1]]]
+            ],
+        ]);
+
         // we require plans only for add house
         $required = false;
-        if ($this->scenario=='update'){
-          $required = false;
+        if ($this->scenario == 'update') {
+            $required = false;
         }
 
         $inputFilter->add([
-            'type'     => 'Zend\InputFilter\FileInput',
-            'name'     => 'image',
+            'type' => 'Zend\InputFilter\FileInput',
+            'name' => 'image',
             'required' => $required,
             'validators' => [
-                ['name'    => 'FileUploadFile'],
+                ['name' => 'FileUploadFile'],
                 [
-                    'name'    => 'FileMimeType',
+                    'name' => 'FileMimeType',
                     'options' => [
-                        'mimeType'  => ['image/jpg', 'image/jpeg'] // only *.jpeg files are allowed here
+                        'mimeType' => ['image/jpg', 'image/jpeg'] // only *.jpeg files are allowed here
                     ]
                 ],
             ],
-            'filters'  => [
+            'filters' => [
                 [
                     'name' => 'FileRenameUpload',
                     'options' => [
@@ -221,5 +268,5 @@ class HouseForm extends Form
                 ]
             ],
         ]);
-    }           
+    }
 }

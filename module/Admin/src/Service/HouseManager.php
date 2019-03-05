@@ -35,6 +35,8 @@ class HouseManager
         $house->setSection($data['section']);
         $house->setTotalFlat($data['total_flat']);
         $house->setYear($data['year']);
+        $house->setState($data['state']);
+        $house->setSell($data['sell']);
 
         // Add the entity to the entity manager.
         $this->entityManager->persist($house);
@@ -56,6 +58,8 @@ class HouseManager
         $house->setSection($data['section']);
         $house->setTotalFlat($data['total_flat']);
         $house->setYear($data['year']);
+        $house->setState($data['state']);
+        $house->setSell($data['sell']);
 
         // Apply changes to database.
         $this->entityManager->flush();
