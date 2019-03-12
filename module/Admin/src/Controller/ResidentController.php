@@ -220,6 +220,7 @@ class ResidentController extends AbstractActionController
             $form->setData(array(
                 'name'=>$resident->getName(),
                 'tittle'=>$resident->getTittle(),
+                'link' => $resident->getLink(),
                 'description'=>$resident->getDescription(),
                 'tittle1'=>$resident->getTittle1(),
                 'description1'=>$resident->getDescription1(),
@@ -261,28 +262,63 @@ class ResidentController extends AbstractActionController
 
     public function parseAction()
     {
-        //$simple = file_get_contents("http://zs.spb.ru/xml/metr?resident=2");
-        $info = simplexml_load_file("http://zs.spb.ru/xml/metr");
+        $id = (int)$this->params()->fromRoute('id', -1);
+        if ($id<1) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+        if($id == -1){
+            $resident = $this->entityManager->getRepository(Resident::class)->getResidentList();
+            foreach($resident as $res)
+                $message[] = $this->parser($res['id']);
+        } else $message[] = $this->parser($id);
+
+        return new ViewModel(array(
+            'message' => $message
+        ));
+    }
+
+    protected function parser($id){
+        $resident = $this->entityManager->getRepository(Resident::class)->find($id);
+        $res_id = $resident->getId();
+        $link = $resident->getLink();
+
+        $info = simplexml_load_file($link);
         $info = json_decode(json_encode((array)$info), TRUE);
 
-        $res_id = 1;
-
+        $dest = ROOT_PATH."/public/data/resident/".$res_id;
+        if (!is_dir($dest)) mkdir($dest);
         $list_flats = $this->entityManager->getRepository(Flat::class)->getFlatList($res_id);
-        foreach($list_flats as $flat)
+        foreach ($list_flats as $flat)
             $old_flats[$flat['ex_id']] = $flat['id'];
+
         $flats = $info['flats']['flat'];
-        foreach ($flats as $flat) {
-            $flat['res_id'] = $res_id;
-            $this->flatManager->addOrUpdateFlat($flat);
-            unset($old_flats[$flat['ex_id']]);
+        $i = 0;
+        if (is_array($flats)) {
+            foreach ($flats as $flat) {
+                $i++;
+                if($i == 100) break;
+                $flat['res_id'] = $res_id;
+                $new_flat = $this->flatManager->addOrUpdateFlat($flat);
+
+                if(is_array($new_flat)) $new_flat = $new_flat[0];
+
+                //file_put_contents($dest.'/flat'.$new_flat->getExId().'.jpeg', file_get_contents($flat['plan']));
+
+                if(!copy($flat['plan'],$dest.'/flat'.$new_flat->getId().'.jpeg')){
+                    $errors= error_get_last();
+                    $message[] =  "Не удалось скопировать {$flat['plan']} :  {$errors['type']} - {$errors['message']}<br>";
+                } else $message[] = "<a href='/flats/view/{$new_flat->getId()}'>Квартира {$new_flat->getId()}</a><br>";
+                if (isset($old_flats[$flat['ex_id']])) unset($old_flats[$flat['ex_id']]);
+            }
         }
-        foreach ($old_flats as $id => $flat){
-            $remove_flat = $this->entityManager->getReference(Flat::class, $id);
+        foreach ($old_flats as $flat){
+            $remove_flat = $this->entityManager->getReference(Flat::class, $flat);
             $this->entityManager->remove($remove_flat);
             $this->entityManager->flush();
+            if(!unlink($dest.'/flat'.$flat.'.jpeg')) error_clear_last () ;
         }
 
-        return $this->redirect()->toRoute('resident',
-            ['action'=>'index']);
+        return $message;
     }
 }

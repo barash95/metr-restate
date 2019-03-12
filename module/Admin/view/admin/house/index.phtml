@@ -39,8 +39,8 @@ $this->headTitle('Список корпусов');
           <td>
               <?= $this->saleFlatCount()->render($house->getResId(), $house->getHouse()); ?>
           </td>
-          <td><?= $this->escapeHtml($house->getStateAsString()) ?></th>
-          <td><?= $this->escapeHtml($house->getSellAsString()) ?></th>
+          <td><?= $this->escapeHtml($house->getStateAsString()) ?></td>
+          <td><?= $this->escapeHtml($house->getSellAsString()) ?></td>
           <td>
             <a class="btn btn-default" href="<?= $this->url('housing',
                     ['action'=>'edit', 'id'=>$house->getId()]); ?>">

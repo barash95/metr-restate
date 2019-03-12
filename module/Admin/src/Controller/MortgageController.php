@@ -55,7 +55,10 @@ class MortgageController extends AbstractActionController
 
             // Make certain to merge the files info!
             $request = $this->getRequest();
-            $data = $request->getPost()->toArray();
+            $data = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray()
+            );
 
             $form->setData($data);
 
@@ -70,7 +73,7 @@ class MortgageController extends AbstractActionController
                 $dest = ROOT_PATH."/public/data/mortgage/";
                 if (!is_dir($dest)) mkdir($dest);
                 if (isset($files['icon']) && $files['icon']['name']>''){
-                    rename(ROOT_PATH."/public/data/upload/".$files['icon']['name'], $dest.$mortgage->getId().'png');
+                    rename(ROOT_PATH."/public/data/upload/".$files['icon']['name'], $dest.$mortgage->getId().'.png');
                 }
                 // Redirect to "view" page
                 return $this->redirect()->toRoute('mortgage',
@@ -107,7 +110,10 @@ class MortgageController extends AbstractActionController
 
             // Make certain to merge the files info!
             $request = $this->getRequest();
-            $data = $request->getPost()->toArray();
+            $data = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray()
+            );
 
             $form->setData($data);
 
@@ -120,7 +126,7 @@ class MortgageController extends AbstractActionController
                 $dest = ROOT_PATH."/public/data/mortgage/";
                 if (!is_dir($dest)) mkdir($dest);
                 if (isset($files['icon']) && $files['icon']['name']>''){
-                    rename(ROOT_PATH."/public/data/upload/".$files['icon']['name'], $dest.$mortgage->getId().'png');
+                    rename(ROOT_PATH."/public/data/upload/".$files['icon']['name'], $dest.$mortgage->getId().'.png');
                 }
                 // Redirect to "view" page
                 return $this->redirect()->toRoute('mortgage',

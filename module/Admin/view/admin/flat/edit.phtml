@@ -1,0 +1,125 @@
+<?php
+$this->headTitle('Изменить квартиру');
+
+$form->get('res_id')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'res_id'
+]);
+
+$form->get('house')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'house'
+]);
+
+$form->get('floor')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'floor'
+]);
+
+$form->get('section')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'section'
+]);
+
+$form->get('number')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'number'
+]);
+
+$form->get('size')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'size'
+]);
+
+$form->get('square')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'square'
+]);
+
+$form->get('price')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'price'
+]);
+
+$form->get('plan')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'load file'
+]);
+
+$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<h1>Изменить квартиру</h1>
+
+<p>
+    Пожалуйста заполните следующую форму и нажмите кнопку <i>Добавить</i>.
+</p>
+
+<div class="row">
+    <?= $this->form()->openTag($form); ?>
+
+    <div class="col-md-6">
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('res_id')); ?>
+            <?= $this->formElement($form->get('res_id')); ?>
+            <?= $this->formElementErrors($form->get('res_id')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('house')); ?>
+            <?= $this->formElement($form->get('house')); ?>
+            <?= $this->formElementErrors($form->get('house')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('floor')); ?>
+            <?= $this->formElement($form->get('floor')); ?>
+            <?= $this->formElementErrors($form->get('floor')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('section')); ?>
+            <?= $this->formElement($form->get('section')); ?>
+            <?= $this->formElementErrors($form->get('section')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('number')); ?>
+            <?= $this->formElement($form->get('number')); ?>
+            <?= $this->formElementErrors($form->get('number')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('size')); ?>
+            <?= $this->formElement($form->get('size')); ?>
+            <?= $this->formElementErrors($form->get('size')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('square')); ?>
+            <?= $this->formElement($form->get('square')); ?>
+            <?= $this->formElementErrors($form->get('square')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('price')); ?>
+            <?= $this->formElement($form->get('price')); ?>
+            <?= $this->formElementErrors($form->get('price')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('plan')); ?>
+            <?= $this->formElement($form->get('plan')); ?>
+            <?= $this->formElementErrors($form->get('plan')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+
+    </div>
+
+    <?= $this->form()->closeTag(); ?>
+</div>
+

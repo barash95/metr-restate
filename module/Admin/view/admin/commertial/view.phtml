@@ -1,0 +1,63 @@
+<?php
+$this->headTitle('Карточка коммерческого помещения');
+?>
+
+
+<h1>ЖК <?= $this->residentialName()->render($commertial->getResId()) ?> коммерческое помещение №<?=$commertial->getId();?></h1>
+<div class="row">
+    <div class="col-md-4">
+        <a class="btn btn-default" href="/commertials/edit/<?=$commertial->getId();?>">
+            <span class="glyphicon glyphicon-pencil"></span> Редактировать
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>ID:</th>
+                <td><?= $this->escapeHtml($commertial->getId()) ?></td>
+            </tr>
+            <tr>
+                <th>Жк:</th>
+                <td><?= $this->residentialName()->render($commertial->getResId()) ?></td>
+            </tr>
+            <tr>
+                <th>Корпус:</th>
+                <td><?= $this->escapeHtml($commertial->getHouse()) ?></td>
+            </tr>
+            <tr>
+                <th>Этаж:</th>
+                <td><?= $this->escapeHtml($commertial->getFloor()) ?></td>
+            </tr>
+            <tr>
+                <th>Секция:</th>
+                <td><?= $this->escapeHtml($commertial->getSection()) ?></td>
+            </tr>
+            <tr>
+                <th>Номер:</th>
+                <td><?= $this->escapeHtml($commertial->getNumber()) ?></td>
+            </tr>
+            <tr>
+                <th>Площадь:</th>
+                <td><?= $this->escapeHtml($commertial->getSquare()) ?></td>
+            </tr>
+            <tr>
+                <th>Цена:</th>
+                <td><?= $this->escapeHtml($commertial->getPrice()) ?></td>
+            </tr>
+            <tr>
+                <th>Высота потолков:</th>
+                <td><?= $this->escapeHtml($commertial->getHeight()) ?></td>
+            </tr>
+            <tr>
+                <th>Отделка:</th>
+                <td><?= $this->escapeHtml($commertial->getFinishAsString()) ?></td>
+            </tr>
+            <tr>
+                <th>Статус:</th>
+                <td><?= $this->escapeHtml($commertial->getStateAsString()) ?></td>
+            </tr>
+        </table>
+    </div>
+</div>

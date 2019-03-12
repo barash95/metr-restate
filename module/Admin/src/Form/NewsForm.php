@@ -143,7 +143,7 @@ class NewsForm extends Form
 
         $inputFilter->add([
             'type'     => 'Zend\InputFilter\FileInput',
-            'name'     => 'icon',
+            'name'     => 'image',
             'required' => $required,
             'validators' => [
                 ['name'    => 'FileUploadFile'],

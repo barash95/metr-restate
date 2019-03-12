@@ -41,7 +41,7 @@ class FlatForm extends Form
     public function __construct($scenario = 'create', $entityManager = null, $flat = null,$residents = null)
     {
         // Define form name
-        parent::__construct('resident-form');
+        parent::__construct('flat-form');
 
         // Set POST method for this form
         $this->setAttribute('method', 'post');
@@ -76,14 +76,6 @@ class FlatForm extends Form
 
         $this->add([
             'type'  => 'number',
-            'name' => 'ex_id',
-            'options' => [
-                'label' => 'ID во внешней системе',
-            ],
-        ]);
-
-        $this->add([
-            'type'  => 'number',
             'name' => 'house',
             'options' => [
                 'label' => 'Корпус',
@@ -103,6 +95,14 @@ class FlatForm extends Form
             'name' => 'section',
             'options' => [
                 'label' => 'Секция',
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'number',
+            'name' => 'number',
+            'options' => [
+                'label' => 'Номер',
             ],
         ]);
 
@@ -158,6 +158,30 @@ class FlatForm extends Form
     {
         // Create main input filter
         $inputFilter = $this->getInputFilter();
+
+        $inputFilter->add([
+            'name' => 'house',
+            'required' => true,
+            'filters' => [
+                ['name' => 'ToInt'],
+            ],
+        ]);
+
+        $inputFilter->add([
+            'name' => 'floor',
+            'required' => true,
+            'filters' => [
+                ['name' => 'ToInt'],
+            ],
+        ]);
+
+        $inputFilter->add([
+            'name' => 'section',
+            'required' => true,
+            'filters' => [
+                ['name' => 'ToInt'],
+            ],
+        ]);
 
         $inputFilter->add([
             'type'     => 'Zend\InputFilter\FileInput',

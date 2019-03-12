@@ -1,0 +1,83 @@
+<?php
+$this->headTitle('Список коммерческих помещений');
+?>
+
+<h1>ЖК</h1>
+
+<p>
+    <a class="btn btn-default" href="
+    <?= $this->url('commertials', ['action' => 'add']); ?>">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Добавить
+    </a>
+</p>
+
+<table class="table table-striped">
+
+    <tr>
+        <th>ID</th>
+        <th>ЖК</th>
+        <th>Корпус / Секция / Этаж</th>
+        <th>Номер</th>
+        <th>Площадь / Высота потолков</th>
+        <th>Цена</th>
+        <th>Кв продано в доме</th>
+        <th>Отделка</th>
+        <th>Статус</th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    <?php foreach ($commertials as $commertial): ?>
+
+        <tr>
+            <td>
+                <a href="<?= $this->url('commertials', ['action' => 'view', 'id' => $commertial->getId()]); ?>">
+                    <?= $this->escapeHtml($commertial->getId()); ?>
+                </a>
+            </td>
+            <td>
+                <?= $this->residentialName()->render($commertial->getResId()); ?>
+            </td>
+            <td><?= $this->escapeHtml($commertial->getHouse()); ?> / <?= $this->escapeHtml($commertial->getFloor()); ?> / <?= $this->escapeHtml($commertial->getSection()); ?></a></td>
+            <td>
+                <?= $this->escapeHtml($commertial->getNumber()); ?>
+            </td>
+            <td>
+            <?= $this->escapeHtml($commertial->getSquare()) ?> / <?= $this->escapeHtml($commertial->getHeight()); ?>
+            </td>
+            <td>
+            <?= $this->escapeHtml($commertial->getPrice()) ?>
+            </td>
+            <td>
+                <?= $this->saleFlatCount()->render($commertial->getResId(), $commertial->getHouse()); ?>
+            </td>
+            <td>
+                <?= $this->escapeHtml($commertial->getFinishAsString()) ?>
+            </td>
+            <td>
+                <?= $this->escapeHtml($commertial->getStateAsString()) ?>
+            </td>
+            <td>
+                <a class="btn btn-default" href="<?= $this->url('commertials',
+                    ['action' => 'edit', 'id' => $commertial->getId()]); ?>">
+                    Редактировать
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-default" href="<?= $this->url('commertials',
+                    ['action' => 'delete', 'id' => $commertial->getId()]); ?>" onclick="return confirm('Вы уверены?')">
+                    Удалить
+                </a>
+            </td>
+        </tr>
+
+    <?php endforeach; ?>
+
+    <?= $this->paginationControl($commertials,
+        'Sliding',
+        'application/partial/paginator',
+        array('route' => 'commertials', 'fromQuery' => $fromQuery)); ?>
+
+</table>
+
+

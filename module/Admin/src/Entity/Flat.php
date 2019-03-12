@@ -94,7 +94,7 @@ class Flat
 
     public function getExId()
     {
-        return $this->ex_idid;
+        return $this->ex_id;
     }
 
     public function setExId($ex_id)
@@ -220,11 +220,11 @@ class Flat
     }
 
     public function getPlan(){
-        $plan = "/data/flats/".$this->getId()."/plan.jpeg";
-        //if (file_exists("/var/www/restate/public".$plan))
+        $plan = "/data/resident/".$this->getResId()."/flat".$this->getId().".jpeg";
+        if (file_exists("/var/www/html/metr/metr-restate/public".$plan))
             return $plan;
-       // else
-         //   return "/main/images/content/no-plan.jpg";
+        else
+            return "/main/images/content/no-plan.jpg";
     }
 
     public function getSizeAsString()

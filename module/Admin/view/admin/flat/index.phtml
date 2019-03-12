@@ -1,0 +1,71 @@
+<?php
+$this->headTitle('Список квартир');
+?>
+
+<h1>ЖК</h1>
+
+<p>
+    <a class="btn btn-default" href="
+    <?= $this->url('flats', ['action' => 'add']); ?>">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Новая квартира
+    </a>
+</p>
+
+<table class="table table-striped">
+
+    <tr>
+        <th>ID</th>
+        <th>ЖК</th>
+        <th>Корпус/ Секция/ Этаж</th>
+        <th>Номер</th>
+        <th>Комнат / Площадь</th>
+        <th>Цена</th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    <?php foreach ($flats as $flat): ?>
+
+        <tr>
+            <td>
+                <a href="<?= $this->url('flats', ['action' => 'view', 'id' => $flat->getId()]); ?>">
+                    <?= $this->escapeHtml($flat->getId()); ?>
+                </a>
+            </td>
+            <td>
+                <?= $this->residentialName()->render($flat->getResId()); ?>
+            </td>
+            <td><?= $this->escapeHtml($flat->getHouse()); ?> / <?= $this->escapeHtml($flat->getFloor()); ?> / <?= $this->escapeHtml($flat->getSection()); ?></a></td>
+            <td>
+                <?= $this->escapeHtml($flat->getNumber()); ?>
+            </td>
+            <td>
+            <?= $this->escapeHtml($flat->getSizeTxt()) ?> / <?= $this->escapeHtml($flat->getSquare()); ?>
+            </td>
+            <td>
+            <?= $this->escapeHtml($flat->getPrice()) ?>
+            </td>
+            <td>
+                <a class="btn btn-default" href="<?= $this->url('flats',
+                    ['action' => 'edit', 'id' => $flat->getId()]); ?>">
+                    Редактировать
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-default" href="<?= $this->url('flats',
+                    ['action' => 'delete', 'id' => $flat->getId()]); ?>" onclick="return confirm('Вы уверены?')">
+                    Удалить
+                </a>
+            </td>
+        </tr>
+
+    <?php endforeach; ?>
+
+    <?= $this->paginationControl($flats,
+        'Sliding',
+        'application/partial/paginator',
+        array('route' => 'flats', 'fromQuery' => $fromQuery)); ?>
+
+</table>
+
+

@@ -16,43 +16,43 @@ $this->headTitle('Карточка корпуса');
         <table class="table table-striped table-bordered">
             <tr>
                 <th>ID:</th>
-                <td><?= $this->escapeHtml($house->getId()) ?></th>
+                <td><?= $this->escapeHtml($house->getId()) ?></td>
             </tr>
             <tr>
                 <th>Жк:</th>
-                <td><?= $this->residentialName()->render($house->getResId()) ?></th>
+                <td><?= $this->residentialName()->render($house->getResId()) ?></td>
             </tr>
             <tr>
                 <th>Номер:</th>
-                <td><?= $this->escapeHtml($house->getHouse()) ?></th>
+                <td><?= $this->escapeHtml($house->getHouse()) ?></td>
             </tr>
             <tr>
                 <th>Этажей:</th>
-                <td><?= $this->escapeHtml($house->getFloor()) ?></th>
+                <td><?= $this->escapeHtml($house->getFloor()) ?></td>
             </tr>
             <tr>
                 <th>Секций:</th>
-                <td><?= $this->escapeHtml($house->getSection()) ?></th>
+                <td><?= $this->escapeHtml($house->getSection()) ?></td>
             </tr>
             <tr>
                 <th>Всего кв:</th>
-                <td><?= $this->escapeHtml($house->getTotalFlat()) ?></th>
+                <td><?= $this->escapeHtml($house->getTotalFlat()) ?></td>
             </tr>
             <tr>
                 <th>Продано кв:</th>
-                <td><?= $this->saleFlatCount()->render($house->getResId(), $house->getHouse()) ?></th>
+                <td><?= $this->saleFlatCount()->render($house->getResId(), $house->getHouse()) ?></td>
             </tr>
             <tr>
                 <th>Статус строительства:</th>
-                <td><?= $this->escapeHtml($house->getStateAsString()) ?></th>
+                <td><?= $this->escapeHtml($house->getStateAsString()) ?></td>
             </tr>
             <tr>
                 <th>Продажа:</th>
-                <td><?= $this->escapeHtml($house->getSellAsString()) ?></th>
+                <td><?= $this->escapeHtml($house->getSellAsString()) ?></td>
             </tr>
             <tr>
               <th>Год сдачи:</th>
-              <td><?= $this->escapeHtml($house->getYear()) ?></th>
+              <td><?= $this->escapeHtml($house->getYear()) ?></td>
             </tr>
         </table>
     </div>

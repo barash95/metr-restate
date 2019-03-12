@@ -84,6 +84,26 @@ return [
                     ],
                 ],
             ],
+            'flats' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/flats[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\FlatController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
+            'commertials' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/commertials[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\CommertialController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -95,6 +115,8 @@ return [
             Controller\VideoController::class => Controller\Factory\VideoControllerFactory::class,
             Controller\MortgageController::class => Controller\Factory\MortgageControllerFactory::class,
             Controller\NewsController::class => Controller\Factory\NewsControllerFactory::class,
+            Controller\FlatController::class => Controller\Factory\FlatControllerFactory::class,
+            Controller\CommertialController::class => Controller\Factory\CommertialControllerFactory::class,
         ],
     ],
     'service_manager' => [
@@ -106,6 +128,7 @@ return [
             Service\VideoManager::class => Service\Factory\VideoManagerFactory::class,
             Service\MortgageManager::class => Service\Factory\MortgageManagerFactory::class,
             Service\NewsManager::class => Service\Factory\NewsManagerFactory::class,
+            Service\CommertialManager::class => Service\Factory\CommertialManagerFactory::class,
         ],
     ],
     'view_manager' => [

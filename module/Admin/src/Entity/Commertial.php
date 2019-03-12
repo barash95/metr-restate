@@ -13,16 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * This class represents a commertial .
  * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="\Admin\Repository\CommertialRepository")
  * @ORM\Table(name="commertial")
  */
 
 class Commertial
 {
     const FREE                   = 0;
-    const AGENCY_BOOKED          = 1;
-    const OPERATOR_BOOKED        = 2;
-    const SOLD_OUT               = 3;
-    const NOT_AVAILABLE          = 4;
+    const BOOKED                 = 1;
+    const SOLD_OUT               = 2;
 
     const FINISH                 = 1;
     const NOT_FINISH             = 0;
@@ -204,11 +203,9 @@ class Commertial
     public static function getStateList()
     {
         return [
-            self::FREE => 'Квартира свободна',
-            self::AGENCY_BOOKED => 'Квартира забронирована агентством',
-            self::OPERATOR_BOOKED => 'Квартира забронирована менеджером',
-            self::SOLD_OUT => 'Квартира продана',
-            self::NOT_AVAILABLE => 'Квартира снята с продажи'
+            self::FREE => 'Помещение свободно',
+            self::BOOKED => 'Помещение забронировано',
+            self::SOLD_OUT => 'Помещение продано'
         ];
     }
 
