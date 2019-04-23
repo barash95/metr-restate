@@ -1,7 +1,9 @@
 <?php
+
 namespace Admin\Repository;
 
 use Admin\Entity\Flat;
+use Admin\Entity\Resident;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -9,12 +11,77 @@ use Doctrine\ORM\EntityRepository;
  */
 class FlatRepository extends EntityRepository
 {
-    public function findAllFlat($limit = null)
+    protected function prepareQueryBuiler(&$queryBuilder, $filter)
+    {
+        $filter = array_filter($filter);
+        if (isset($filter['size']) && !is_array($filter['size']))
+            $array_size = array_filter(explode(",", $filter['size']));
+        else
+            $array_size = array();
+        if(isset($filter['size']) && is_array($filter['size'])){
+            foreach ($filter['size'] as $room)
+                $array_size[] = $room;
+        }
+
+        if (isset($filter['resident']))
+            $array_res = array_filter(explode(",", $filter['resident']));
+        else
+            $array_res = array();
+        if (isset($filter['resident']))
+            $array_res[] = $filter['resident'];
+
+
+        if (isset($filter['id'])) {
+            $ids = explode(",", $filter['id']);
+            $queryBuilder->andWhere('f.id IN (:id)')->setParameter('id', $ids);
+        }
+        if (isset($filter['not_id'])) {
+            $ids = explode(",", $filter['not_id']);
+            $queryBuilder->andWhere('f.id NOT IN (:id)')->setParameter('id', $ids);
+        }
+        if (count($array_res) > 0) {
+            $queryBuilder->andWhere('f.res_id IN (:res_id)')->setParameter('res_id', $array_res);
+        }
+        if (isset($filter['number_min'])) {
+            $queryBuilder->andWhere('f.number >= :number_min')->setParameter('number_min', $filter['number_min']);
+        }
+        if (isset($filter['number_max'])) {
+            $queryBuilder->andWhere('f.number <= :number_max')->setParameter('number_max', $filter['number_max']);
+        }
+        if (isset($filter['square_min'])) {
+            $queryBuilder->andWhere('f.square >= :square_min')->setParameter('square_min', $filter['square_min']);
+        }
+        if (isset($filter['square_max'])) {
+            $queryBuilder->andWhere('f.square <= :square_max')->setParameter('square_max', $filter['square_max']);
+        }
+        if (count($array_size) > 0) {
+            $queryBuilder->andWhere('f.size IN (:size)')->setParameter('size', $array_size);
+        }
+        if (isset($filter['floor'])) {
+            $queryBuilder->andWhere('f.floor = :floor')->setParameter('floor', $filter['floor']);
+        }
+        if (isset($filter['year'])) {
+            $queryBuilder->andWhere('f.year = :year')->setParameter('year', $filter['year']);
+        }
+        if (isset($filter['price_min'])) {
+            $queryBuilder->andWhere('f.price >= :price_min')->setParameter('price_min', $filter['price_min']);
+        }
+        if (isset($filter['price_max'])) {
+            $queryBuilder->andWhere('f.price <= :price_max')->setParameter('price_max', $filter['price_max']);
+        }
+        if (isset($filter['state'])) {
+            $queryBuilder->andWhere('f.state = :state')->setParameter('state', $filter['state']);
+        }
+    }
+
+    public function findAllFlat($filter, $limit = null)
     {
         $entityManager = $this->getEntityManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('f')->from(Flat::class, 'f');
         $queryBuilder->orderBy('f.id', 'DESC');
+
+        $this->prepareQueryBuiler($queryBuilder, $filter);
 
         if (!is_null($limit))
             $queryBuilder->setMaxResults($limit);
@@ -59,6 +126,31 @@ class FlatRepository extends EntityRepository
         $queryBuilder->select('f')->from(Flat::class, 'f');
         $queryBuilder->where('f.res_id = :res_id')->setParameter('res_id', $res_id);
         $queryBuilder->andWhere('f.house = :house')->setParameter('house', $house);
+        $query = $queryBuilder->getQuery();
+        $res = $query->execute();
+        return count($res);
+    }
+
+    public function findBestFlats($limit = 10)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select("f")->from(Flat::class, "f");
+        $queryBuilder->orderBy('f.price', 'DESC');
+        $queryBuilder->setMaxResults($limit);
+        $query = $queryBuilder->getQuery();
+
+        $result = $query->execute();
+
+        return $result;
+    }
+
+    public function getFlatCount($res_id = null)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('f')->from(Flat::class, 'f');
+        $queryBuilder->where('f.res_id = :res_id')->setParameter('res_id', $res_id);
         $query = $queryBuilder->getQuery();
         $res = $query->execute();
         return count($res);

@@ -14,7 +14,7 @@ class HouseRepository extends EntityRepository
         $entityManager = $this->getEntityManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('h')->from(House::class, 'h');
-        $queryBuilder->orderBy('h.id', 'DESC');
+        $queryBuilder->orderBy('h.res_id, h.id', 'DESC');
 
         if (!is_null($limit))
             $queryBuilder->setMaxResults($limit);
@@ -28,7 +28,7 @@ class HouseRepository extends EntityRepository
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('h.total_flat')->from(House::class, 'h');
         $queryBuilder->where('h.res_id = :res_id')->setParameter('res_id', $res_id);
-        $queryBuilder->andWhere('h.house = :house')->setParameter('house', $house);
+        $queryBuilder->andWhere('h.id = :house')->setParameter('house', $house);
         $query = $queryBuilder->getQuery();
         $res = $query->execute();
 
@@ -47,6 +47,24 @@ class HouseRepository extends EntityRepository
         $res = $query->execute();
 
         return $res;
+    }
+
+    public function getYearList()
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('h.year')
+            ->distinct()
+            ->from(House::class, 'h')
+            ->orderBy('h.year', 'DESC');
+
+        $query = $queryBuilder->getQuery();
+        $res = $query->execute();
+        $result = [];
+        foreach ($res as $r)
+            $result[] = $r['year'];
+
+        return $result;
     }
 
 }

@@ -28,6 +28,8 @@ return [
     'Zend\Form',
     'Zend\Router',
     'Zend\Validator',
+    'ZendDeveloperTools',
     'Application',
-    'Admin'
+    'Admin',
+    'User'
 ];

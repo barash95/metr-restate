@@ -2,7 +2,7 @@
 $this->headTitle('Список квартир');
 ?>
 
-<h1>ЖК</h1>
+<h1>Список кв (<?=$count;?>)</h1>
 
 <p>
     <a class="btn btn-default" href="
@@ -35,7 +35,7 @@ $this->headTitle('Список квартир');
             <td>
                 <?= $this->residentialName()->render($flat->getResId()); ?>
             </td>
-            <td><?= $this->escapeHtml($flat->getHouse()); ?> / <?= $this->escapeHtml($flat->getFloor()); ?> / <?= $this->escapeHtml($flat->getSection()); ?></a></td>
+            <td><?= $this->houseNumber()->render($flat->getHouse()) ?> / <?= $this->escapeHtml($flat->getFloor()); ?> / <?= $this->escapeHtml($flat->getSection()); ?></a></td>
             <td>
                 <?= $this->escapeHtml($flat->getNumber()); ?>
             </td>

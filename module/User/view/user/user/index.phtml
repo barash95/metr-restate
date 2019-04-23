@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-2">
+    <a href="/users/add" class="urlFlat btn-main" data-toggle="tooltip" data-placement="right" title="Добавить менеджера">
+      <span class="glyphicon glyphicon-plus-sign glyphicon-plus-sign-2" aria-hidden="true"></span>
+    </a>
+  </div>
+</div><!-- row -->
+<div class="row">
+  <div class="col-md-12" id="ajax_content">
+    <table class="table table-bordered">
+      <?php foreach($users as $arrUser) { $user = $arrUser; ?>
+      <tr>
+        <td><?=$user->getId();?></td>
+        <td><a href="/users/view/<?=$user->getId();?>" class="flatUrl"><?=$user->getId();?></a></td>
+        <td><?=$user->getDateCreated();?></td>
+        <td><?=$user->getStatusAsString();?></td>
+        <td><?=$user->getEmail();?></td>
+        <td>
+          <a href="/users/edit/<?=$user->getId();?>" class="urlFlat btn-main" data-toggle="tooltip" data-placement="left" title="Редактировать">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+          </a>
+        </td>
+        <td>
+          <a href="/users/remove?id=<?=$user->getId();?>" onclick="return confirm('Вы уверены?')" class="urlFlat btn-main" data-toggle="tooltip" data-placement="left" title="Удалить">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </a>
+        </td>
+      </tr>
+      <?php } ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+

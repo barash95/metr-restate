@@ -1,0 +1,24 @@
+<div class="row row-bar">
+  <div class="col-md-6">
+    <div class="btn-toolbar btn-inline" role="toolbar" aria-label="...">
+      <a href="/users/edit/<?=$user->getId();?>" type="button" class="btn btn-default btn-lg btn-save">
+        РЕДАКТИРОВАТЬ
+      </a>
+      <a href="/users/remove?id=<?=$user->getId();?>" onclick="return confirm('Вы уверены?')" type="button" class="btn btn-default btn-lg">
+        <span class="glyphicon glyphicon-remove glyphicon-remove-2" aria-hidden="true"></span>
+      </a>
+      <a href="/events/add?user=<?=$user->getId();?>" type="button" class="btn btn-default btn-lg btn-quest">
+        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Задача
+      </a>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-3 name-add">Почта:</div>
+              <div class="col-md-4 name-man"><?=$user->getEmail();?></div>
+            </div>
+    </div>
+  </div>
+</div>

@@ -31,12 +31,14 @@
         "doctrine/annotations": "^1.6",
         "phpmailer/phpmailer": "^6.0",
         "docnet/tfpdf": "^2.2",
-        "rev42/tfpdf": "^1.25"
+        "rev42/tfpdf": "^1.25",
+        "zendframework/zend-developer-tools": "^1.2"
     },
     "autoload": {
         "psr-4": {
             "Application\\": "module/Application/src/",
-            "Admin\\": "module/Admin/src/"
+            "Admin\\": "module/Admin/src/",
+            "User\\": "module/User/src/"
         }
     },
     "autoload-dev": {

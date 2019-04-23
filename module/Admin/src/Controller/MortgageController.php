@@ -123,6 +123,8 @@ class MortgageController extends AbstractActionController
                 $data = $form->getData();
                 $this->mortgageManager->updateMortgage($mortgage, $data);
                 $files = $request->getFiles()->toArray();
+
+                //return print_r($files);
                 $dest = ROOT_PATH."/public/data/mortgage/";
                 if (!is_dir($dest)) mkdir($dest);
                 if (isset($files['icon']) && $files['icon']['name']>''){

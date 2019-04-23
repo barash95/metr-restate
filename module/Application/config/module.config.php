@@ -92,6 +92,20 @@ return [
                     ],
                 ],
             ],
+            'commertial' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/commertial[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\CommertialController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
             'favorites' => [
                 'type'    => Literal::class,
                 'options' => [
@@ -130,22 +144,38 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
+            Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
             Controller\ComplexController::class => Controller\Factory\ComplexControllerFactory::class,
-            Controller\FlatController::class => InvokableFactory::class,
+            Controller\FlatController::class => Controller\Factory\FlatControllerFactory::class,
+            Controller\CommertialController::class => Controller\Factory\CommertialControllerFactory::class,
             Controller\NewsController::class => InvokableFactory::class,
         ],
+    ],
+    'access_filter' => [
+        'options' => [
+            'mode' => 'permissive',
+        ]
     ],
     'view_helpers' => [
         'factories' => [
             View\Helper\Breadcrumbs::class => InvokableFactory::class,
+            View\Helper\FormatPrice::class => InvokableFactory::class,
             View\Helper\ResidentialName::class => View\Helper\Factory\ResidentialNameFactory::class,
             View\Helper\SaleFlatCount::class => View\Helper\Factory\SaleFlatCountFactory::class,
+            View\Helper\HouseNumber::class => View\Helper\Factory\HouseNumberFactory::class,
+            View\Helper\FilterData::class => View\Helper\Factory\FilterDataFactory::class,
+            View\Helper\Current::class => InvokableFactory::class,
+            View\Helper\ActiveMenu::class => InvokableFactory::class,
         ],
         'aliases' => [
             'pageBreadcrumbs' => View\Helper\Breadcrumbs::class,
             'residentialName' => View\Helper\ResidentialName::class,
             'saleFlatCount' => View\Helper\SaleFlatCount::class,
+            'houseNumber' => View\Helper\HouseNumber::class,
+            'formatPrice' => View\Helper\FormatPrice::class,
+            'filterData' => View\Helper\FilterData::class,
+            'current' => View\Helper\Current::class,
+            'activeMenu' => View\Helper\ActiveMenu::class,
         ],
     ],
     'view_manager' => [
@@ -156,6 +186,9 @@ return [
         'exception_template'       => 'error/index',
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/layout_main'           => __DIR__ . '/../view/layout/layout_main.phtml',
+            'layout/layout_second'           => __DIR__ . '/../view/layout/layout_second.phtml',
+            'layout/layout_view'           => __DIR__ . '/../view/layout/layout_view.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',

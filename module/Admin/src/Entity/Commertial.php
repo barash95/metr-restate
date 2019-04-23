@@ -83,6 +83,11 @@ class Commertial
      */
     protected $state;
 
+    /**
+     * @ORM\Column(name="year")
+     */
+    protected $year;
+
     public function getId()
     {
         return $this->id;
@@ -191,6 +196,16 @@ class Commertial
     public function setState($state)
     {
         $this->state = $state;
+    }
+
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    public function setYear($year)
+    {
+        $this->year = $year;
     }
 
     public function getSquarePrice(){

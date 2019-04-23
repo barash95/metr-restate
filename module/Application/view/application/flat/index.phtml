@@ -1,1 +1,37 @@
-<?php echo '<h1>Flat</h1>';
+<div class="header_middle">
+    <div class="main-txt">
+        <h1>Жилая недвижимость</h1>
+        <p>Подобрать квартиру</p>
+    </div>
+
+    <div id="menu-filter" class="fadeEl choce-filter">
+        <?php echo $this->partial('application/partial/filter_flat'); ?>
+    </div><!-- #menu-filter -->
+
+</div>
+<!-- .header_middle -->
+</div>
+<!-- End .container -->
+</header>
+<article id="choce-page" class="inside">
+    <section id="product">
+        <div class="container">
+            <div class="title-block js-animation">
+                <h2>Квартиры по вашим параметрам(<?=$count?>)</h2></div>
+            <div class="product_block">
+                <?php foreach ($flats as $flat){?>
+                        <?php echo $this->partial('application/partial/flat_second', ['flat' => $flat]); ?>
+                <?php } ?>
+            </div>
+            <!-- End .product_block -->
+
+            <div id="feedback-modal" class="modal-block btn call_us">Позвоните нам</div>
+
+            <?= $this->paginationControl($flats,
+                'Sliding',
+                'application/partial/flat_paginator',
+                array('route' => 'flat', 'fromQuery' => $fromQuery)); ?>
+        </div>
+        <!-- End .container -->
+    </section>
+</article>

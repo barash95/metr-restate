@@ -1,6 +1,7 @@
 <?php
 namespace Admin;
 
+use DoctrineModule\Validator\Service\Exception\ServiceCreationException;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -119,6 +120,46 @@ return [
             Controller\CommertialController::class => Controller\Factory\CommertialControllerFactory::class,
         ],
     ],
+    'access_filter' => [
+        'controllers' => [
+            Controller\IndexController::class => [
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ["index"], 'allow' => '@']
+            ],
+            Controller\ResidentController::class => [
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ["index", "add", "view", "delete", "parse"], 'allow' => '@']
+            ],
+            Controller\HouseController::class => [
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ["index", 'view', 'edit', 'delete', 'add'], 'allow' => '@']
+            ],
+            Controller\FlatController::class => [
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ["index", 'view', 'edit', 'delete', 'add'], 'allow' => '@']
+            ],
+            Controller\CommertialController::class => [
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ["index", 'view', 'edit', 'delete', 'add'], 'allow' => '@']
+            ],
+            Controller\MapController::class => [
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ["index", 'edit', 'delete', 'add'], 'allow' => '@']
+            ],
+            Controller\MortgageController::class => [
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ["index", 'edit', 'delete', 'add'], 'allow' => '@']
+            ],
+            Controller\NewsController::class => [
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ["index", 'view' ,'edit', 'delete', 'add'], 'allow' => '@']
+            ],
+            Controller\VideoController::class => [
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ["index", 'edit', 'delete', 'add'], 'allow' => '@']
+            ],
+        ],
+    ],
     'service_manager' => [
         'factories' => [
             Service\ResidentManager::class => Service\Factory\ResidentManagerFactory::class,
@@ -129,6 +170,7 @@ return [
             Service\MortgageManager::class => Service\Factory\MortgageManagerFactory::class,
             Service\NewsManager::class => Service\Factory\NewsManagerFactory::class,
             Service\CommertialManager::class => Service\Factory\CommertialManagerFactory::class,
+            Service\SearchFlatManager::class => Service\Factory\SearchFlatManagerFactory::class,
         ],
     ],
     'view_manager' => [

@@ -1,0 +1,19 @@
+<figure class="item fadeEl <?=$first?>">
+    <div class="img"><img src="<?=$resident->getImage();?><?=$first?>.jpeg" alt="" class="big-img" />
+        <img src="<?=$resident->getImage();?><?=$first?>_mob.jpeg" alt="" class="smoll-img"/>
+    </div>
+    <figcaption>
+        <div class="tag">
+            <div class="tag-value value-<?=$resident->getState()?>"">Квартиры от 3 млн. руб.</div>
+            <div class="tag-value value-<?=$resident->getState()?>"><?=$resident->getStateAsString();?></div>
+        </div><!-- .tag -->
+        <div class="info">
+            <h3>ЖК <?=$resident->getName();?></h3>
+            <p>Корпусов <?=$resident->getHousing();?></p>
+            <p>Свободных квартир <?=$this->residentialName()->flatCount($resident->getId());?></p>
+            <p>Метро <?=$resident->getMetro();?></p>
+            <p><?=$resident->getAddress();?></p>
+        </div><!-- .info -->
+    </figcaption>
+    <a href="/complex/view/<?=$resident->getId();?>" class="link"></a>
+</figure>

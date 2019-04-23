@@ -1,0 +1,92 @@
+<?php
+    $form->get('email')->setAttributes([
+        'class'=>'form-control',
+        'placeholder'=>'name@example.com'
+    ]);
+
+    $form->get('status')->setAttributes([
+        'class'=>'form-control'
+    ]);
+
+    $form->get('password')->setAttributes([
+        'class'=>'form-control'
+    ]);
+
+    $form->get('confirm_password')->setAttributes([
+     'class'=>'form-control'
+    ]);
+
+    $form->prepare();
+?>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="btn-toolbar" role="toolbar" aria-label="...">
+            <a href="/crm" class="btn btn-default btn-lg btn-border">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            <a href="/users/add"  class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span class="btn-name">Новый менеджер</span>
+            </a>
+        </div>
+    </div><div class="col-md-7">
+        <h2 class="name">Новый менеджер</h2>
+    </div><!-- col-md-12 -->
+    <div class="col-md-2"><h5 class="h-exit"><a class="a-exit" href="/logout">Выход</a></h5></div>
+</div><!-- row -->
+<hr>
+<?= $this->form()->openTag($form); ?>
+    <div class="row row-bar">
+        <div class="col-md-6">
+            <div class="btn-toolbar btn-inline" role="toolbar" aria-label="...">
+                <button type="submit" class="btn btn-default btn-lg btn-save">
+                    ЗАПИСАТЬ И ЗАКРЫТЬ
+                </button>
+                <a href="/users" type="button" class="btn btn-default btn-lg">
+                    <span class="glyphicon glyphicon-remove glyphicon-remove-2" aria-hidden="true"></span>
+                </a>
+                <a href="/events/add" type="button" class="btn btn-default btn-lg btn-quest">
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Задача
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row row-bar">
+                <div class="col-md-12">
+                    <div class="row">
+
+                        <div class="col-md-1 name-add"><?= $this->formLabel($form->get('status')); ?></div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3">
+                            <?= $this->formElement($form->get('status')); ?>
+                            <?= $this->formElementErrors($form->get('status')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 name-add"><?= $this->formLabel($form->get('email')); ?></div>
+                        <div class="col-md-4">
+                            <?= $this->formElement($form->get('email')); ?>
+                            <?= $this->formElementErrors($form->get('email')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 name-add"><?= $this->formLabel($form->get('password')); ?></div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <?= $this->formElement($form->get('password')); ?>
+                            <?= $this->formElementErrors($form->get('password')); ?>
+                        </div>
+                        <div class="col-md-2 name-add"><?= $this->formLabel($form->get('confirm_password')); ?></div>
+                        <div class="col-md-3">
+                            <?= $this->formElement($form->get('confirm_password')); ?>
+                            <?= $this->formElementErrors($form->get('confirm_password')); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?= $this->form()->closeTag(); ?>

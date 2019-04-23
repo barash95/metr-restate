@@ -8,8 +8,10 @@
 
 namespace Admin\Controller;
 
+use Admin\Entity\Commertial;
 use Admin\Entity\House;
 use Admin\Entity\Resident;
+use Admin\Entity\Flat;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
 use Admin\Form\HouseForm;
@@ -32,14 +34,15 @@ class HouseController extends AbstractActionController
      */
     private $houseManager;
 
-
+    private $flatManager;
     /**
      * Constructor.
      */
-    public function __construct($entityManager, $houseManager)
+    public function __construct($entityManager, $houseManager, $flatManager)
     {
         $this->entityManager = $entityManager;
         $this->houseManager = $houseManager;
+        $this->flatManager = $flatManager;
     }
 
     public function indexAction()
@@ -181,6 +184,18 @@ class HouseController extends AbstractActionController
                 if (isset($files['image']) && $files['image']['name']>''){
                     rename(ROOT_PATH."/public/data/upload/".$files['image']['name'], $dest."/house".$house->getHouse().".jpeg");
                 }
+
+                $flats = $this->entityManager->getRepository(Flat::class)->findBy([
+                    'res_id' => $data['res_id'],
+                    'house' => $house->getId()], ['id' => 'DESC']);
+                foreach ($flats as $flat)
+                    $this->flatManager->changeYear($flat, $data['year']);
+
+                $commertials = $this->entityManager->getRepository(Commertial::class)->findBy([
+                    'res_id' => $data['res_id'],
+                    'house' => $house->getId()], ['id' => 'DESC']);
+                foreach ($commertials as $com)
+                    $this->flatManager->changeYear($com, $data['year']);
 
                 // Redirect to "view" page
                 return $this->redirect()->toRoute('housing',

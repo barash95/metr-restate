@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'gilroyextrabold';
+    src: url('../fonts/Gilroy/gilroy-extrabold-webfont.woff2') format('woff2'),
+         url('../fonts/Gilroy/gilroy-extrabold-webfont.woff') format('woff'),
+         url('../fonts/Gilroy/gilroy-extrabold-webfont.ttf') format('truetype'),
+         url('../fonts/Gilroy/gilroy-extrabold-webfont.svg#gilroyextrabold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'gilroylight';
+    src: url('../fonts/Gilroy/gilroy-light-webfont.woff2') format('woff2'),
+         url('../fonts/Gilroy/gilroy-light-webfont.woff') format('woff'),
+         url('../fonts/Gilroy/gilroy-light-webfont.ttf') format('truetype'),
+         url('../fonts/Gilroy/gilroy-light-webfont.svg#gilroylight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'gilroyregular';
+    src: url('../fonts/Gilroy/gilroy-regular-webfont.woff2') format('woff2'),
+         url('../fonts/Gilroy/gilroy-regular-webfont.woff') format('woff'),
+         url('../fonts/Gilroy/gilroy-regular-webfont.ttf') format('truetype'),
+         url('../fonts/Gilroy/gilroy-regular-webfont.svg#gilroyregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

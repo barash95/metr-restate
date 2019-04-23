@@ -1,0 +1,96 @@
+<section id="calculate-mortgage" class="container">
+    <div class="title-block js-animation">
+        <h2>Рассчитать ипотеку</h2>
+    </div>
+    <div class="calculate-top fadeEl">
+        <div class="l-block">
+            <div class="tit">Выберите банк</div>
+            <div id="ps-slider">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <?php
+                        foreach ($banks as $bank){
+                         ?>
+                            <div class="swiper-slide">
+                                <div class="ps-item">
+                                    <div class="img"><img src="/img/ps/ps-1.png" alt=""/></div>
+                                    <div class="txt">
+                                        <p>Ставка <span><?=$bank->getPercent()?>%</span></p>
+                                        <p>до <?=$bank->getYear()?> лет <span>до <?=$bank->getMoney()?> млн. р.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                <script>
+                    var swiper = new Swiper('#ps-slider .swiper-container', {
+                        slidesPerView: 3,
+                        slidesPerColumn: 2,
+                        spaceBetween: 20,
+                        pagination: {
+                            el: '#ps-slider .swiper-pagination',
+                            clickable: true,
+                        },
+                        breakpoints: {
+                            768: {
+                                slidesPerView: 2,
+                                spaceBetween: 10,
+                            }
+                        }
+                    });
+                </script>
+            </div>
+            <!-- #ps-slider -->
+        </div>
+
+        <div class="r-block">
+            <div class="calculate_item">
+                <div class="tit">Стоимость квартиры</div>
+                <div class="range-slider">
+                    <input type="text" class="price-range" value=" млн. р."/>
+                </div>
+            </div>
+            <!-- calculate_item -->
+            <div class="calculate_item">
+                <div class="tit">Первоначальный взнос</div>
+                <div class="range-slider">
+                    <input type="text" class="payment-range" value=""/>
+                </div>
+            </div>
+            <!-- calculate_item -->
+            <div class="calculate_item">
+                <div class="tit">Срок</div>
+                <div class="range-slider">
+                    <input type="text" class="time-range" value=""/>
+                </div>
+            </div>
+            <!-- calculate_item -->
+        </div>
+
+        <div class="calculate-bottom fadeEl">
+            <div class="l-block">
+                <p>Рассчет является предварительным и может не отражать действующей процентной ставки банка.</p>
+                <p>Для уточнения полных условий по ипотеке, подайте заявку и дождитесь звонка менеджера.</p>
+            </div>
+            <div class="r-block">
+                <div class="item">
+                    <div class="tit">Процентная ставка</div>
+                    <div class="rate">7,5 %</div>
+                </div>
+                <div class="item">
+                    <div class="tit">Ежемесячный платеж</div>
+                    <div class="price">13 560 <span class="size-smoll">руб.</span></div>
+
+                </div>
+            </div>
+        </div>
+        <!-- calculate-bottom -->
+        <div class="btn-block">
+            <div id="feedback-modal" class="modal-block btn">Подать заявку на одобрение</div>
+        </div>
+    </div>
+    <!-- calculate-top -->
+
+</section>

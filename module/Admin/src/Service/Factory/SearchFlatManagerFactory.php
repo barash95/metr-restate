@@ -1,8 +1,8 @@
 <?php
-namespace Flat\Service\Factory;
+namespace Admin\Service\Factory;
 
 use Interop\Container\ContainerInterface;
-use Flat\Service\SearchFlatManager;
+use Admin\Service\SearchFlatManager;
 use Zend\Session\SessionManager;
 
 /**

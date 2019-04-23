@@ -266,11 +266,11 @@ class Resident
     }
 
     public function getImage(){
-        $complex = "/data/complex/".$this->getId()."/complex.jpeg";
-        //if (file_exists("/var/www/restate/public".$complex))
+        $complex = "/data/complex/".$this->getId()."/complex";
+        if (file_exists("/var/www/html/metr/metr-restate/public".$complex.".jpeg"))
             return $complex;
-        //else
-            //return "/main/images/content/no-complex.jpg";
+        else
+            return "/img/content/no-image";
     }
     public function getImage1(){
         $image = "/data/complex/".$this->getId()."/1.jpeg";

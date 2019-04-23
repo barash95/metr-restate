@@ -2,7 +2,7 @@
 $this->headTitle('Список коммерческих помещений');
 ?>
 
-<h1>ЖК</h1>
+<h1>Коммерческие помещения</h1>
 
 <p>
     <a class="btn btn-default" href="
@@ -38,7 +38,7 @@ $this->headTitle('Список коммерческих помещений');
             <td>
                 <?= $this->residentialName()->render($commertial->getResId()); ?>
             </td>
-            <td><?= $this->escapeHtml($commertial->getHouse()); ?> / <?= $this->escapeHtml($commertial->getFloor()); ?> / <?= $this->escapeHtml($commertial->getSection()); ?></a></td>
+            <td><?= $this->houseNumber()->render($commertial->getHouse()) ?> / <?= $this->escapeHtml($commertial->getFloor()); ?> / <?= $this->escapeHtml($commertial->getSection()); ?></a></td>
             <td>
                 <?= $this->escapeHtml($commertial->getNumber()); ?>
             </td>

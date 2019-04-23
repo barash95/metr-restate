@@ -50,7 +50,7 @@ class CommertialController extends AbstractActionController
         if (isset($fromQuery['page'])) unset($fromQuery['page']);
 
         $query = $this->entityManager->getRepository(Commertial::class)
-            ->findAllCommertial();
+            ->findAllCommertial(array());
 
         $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
         $paginator = new Paginator($adapter);
@@ -188,10 +188,13 @@ class CommertialController extends AbstractActionController
                     ['action'=>'index']);
             }
         } else {
+            $house = $this->entityManager->getRepository(House::class)->findOneBy([
+                'res_id' => $commertial->getResId(),
+                'house' => $commertial->getHouse()], ['id' => 'DESC']);
 
             $form->setData(array(
                 'res_id' => $commertial->getResId(),
-                'house' => $commertial->getHouse(),
+                'house' => $house,
                 'floor'=> $commertial->getFloor(),
                 'section' => $commertial->getSection(),
                 'number' => $commertial->getNumber(),

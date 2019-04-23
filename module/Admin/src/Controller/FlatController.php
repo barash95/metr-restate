@@ -9,7 +9,9 @@
 namespace Admin\Controller;
 
 use Admin\Entity\Flat;
+use Admin\Entity\House;
 use Admin\Entity\Resident;
+use Application\View\Helper\HouseNumber;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
 use Admin\Form\FlatForm;
@@ -50,7 +52,8 @@ class FlatController extends AbstractActionController
         if (isset($fromQuery['page'])) unset($fromQuery['page']);
 
         $query = $this->entityManager->getRepository(Flat::class)
-            ->findAllFlat();
+            ->findAllFlat(array());
+        $count = count($query->execute());
 
         $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
         $paginator = new Paginator($adapter);
@@ -59,7 +62,8 @@ class FlatController extends AbstractActionController
 
         return new ViewModel([
             'flats' => $paginator,
-            'fromQuery' => $fromQuery
+            'fromQuery' => $fromQuery,
+            'count' => $count,
         ]);
     }
 
@@ -169,13 +173,13 @@ class FlatController extends AbstractActionController
                 $request->getFiles()->toArray()
             );
 
-            if($data['res_id'] != $res_id) $data['ex_id'] =null;
             $form->setData($data);
 
             // Validate form
             if($form->isValid()) {
                 // Get filtered and validated data
                 $data = $form->getData();
+                $data['ex_id'] = $flat->getExId();
                 $this->flatManager->updateFlat($flat, $data);
 
                 $files = $request->getFiles()->toArray();
@@ -190,10 +194,14 @@ class FlatController extends AbstractActionController
                     ['action'=>'view', 'id' => $flat->getId()]);
             }
         } else {
+            $house = $this->entityManager->getRepository(House::class)->findOneBy([
+                'res_id' => $flat->getResId(),
+                'house' => $flat->getHouse()], ['id' => 'DESC']);
 
             $form->setData(array(
                 'res_id' => $flat->getResId(),
-                'house' => $flat->getHouse(),
+                'ex_id' => $flat->getExId(),
+                'house' => $house,
                 'floor'=> $flat->getFloor(),
                 'section' => $flat->getSection(),
                 'number' => $flat->getNumber(),

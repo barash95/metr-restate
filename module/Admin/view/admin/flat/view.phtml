@@ -28,7 +28,7 @@ $this->headTitle('Карточка квартиры');
             </tr>
             <tr>
                 <th>Корпус:</th>
-                <td><?= $this->escapeHtml($flat->getHouse()) ?></td>
+                <td><?= $this->houseNumber()->render($flat->getHouse()) ?></td>
             </tr>
             <tr>
                 <th>Этаж:</th>

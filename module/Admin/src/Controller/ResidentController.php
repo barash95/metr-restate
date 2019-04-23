@@ -60,7 +60,7 @@ class ResidentController extends AbstractActionController
 
         $query = $this->entityManager->getRepository(Resident::class)
             ->findAllResident();
-
+        $count = count($query->execute());
         $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
         $paginator = new Paginator($adapter);
         $paginator->setDefaultItemCountPerPage(10);
@@ -68,7 +68,8 @@ class ResidentController extends AbstractActionController
 
         return new ViewModel([
             'residents' => $paginator,
-            'fromQuery' => $fromQuery
+            'fromQuery' => $fromQuery,
+            'count' => $count
         ]);
     }
 
@@ -262,30 +263,34 @@ class ResidentController extends AbstractActionController
 
     public function parseAction()
     {
+        $start = microtime(true);
         $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id<1) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
+        $i = 0;
         if($id == -1){
             $resident = $this->entityManager->getRepository(Resident::class)->getResidentList();
-            foreach($resident as $res)
-                $message[] = $this->parser($res['id']);
+            foreach($resident as $id => $res)
+                $message[] = $this->parser($id);
         } else $message[] = $this->parser($id);
-
+        $time = microtime(true) - $start;
         return new ViewModel(array(
-            'message' => $message
+            'message' => $message,
+            'time' =>  "Время выполнения $time секунд"
         ));
     }
 
     protected function parser($id){
         $resident = $this->entityManager->getRepository(Resident::class)->find($id);
+        if(is_null($resident)){
+            $message[] = "ЖК $id не найден<br>";
+            return $message;
+        }
         $res_id = $resident->getId();
         $link = $resident->getLink();
 
         $info = simplexml_load_file($link);
         $info = json_decode(json_encode((array)$info), TRUE);
 
+        $old_flats = array();
         $dest = ROOT_PATH."/public/data/resident/".$res_id;
         if (!is_dir($dest)) mkdir($dest);
         $list_flats = $this->entityManager->getRepository(Flat::class)->getFlatList($res_id);
@@ -294,10 +299,12 @@ class ResidentController extends AbstractActionController
 
         $flats = $info['flats']['flat'];
         $i = 0;
+        $count = 0;
         if (is_array($flats)) {
+            $start = microtime(true);
             foreach ($flats as $flat) {
                 $i++;
-                if($i == 100) break;
+                if($i == 1000) break;
                 $flat['res_id'] = $res_id;
                 $new_flat = $this->flatManager->addOrUpdateFlat($flat);
 
@@ -308,15 +315,27 @@ class ResidentController extends AbstractActionController
                 if(!copy($flat['plan'],$dest.'/flat'.$new_flat->getId().'.jpeg')){
                     $errors= error_get_last();
                     $message[] =  "Не удалось скопировать {$flat['plan']} :  {$errors['type']} - {$errors['message']}<br>";
-                } else $message[] = "<a href='/flats/view/{$new_flat->getId()}'>Квартира {$new_flat->getId()}</a><br>";
+                } else $count++;
+                    //$message[] = "<a href='/flats/view/{$new_flat->getId()}'>Квартира {$new_flat->getId()}</a><br>";
                 if (isset($old_flats[$flat['ex_id']])) unset($old_flats[$flat['ex_id']]);
             }
+            $time = microtime(true) - $start;
+            $message[] = "Успешных квартир в ЖК <a href='/resident/view/{$resident->getId()}'>{$resident->getName()}</a> - $count<br>";
+            $message[] = "Затраченное время на ЖК - $time секунд.<br>";
         }
-        foreach ($old_flats as $flat){
-            $remove_flat = $this->entityManager->getReference(Flat::class, $flat);
-            $this->entityManager->remove($remove_flat);
+        if(count($old_flats) > 0) {
+            foreach ($old_flats as $flat) {
+                $remove_flat = $this->entityManager->getReference(Flat::class, $flat);
+                $this->entityManager->remove($remove_flat);
+                $plan = "/data/resident/" . $res_id . "/flat" . $flat . ".jpeg";
+                if (file_exists("/var/www/html/metr/metr-restate/public" . $plan)) {
+                    if (!unlink($dest . '/flat' . $flat . '.jpeg')) {
+                        $errors = error_get_last();
+                        $message[] = "{$res_id}: Не удалось удалить планировку  {$flat} :  {$errors['type']} - {$errors['message']}<br>";
+                    }
+                }
+            }
             $this->entityManager->flush();
-            if(!unlink($dest.'/flat'.$flat.'.jpeg')) error_clear_last () ;
         }
 
         return $message;

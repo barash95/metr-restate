@@ -1,1 +1,37 @@
-<?php echo '<h1>Complex</h1>';
+<div class="header_middle">
+    <div class="main-txt">
+        <h1>Жилая недвижимость</h1>
+        <p>Подобрать квартиру</p>
+    </div>
+    <div id="menu-filter" class="fadeEl index-filter">
+        <?php echo $this->partial('application/partial/filter'); ?>
+    </div><!-- #menu-filter -->
+</div>
+</div><!-- End .container -->
+    <a href="#scroll" id="scroll-a" class="scroll-btn"><img src="img/ico/arrow-black.png" alt=""/></a>
+</header>
+
+<article id="scroll">
+    <section id="residential-complexes">
+        <div class="container">
+            <div class="title-block js-animation"><h2>Жилые комплексы</h2></div>
+            <div class="residential-complexes">
+                <?php
+                $first = 'width-100';
+                foreach ($residents as $resident) {
+                    echo $this->partial('application/partial/complex', ['resident' => $resident, 'first' => $first]);
+                    $first = '';
+                }
+                ?>
+                <div class="choice-apartment item fadeEl">
+                    <div class="img"><img src="img/ico/choice.png" alt=""/></div>
+                    <div class="txt">
+                        <p>Выбор квартиры <img src="img/ico/arrow.png" alt=""/></p>
+                    </div>
+                    <a href="#" class="link"></a>
+                </div>
+            </div>
+            <div class="btn-block"><a href="#">Загрузить еще</a></div>
+        </div><!-- End .container -->
+    </section>
+</article>

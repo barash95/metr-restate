@@ -2,6 +2,7 @@
 namespace Admin\Service;
 
 use Admin\Entity\House;
+use Admin\Entity\Flat;
 /**
  * This service is responsible for adding/editing rouse
  */
@@ -11,8 +12,8 @@ class HouseManager
      * Doctrine entity manager.
      * @var Doctrine\ORM\EntityManager
      */
-    private $entityManager;  
-    
+    private $entityManager;
+
     /**
      * Constructs the service.
      */
@@ -60,6 +61,7 @@ class HouseManager
         $house->setYear($data['year']);
         $house->setState($data['state']);
         $house->setSell($data['sell']);
+
 
         // Apply changes to database.
         $this->entityManager->flush();

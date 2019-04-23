@@ -3,6 +3,7 @@ namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Admin\Entity\Resident;
+use Admin\Entity\Flat;
 
 
 class ResidentialName extends AbstractHelper
@@ -32,5 +33,13 @@ class ResidentialName extends AbstractHelper
             $name = $name->getName();
 
         return $name;
+    }
+
+    public function flatCount($residential_id)
+    {
+        if(!is_null($residential_id))
+            $count = $this->entityManager->getRepository(Flat::class)->getFlatCount($residential_id);
+
+        return $count;
     }
 }

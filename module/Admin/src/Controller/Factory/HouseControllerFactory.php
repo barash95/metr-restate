@@ -12,6 +12,7 @@ use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Admin\Controller\HouseController;
 use Admin\Service\HouseManager;
+use Admin\Service\FlatManager;
 
 /**
  * This is the factory for ResidentController. Its purpose is to instantiate the
@@ -23,8 +24,9 @@ class HouseControllerFactory implements FactoryInterface
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $houseManager = $container->get(HouseManager::class);
+        $flatManager = $container->get(FlatManager::class);
 
         // Instantiate the controller and inject dependencies
-        return new HouseController($entityManager, $houseManager);
+        return new HouseController($entityManager, $houseManager, $flatManager);
     }
 }

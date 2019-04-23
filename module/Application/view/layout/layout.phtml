@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?= $this->headTitle('ZF Skeleton Application')->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?= $this->headTitle('metr-restate')->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?= $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -12,7 +12,7 @@
 
         <!-- Le styles -->
         <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
-            ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/old_style.css'))
             ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
             ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
         ?>
@@ -36,6 +36,8 @@
                         <li><a href="<?= $this->url('contacts') ?>">Contacts</a></li>
                         <li><a href="<?= $this->url('mortgage') ?>">Mortgage</a></li>
                         <li><a href="<?= $this->url('news') ?>">News</a></li>
+
+
                         <li><a href="<?= $this->url('resident') ?>">Список ЖК</a></li>
                         <li><a href="<?= $this->url('mapping') ?>">Список карт</a></li>
                         <li><a href="<?= $this->url('housing') ?>">Корпуса</a></li>
@@ -44,6 +46,9 @@
                         <li><a href="<?= $this->url('anews') ?>">Новости</a></li>
                         <li><a href="<?= $this->url('flats') ?>">Квартиры</a></li>
                         <li><a href="<?= $this->url('commertials') ?>">Помещения</a></li>
+
+
+                        <li><a href="<?= $this->url('logout') ?>">Выход</a></li>
                     </ul>
             </div>
         </nav>
@@ -51,7 +56,7 @@
             <?= $this->content ?>
             <hr>
             <footer>
-                <p>&copy; 2005 - <?= date('Y') ?> by Zend Technologies Ltd. All rights reserved.</p>
+                <p>&copy; 2019               - <?= date('Y') ?> by ATR-MEDIA Ltd. All rights reserved.</p>
             </footer>
         </div>
         <?= $this->inlineScript() ?>

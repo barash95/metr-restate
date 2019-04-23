@@ -3,6 +3,7 @@ namespace Admin\Service\Factory;
 
 use Interop\Container\ContainerInterface;
 use Admin\Service\CommertialManager;
+use Admin\Service\HouseManager;
 
 /**
  * This is the factory class for commertialManager service. The purpose of the factory
@@ -16,7 +17,8 @@ class CommertialManagerFactory
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
+        $houseManager = $container->get(HouseManager::class);
                         
-        return new CommertialManager($entityManager);
+        return new CommertialManager($entityManager, $houseManager);
     }
 }

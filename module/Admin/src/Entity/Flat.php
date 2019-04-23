@@ -24,7 +24,7 @@ class Flat
     const OPERATOR_BOOKED        = 2;
     const SOLD_OUT               = 3;
     const NOT_AVAILABLE          = 4;
-
+    
     /**
      * @ORM\Id
      * @ORM\Column(name="id")
@@ -76,6 +76,11 @@ class Flat
      * @ORM\Column(name="price")
      */
     protected $price;
+
+    /**
+     * @ORM\Column(name="year")
+     */
+    protected $year;
 
     /**
      * @ORM\Column(name="state")
@@ -180,6 +185,16 @@ class Flat
     public function setPrice($price)
     {
         $this->price = $price;
+    }
+
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    public function setYear($year)
+    {
+        $this->year = $year;
     }
 
     public function getState()
