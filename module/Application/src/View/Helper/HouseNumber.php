@@ -3,6 +3,7 @@ namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use Admin\Entity\House;
+use Admin\Entity\Commertial;
 
 
 class HouseNumber extends AbstractHelper
@@ -31,5 +32,13 @@ class HouseNumber extends AbstractHelper
         if(!is_null($house))
             $number = $house->getHouse();
         return $number;
+    }
+
+    public function getComCount($id)
+    {
+        if(!is_null($id))
+            $count = count($this->entityManager->getRepository(Commertial::class)->findBy(['house' => $id]));
+
+        return $count;
     }
 }

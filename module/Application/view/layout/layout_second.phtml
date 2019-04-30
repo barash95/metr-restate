@@ -23,6 +23,7 @@
         <!-- Scripts -->
         <?= $this->headScript()
             ->prependFile($this->basePath('js/favorites.js'))
+            ->prependFile($this->basePath('js/lead.js'))
             ->prependFile($this->basePath('js/js.cookie.js'))
             ->prependFile($this->basePath('js/swiper.min.js'))
             ->prependFile($this->basePath('js/jquery.maskedinput.min.js'))
@@ -153,7 +154,7 @@
                     <div class="footer_menu">
                         <ul>
                             <li><a href="<?= $this->url('home') ?>">Главная</a></li>
-                            <li><a href="#">Выбор квартиры</a></li>
+                            <li><a href="<?= $this->url('flat') ?>">Выбор квартиры</a></li>
                             <li><a href="<?= $this->url('complex') ?>">Жилые комплексы</a></li>
                             <li><a href="#">Ипотека</a></li>
                         </ul>
@@ -183,14 +184,14 @@
             <div class="feedback_form">
                 <div class="tit">Заказать обратный звонок</div>
                 <p>Оставьте заявку и наш менеджер свяжется<br/>с вами в течение 30 минут</p>
-                <form action="" method="post">
+                <form action="" method="post" name="order-form" id="order-form">
                     <div class="item-form">
-                        <input type="text" class="input-form" placeholder="Ваше имя"/>
+                        <input type="text" class="input-form" id="name-form" placeholder="Ваше имя"/>
                     </div>
                     <div class="item-form">
                         <input id="phone" type="text" class="input-form" placeholder="Номер телефона"/>
                     </div>
-                    <div class="btn-block"><button class="btn">Перезвоните мне</button></div>
+                    <div class="btn-block"><button class="btn" id="call-me" onclick="">Перезвоните мне</button></div>
                 </form>
             </div><!-- .feedback_form -->
             <script>

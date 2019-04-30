@@ -19,8 +19,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 class House
 {
-    const SELL                    = 1;
     const NOT_SELL                = 0;
+    const SELL                    = 1;
 
     const BUILD                   = 0;
     const FINISH                  = 1;
@@ -182,18 +182,36 @@ class House
     public static function getSellList()
     {
         return [
-            self::SELL => 'В продаже',
-            self::NOT_SELL => 'Не продается'
+            self::NOT_SELL => 'Не продается',
+            self::SELL => 'В продаже'
         ];
     }
 
     public function getSellAsString()
     {
         $list = self::getSellList();
-        if (isset($list[$this->state]))
-            return $list[$this->state];
+        if (isset($list[$this->sell]))
+            return $list[$this->sell];
 
         return 'Не найден';
+    }
+
+    public function getStatus()
+    {
+        $list = self::getSellList();
+        $finish = self::getStateList();
+        if($this->sell == 1)
+            return $list[$this->sell];
+        else
+            return $finish[$this->state];
+    }
+
+    public function getStatusNum()
+    {
+        if($this->sell == 1)
+            return $this->sell+2;
+        else
+            return $this->state+1;
     }
 
 

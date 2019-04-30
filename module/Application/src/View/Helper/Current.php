@@ -17,6 +17,8 @@ class Current extends AbstractHelper
           '/flat' => 'inside-page choce-p',
           '/commertial' => 'inside-page choce-p',
           '/map' => 'inside-page',
+          '/complex/view' => 'header-smoll',
+          '/commertial/view' => 'header-smoll product_header',
           '/complex/view' => 'header-smoll'
       ];
 

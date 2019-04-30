@@ -1,0 +1,84 @@
+<div class="header_middle">
+    <div class="main-txt">
+        <h1>Помещение № <?=$commertial->getNumber()?></h1>
+        <div class="flex">
+            <a href="/complex/view/<?=$commertial->getResId()?>" class="back name">ЖК “<?= $this->residentialName()->render($commertial->getResId()) ?>”</a>
+            <a href="/commertial" class="back">Вернуться к выбору квартиры</a>
+        </div>
+    </div>
+</div>
+<!-- .header_middle -->
+</div>
+<!-- End .container -->
+</header>
+
+<article class="relative">
+    <section id="kom-page" class="product-one">
+        <div class="container">
+            <div class="product_top">
+                <div class="img fadeEl fadeEl-left"><img src="<?=$commertial->getPlan()?>" alt="" /></div>
+                <div class="txt fadeEl fadeEl-right">
+                    <div class="item">
+                        <div class="tit">Площадь</div>
+                        <p><?=$commertial->getSquare()?> м2</p>
+                    </div>
+                    <div class="item">
+                        <div class="tit">Высота потолка</div>
+                        <p><?=$commertial->getHeight()?></p>
+                    </div>
+                    <div class="item">
+                        <div class="tit">Этаж</div>
+                        <p><?=$commertial->getFloor()?></p>
+                    </div>
+                    <div class="item">
+                        <div class="tit">Отделка</div>
+                        <p><?=$commertial->getFinish()?></p>
+                    </div>
+                    <div class="item">
+                        <div class="tit">Корпус</div>
+                        <p><?= $this->houseNumber()->render($commertial->getHouse()) ?></p>
+                    </div>
+                    <div class="item">
+                        <div class="tit">Год сдачи</div>
+                        <p><?=$commertial->getYear()?></p>
+                    </div>
+                    <div class="item no-margin">
+                        <div class="tit">Куплено квартир в доме</div>
+                        <p><?= $this->saleFlatCount()->render($commertial->getResId(), $commertial->getHouse()); ?></p>
+                    </div>
+                    <div class="item no-margin">
+                        <div class="tit">.pdf</div>
+                        <a href="#">Скачать</a>
+                    </div>
+                </div>
+            </div>
+            <!-- product_top -->
+
+            <div class="product_bottom fadeEl">
+                <div class="l-block">
+                    <div id="feedback-modal" class="modal-block btn">Забронировать</div>
+                    <div id="video_modal" class="modal-block plan">План этажа</div>
+                </div>
+                <div class="r-block">
+<!--                    <div class="old-price">2 790 000 <span class="size-smoll">руб.</span></div>-->
+                    <div class="price">2 245 000 <span class="size-smoll">руб.</span></div>
+                </div>
+                <div class="add-block">
+                    <a href="#" class="add-f">Добавить в избранное</a>
+                    <a href="#" class="c-mortgage">Рассчитать ипотеку</a>
+                </div>
+            </div>
+            <!--product_bottom-->
+        </div>
+        <!-- End .container -->
+    </section>
+</article>
+<div class="modal" data-id="#video_modal">
+    <div class="modal-ov"></div>
+    <div class="modal-content">
+        <span class="close  close-v">&times;</span>
+        <div class="video-block">
+            <img src="<?=$commertial->getPlan()?>" alt="" />
+        </div>
+    </div>
+</div>

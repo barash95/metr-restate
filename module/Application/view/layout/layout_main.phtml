@@ -128,7 +128,7 @@
                     </div><!-- .header_top-center -->
 
                     <div class="header_contacts contacts-block">
-                        <a href="tel:+7 (812) 649-75-34" class="tel">+7 (812) 649-75-34</a>
+                        <a id="feedback-modal" class="tel">+7 (812) 649-75-34</a>
                         <div class="mode">
                             <p>пн-пт 9:00-21:00</p>
                             <p>сб-вс 10:00-20:00</p>
@@ -175,15 +175,15 @@
             <div class="feedback_form">
                 <div class="tit">Заказать обратный звонок</div>
                 <p>Оставьте заявку и наш менеджер свяжется<br/>с вами в течение 30 минут</p>
-                <form action="" method="post">
+                <form action="" method="post" name="order-form" id="order-form">
                     <div class="item-form">
-                        <input type="text" class="input-form" placeholder="Ваше имя"/>
+                        <input type="text" class="input-form" name="name" id="name-form" placeholder="Ваше имя"/>
                     </div>
                     <div class="item-form">
-                        <input id="phone" type="text" class="input-form" placeholder="Номер телефона"/>
+                        <input id="phone" type="text" class="input-form" name="phone" placeholder="Номер телефона"/>
                     </div>
                     <div class="btn-block">
-                        <button class="btn">Перезвоните мне</button>
+                        <button class="btn" id="call-me">Перезвоните мне</button>
                     </div>
                 </form>
             </div><!-- .feedback_form -->

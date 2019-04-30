@@ -13,11 +13,25 @@
     <section id="product">
         <div class="container">
             <div class="product_block">
-                <?php if(isset($flats)){ ?>
+                <?php if(count($flats)>0){ ?>
                 <?php foreach ($flats as $flat){?>
                     <?php echo $this->partial('application/partial/flat_second', ['flat' => $flat]); ?>
                 <?php }} else { ?>
                 <p>В избранном ничего нет!</p>
+                <?php } ?>
+            </div><!-- End .product_block -->
+
+            <div class="header_middle" style="margin-bottom: 50px; margin-top: 50px">
+                <div class="main-txt">
+                    <p>Помещения, которые вам понравились</p>
+                </div>
+            </div><!-- .header_middle -->
+            <div class="product_block">
+                <?php if(count($commertials)>0){ ?>
+                    <?php foreach ($commertials as $commertial){?>
+                        <?php echo $this->partial('application/partial/com', ['com' => $commertial]); ?>
+                    <?php }} else { ?>
+                    <p>В избранном ничего нет!</p>
                 <?php } ?>
             </div><!-- End .product_block -->
         </div><!-- End .container -->

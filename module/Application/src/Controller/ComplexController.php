@@ -10,6 +10,8 @@ namespace Application\Controller;
 
 use Admin\Entity\Map;
 use Admin\Entity\Resident;
+use Admin\Entity\Flat;
+use Admin\Entity\House;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -77,7 +79,31 @@ class ComplexController extends AbstractActionController
 
     public function viewAction()
     {
-        return new ViewModel();
+        $this->layout('layout/layout_view');
+
+        $id = (int)$this->params()->fromRoute('id', -1);
+        if ($id<1) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        // Find a resident with such ID.
+        $resident = $this->entityManager->getRepository(Resident::class)
+            ->find($id);
+
+        if ($resident == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        $flats = $this->entityManager->getRepository(Flat::class)->findBestFlats(15, $resident->getId());
+        $houses = $this->entityManager->getRepository(House::class)->findBy(['res_id' => $resident->getId()]);
+
+        return new ViewModel([
+            'resident' => $resident,
+            'flats' => $flats,
+            'houses' => $houses
+        ]);
     }
 
     public function mapAction()

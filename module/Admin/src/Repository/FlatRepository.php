@@ -131,13 +131,19 @@ class FlatRepository extends EntityRepository
         return count($res);
     }
 
-    public function findBestFlats($limit = 10)
+    public function findBestFlats($limit = 10, $res_id = null)
     {
         $entityManager = $this->getEntityManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select("f")->from(Flat::class, "f");
         $queryBuilder->orderBy('f.price', 'DESC');
+
+        if(!is_null($res_id)){
+            $queryBuilder->andWhere('f.res_id = :res_id')->setParameter('res_id', $res_id);
+        }
+
         $queryBuilder->setMaxResults($limit);
+
         $query = $queryBuilder->getQuery();
 
         $result = $query->execute();

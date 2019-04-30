@@ -252,9 +252,9 @@ class Commertial
 
     public function getPlan(){
         $plan = "/data/flats/".$this->getId()."/plan.jpeg";
-        //if (file_exists("/var/www/restate/public".$plan))
-        return $plan;
-        // else
-        //   return "/main/images/content/no-plan.jpg";
+        if (file_exists("/var/www/metr/metr-restate/public".$plan))
+            return $plan;
+        else
+            return "/img/product/big-2.jpg";
     }
 }

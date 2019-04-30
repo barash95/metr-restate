@@ -1,1 +1,153 @@
-<?php echo '<h1>Complex view</h1>';
+<div class="header_middle">
+    <div class="flex">
+        <div class="main-txt">
+            <h1>ЖК “<?=$resident->getName()?>”</h1>
+            <p><?=$resident->getTittle()?></p>
+        </div>
+        <div id="video">
+            <div id="video_modal" class="modal-block">
+                <div class="img"><img src="/img/ico/video.png" alt="" /></div>
+                <p>Видео о жилом комплексе</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- .header_middle -->
+</div>
+<!-- End .container -->
+</header>
+
+<!-- MODAL-->
+<div class="modal" data-id="#video_modal">
+    <div class="modal-ov"></div>
+    <div class="modal-content">
+        <span class="close  close-v">&times;</span>
+        <div class="video-block">
+            <div class="video-palay"><img src="/img/ico/video.png" alt="" /></div>
+            <div class="video-pause"><img src="/img/ico/pause-button.svg" alt="" /></div>
+            <video muted="muted" id="video-m">
+                <source src="/img/video.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+            </video>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("ready", function() {
+        var modVideo = document.getElementById("video-m");
+        $(".close-v").click(function() {
+            modVideo.pause();
+        });
+        $(".video-palay").click(function() {
+            modVideo.play();
+            $(".video-block").addClass('pause');
+        });
+        $(".video-pause").click(function() {
+            modVideo.pause();
+            $(".video-block").removeClass('pause');
+        });
+    });
+</script>
+
+<article class="relative">
+    <section id="best-offer">
+        <div class="title-block js-animation">
+            <h2>Лучшие предложения</h2>
+            <p>Акция: все квартиры со скидкой 3%</p>
+        </div>
+        <div id="slider_product" class="fadeEl slider">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+
+                    <?php foreach ($flats as $flat) { ?>
+                        <div class="swiper-slide">
+                            <?php echo $this->partial('application/partial/flat', ['flat' => $flat]); ?>
+                        </div><!-- End .swiper-slide -->
+                    <?php } ?>
+
+                </div>
+                <!--swiper-wrapper-->
+
+                <!-- Arrows -->
+                <div class="swiper-button-next"><img src="/img/ico/arrow-slider.png" alt="" /></div>
+                <div class="swiper-button-prev"><img src="/img/ico/arrow-slider.png" alt="" /></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <!-- End #slider-projects -->
+
+        <script>
+            var swiper = new Swiper('#slider_product .swiper-container', {
+                spaceBetween: 30,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                slideToClickedSlide: true,
+                initialSlide: 2,
+                loop: true,
+
+                navigation: {
+                    nextEl: '#slider_product .swiper-button-next',
+                    prevEl: '#slider_product .swiper-button-prev',
+                },
+                pagination: {
+                    el: '#slider_product .swiper-pagination',
+                    clickable: true,
+                },
+            });
+        </script>
+
+        <div class="btn-block">
+            <a href="/flat?resident=<?=$resident->getId()?>" class="btn">Подобрать квартиру</a>
+        </div>
+    </section>
+
+    <section id="residential-complexes" class="residential_index residential_list">
+        <div class="container">
+            <div class="title-block js-animation">
+                <h2>Коммерческая недвижимость</h2></div>
+            <div class="residential-complexes">
+
+                <?php foreach ($houses as $house) { ?>
+                        <?php echo $this->partial('application/partial/complex_com', ['house' => $house]); ?>
+                <?php } ?>
+
+            </div>
+            <div class="btn-block"><a href="#">Загрузить еще</a></div>
+        </div>
+        <!-- End .container -->
+    </section>
+
+    <section id="about-project">
+        <div class="container">
+            <div class="title-block js-animation">
+                <h2>О проекте</h2>
+                <p><?=$resident->getDescription()?></p>
+            </div>
+            <div class="flex fadeEl">
+                <div class="item">
+                    <div class="ico ico-1"><img src="/img/ico/marker.png" alt="" /></div>
+                    <div class="txt">
+                        <p><?=$resident->getTittle1()?></p>
+                        <p class="size-smoll"><?=$resident->getDescription1()?></p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="ico ico-1"><img src="/img/ico/marker.png" alt="" /></div>
+                    <div class="txt">
+                        <p><?=$resident->getTittle2()?></p>
+                        <p class="size-smoll"><?=$resident->getDescription2()?></p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="ico ico-2"><img src="/img/ico/home.png" alt="" /></div>
+                    <div class="txt">
+                        <p><?=$resident->getTittle3()?></p>
+                        <p class="size-smoll"><?=$resident->getDescription3()?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End .container -->
+    </section>
+</article>
+</div>

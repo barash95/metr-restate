@@ -8,6 +8,7 @@
 
 namespace Application\Controller;
 
+use Admin\Entity\Commertial;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Entity\Flat;
@@ -51,14 +52,13 @@ class FlatController extends AbstractActionController
         if ($this->getRequest()->isPost()) {
             $data = $formData = $this->params()->fromPost();
             $this->searchFlatManager->saveSearch($data);
-        }else{
+        } else {
             $filter = $this->searchFlatManager->getSearch();
 
-            if (count($filter)==0 || intval($this->params()->fromQuery('reset', 0)) == 1) {
-                $formData = ['size' => '', 'price_min' => '', 'price_max' => '', 'square_min' => '', 'square_max' => '', 'floor' => '', 'year' => '', 'resident' => ''];
+            if (count($filter) == 0 || intval($this->params()->fromQuery('reset', 0)) == 1) {
+                $formData = ['size' => '', 'price_min' => 0, 'price_max' => 4500000, 'square_min' => 0, 'square_max' => 250, 'floor' => '', 'year' => '', 'resident' => ''];
                 $this->searchFlatManager->saveSearch($formData);
-            }
-            else
+            } else
                 $formData = $filter;
         }
 
@@ -93,7 +93,7 @@ class FlatController extends AbstractActionController
         $this->layout('layout/layout_view');
 
         $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id<1) {
+        if ($id < 1) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
@@ -119,24 +119,26 @@ class FlatController extends AbstractActionController
     public function favoritesAction()
     {
         $this->layout('layout/layout_view');
-        if(isset($_COOKIE['favorites'])){
-           $flats = $_COOKIE['favorites'];
-        if ($flats)
-        {
-            $flats = explode(";", $flats); // array of flats
-            $query = $this->entityManager->getRepository(Flat::class)
-                ->findById($flats);
+        $flats = $commertials = array();
+        $flats_fav = $commertials_fav = false;
+        if (isset($_COOKIE['favorites']))
+            $flats_fav = $_COOKIE['favorites'];
+        if (isset($_COOKIE['favorites-com']))
+            $commertials_fav = $_COOKIE['favorites-com'];
+        if ($flats_fav) {
+            $flats_fav = explode(";", $flats_fav); // array of flats
+            $flats = $this->entityManager->getRepository(Flat::class)
+                ->findById($flats_fav);
+        }
+        if ($commertials_fav) {
+            $commertials_fav = explode(';', $commertials_fav);
+            $commertials = $this->entityManager->getRepository(Commertial::class)->findById($commertials_fav);
+        }
 
-            /*$adapter = new DoctrineAdapter(new ORMPaginator($query, false));
-            $paginator = new Paginator($adapter);
-            $paginator->setDefaultItemCountPerPage(10);
-            $paginator->setCurrentPageNumber($page);*/
-
-            return new ViewModel([
-                'flats' => $query
-            ]);
-        }}
-        return new ViewModel();
+        return new ViewModel([
+            'flats' => $flats,
+            'commertials' =>$commertials
+        ]);
     }
 
     public function pdfAction()
@@ -147,21 +149,21 @@ class FlatController extends AbstractActionController
 
     private function checkData($data)
     {
-        if(!isset($data['price_min_com'])) $data['price_min_com'] = '';
-        if(!isset($data['price_max_com'])) $data['price_max_com'] = '';
-        if(!isset($data['square_min_com'])) $data['square_min_com'] = '';
-        if(!isset($data['square_max_com'])) $data['square_max_com'] = '';
-        if(!isset($data['year_com'])) $data['year_com'] = '';
-        if(!isset($data['resident_com'])) $data['resident_com'] = '';
+        if (!isset($data['price_min_com'])) $data['price_min_com'] = '';
+        if (!isset($data['price_max_com'])) $data['price_max_com'] = '';
+        if (!isset($data['square_min_com'])) $data['square_min_com'] = '';
+        if (!isset($data['square_max_com'])) $data['square_max_com'] = '';
+        if (!isset($data['year_com'])) $data['year_com'] = '';
+        if (!isset($data['resident_com'])) $data['resident_com'] = '';
 
-        if(!isset($data['price_min'])) $data['price_min'] = '';
-        if(!isset($data['price_max'])) $data['price_max'] = '';
-        if(!isset($data['square_min'])) $data['square_min'] = '';
-        if(!isset($data['square_max'])) $data['square_max'] = '';
-        if(!isset($data['year'])) $data['year'] = '';
-        if(!isset($data['resident'])) $data['resident'] = '';
-        if(!isset($data['floor'])) $data['floor'] = '';
-        if(!isset($data['size'])) $data['size'] = '';
+        if (!isset($data['price_min'])) $data['price_min'] = '';
+        if (!isset($data['price_max'])) $data['price_max'] = '';
+        if (!isset($data['square_min'])) $data['square_min'] = '';
+        if (!isset($data['square_max'])) $data['square_max'] = '';
+        if (!isset($data['year'])) $data['year'] = '';
+        if (!isset($data['resident'])) $data['resident'] = '';
+        if (!isset($data['floor'])) $data['floor'] = '';
+        if (!isset($data['size'])) $data['size'] = '';
 
         return $data;
     }

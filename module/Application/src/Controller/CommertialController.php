@@ -91,6 +91,7 @@ class CommertialController extends AbstractActionController
 
     public function viewAction()
     {
+        $this->layout('layout/layout_view');
         $id = (int)$this->params()->fromRoute('id', -1);
         if ($id<1) {
             $this->getResponse()->setStatusCode(404);

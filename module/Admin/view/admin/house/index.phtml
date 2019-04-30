@@ -37,7 +37,7 @@ $this->headTitle('Список корпусов');
           </td>
         <td><?= $this->escapeHtml($house->getHouse()); ?></a></td>
           <td>
-              <?= $this->saleFlatCount()->render($house->getResId(), $house->getHouse()); ?>
+              <?= $this->saleFlatCount()->render($house->getResId(), $house->getId()); ?>
           </td>
           <td><?= $this->escapeHtml($house->getStateAsString()) ?></td>
           <td><?= $this->escapeHtml($house->getSellAsString()) ?></td>
