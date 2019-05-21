@@ -1,0 +1,7 @@
+<div class="main-txt">
+    <h1><?php echo str_replace(' ', " <br>", $flat->getSizeTxt())?> № <?=$flat->getNumber()?></h1>
+    <div class="flex">
+        <a href="/complex/view/<?=$flat->getResId()?>" class="back name">ЖК “<?= $this->residentialName()->render($flat->getResId()) ?>”</a>
+        <a onclick="history.back();" class="back">Вернуться к выбору квартиры</a>
+    </div>
+</div>

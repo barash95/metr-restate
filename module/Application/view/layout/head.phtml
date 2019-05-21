@@ -1,0 +1,33 @@
+<meta charset="utf-8">
+<?= $this->headTitle('metr-restate')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+<?= $this->headMeta()
+    ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+    ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+?>
+
+<title></title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+    ->prependStylesheet($this->basePath('css/style.css'))
+    ->prependStylesheet($this->basePath('css/fonts.css'))
+    ->prependStylesheet($this->basePath('css/swiper.min.css'))
+?>
+
+<!-- Scripts -->
+<?= $this->headScript()
+    ->prependFile($this->basePath('js/favorites.js'))
+    ->prependFile($this->basePath('js/js.cookie.js'))
+    ->prependFile($this->basePath('js/swiper.min.js'))
+    ->prependFile($this->basePath('js/jquery.maskedinput.min.js'))
+    ->prependFile($this->basePath('js/jquery.js'))
+?>
+
+<link rel="stylesheet" type="text/css" href="/css/ion.rangeSlider.css"/>
+<link rel="stylesheet" type="text/css" href="/bootstrap-multiselect/bootstrap-multiselect.css"/>
+<script type="text/javascript" src="/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+
+<link rel="icon" href="/favicon.png" type="image/x-icon">

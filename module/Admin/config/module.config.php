@@ -105,6 +105,16 @@ return [
                     ],
                 ],
             ],
+            'orders' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/orders[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\OrderController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -118,6 +128,7 @@ return [
             Controller\NewsController::class => Controller\Factory\NewsControllerFactory::class,
             Controller\FlatController::class => Controller\Factory\FlatControllerFactory::class,
             Controller\CommertialController::class => Controller\Factory\CommertialControllerFactory::class,
+            Controller\OrderController::class => Controller\Factory\OrderControllerFactory::class,
         ],
     ],
     'access_filter' => [
@@ -156,7 +167,11 @@ return [
             ],
             Controller\VideoController::class => [
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
-                ['actions' => ["index", 'edit', 'delete', 'add'], 'allow' => '@']
+                ['actions' => ["index", 'edit', 'delete', 'add'], 'allow' => '@'],
+                ],
+            Controller\OrderController::class => [
+                ['actions' => ["index", 'edit', 'delete'], 'allow' => '@'],
+                ['actions' => ["add"], 'allow' => '*']
             ],
         ],
     ],
@@ -171,6 +186,7 @@ return [
             Service\NewsManager::class => Service\Factory\NewsManagerFactory::class,
             Service\CommertialManager::class => Service\Factory\CommertialManagerFactory::class,
             Service\SearchFlatManager::class => Service\Factory\SearchFlatManagerFactory::class,
+            Service\OrderManager::class => Service\Factory\OrderManagerFactory::class,
         ],
     ],
     'view_manager' => [

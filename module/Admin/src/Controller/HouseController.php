@@ -223,20 +223,29 @@ class HouseController extends AbstractActionController
 
     public function deleteAction()
     {
-        $id = (int)$this->params()->fromRoute('id', -1);
-        if ($id<1) {
-            $this->getResponse()->setStatusCode(404);
-            return;
+
+        $this->layout('layout/empty');
+        $viewModel = null;
+
+        if ($this->getRequest()->isPost()) {
+
+            $request = $this->getRequest();
+            $data = $request->getPost()->toArray();
+            $id = $data['id'];
+
+            $house = $this->entityManager->getRepository(House::class)->find($id);
+
+            // Remove it and flush
+            $this->entityManager->remove($house);
+            $this->entityManager->flush();
+
+            $viewModel = new ViewModel(array());
         }
 
-        $house = $this->entityManager->getReference(House::class, $id);
+        $viewModel->setTerminal(true);
 
-        // Remove it and flush
-        $this->entityManager->remove($house);
-        $this->entityManager->flush();
+        return $viewModel;
 
-        // Redirect to "view" page
-        return $this->redirect()->toRoute('housing', ['action'=>'index']);
     }
 
 }

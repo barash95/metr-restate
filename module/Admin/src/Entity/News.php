@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Никита
- * Date: 18.02.2019
- * Time: 13:49
- */
 
 namespace Admin\Entity;
 
@@ -100,7 +94,7 @@ class News
 
     public function setResId($res_id)
     {
-        if($res_id != 0)
+//        if($res_id != 0)
         $this->res_id = $res_id;
     }
 

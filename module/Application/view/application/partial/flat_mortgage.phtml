@@ -11,7 +11,7 @@
                         <?php
                         foreach ($banks as $bank){
                          ?>
-                            <div class="swiper-slide">
+                            <div class="swiper-slide" onclick="changePercent(<?=$bank->getPercent();?>)">
                                 <div class="ps-item">
                                     <div class="img"><img src="/img/ps/ps-1.png" alt=""/></div>
                                     <div class="txt">
@@ -40,6 +40,25 @@
                             }
                         }
                     });
+                </script>
+                <script>
+                    $(document).ready(function() {
+                        changePercent(<?=$banks[0]->getPercent();?>);
+                    })
+                </script>
+                <script>
+                    function getTotal(){
+                        cost = $range.val() * 1000000*((100 - $payment.val())/100);
+                        percent = $('#percent').text().replace(/,/, '.');
+                        total =  (cost + (cost*percent/100)*$time.val()) / ($time.val() * 12);
+                        $('#total')[0].textContent = Math.ceil(total);
+                    }
+                </script>
+                <script>
+                    function changePercent(pr) {
+                        $('#percent')[0].textContent = pr;
+                        getTotal();
+                    }
                 </script>
             </div>
             <!-- #ps-slider -->
@@ -77,11 +96,11 @@
             <div class="r-block">
                 <div class="item">
                     <div class="tit">Процентная ставка</div>
-                    <div class="rate">7,5 %</div>
+                    <div class="rate"><span id="percent">7,5</span> %</div>
                 </div>
                 <div class="item">
                     <div class="tit">Ежемесячный платеж</div>
-                    <div class="price">13 560 <span class="size-smoll">руб.</span></div>
+                    <div class="price"><span id="total">13 560</span> <span class="size-smoll">руб.</span></div>
 
                 </div>
             </div>

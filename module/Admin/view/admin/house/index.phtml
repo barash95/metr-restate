@@ -26,7 +26,7 @@ $this->headTitle('Список корпусов');
 
     <?php foreach ($housing as $house): ?>
 
-      <tr>
+      <tr id="housing<?=$house->getId()?>">
         <td>
           <a href="<?= $this->url('housing', ['action'=>'view', 'id'=>$house->getId()]); ?>">
             <?= $this->escapeHtml($house->getId()); ?>
@@ -46,12 +46,8 @@ $this->headTitle('Список корпусов');
                     ['action'=>'edit', 'id'=>$house->getId()]); ?>">
                 Редактировать
             </a>
-          </td><td>
-            <a class="btn btn-default" href="<?= $this->url('housing',
-                      ['action'=>'delete', 'id'=>$house->getId()]); ?>"  onclick="return confirm('Вы уверены?')">
-              Удалить
-            </a>
-        </td>
+          </td>
+          <td><a href="#"  onclick="return confirm('Вы уверены?') ? confirmDelete('housing', <?= $house->getId() ?>) : false">Удалить</a></td>
       </tr>
 
     <?php endforeach; ?>

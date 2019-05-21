@@ -17,21 +17,33 @@
     <section id="product">
         <div class="container">
             <div class="title-block js-animation">
-                <h2>Квартиры по вашим параметрам(<?=$count?>)</h2></div>
-            <div class="product_block">
-                <?php foreach ($flats as $flat){?>
+                <h2>Квартиры по вашим параметрам(<?= $count ?>)</h2></div>
+            <div id="ajax_content">
+                <div class="product_block">
+                    <?php foreach ($flats as $flat) { ?>
                         <?php echo $this->partial('application/partial/flat_second', ['flat' => $flat]); ?>
-                <?php } ?>
+                    <?php } ?>
+                </div>
+                <!-- End .product_block -->
+
+                <div id="feedback-modal" class="modal-block btn call_us">Позвоните нам</div>
+
+                <?= $this->paginationControl($flats,
+                    'Sliding',
+                    'application/partial/flat_paginator',
+                    array('route' => 'flat', 'fromQuery' => $fromQuery)); ?>
             </div>
-            <!-- End .product_block -->
-
-            <div id="feedback-modal" class="modal-block btn call_us">Позвоните нам</div>
-
-            <?= $this->paginationControl($flats,
-                'Sliding',
-                'application/partial/flat_paginator',
-                array('route' => 'flat', 'fromQuery' => $fromQuery)); ?>
         </div>
         <!-- End .container -->
     </section>
 </article>
+<script>
+    function getAjax(page) {
+        $.get("/flat/ajax-flats", {
+            page: page
+        }, function (data) {
+            $('#ajax_content').html(data);
+            console.log(data);
+        });
+    }
+</script>

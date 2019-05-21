@@ -90,6 +90,7 @@ class FlatController extends AbstractActionController
 
     public function viewAction()
     {
+//        $this->layout('layout/layout_view');
         $this->layout('layout/layout_view');
 
         $id = (int)$this->params()->fromRoute('id', -1);
@@ -144,6 +145,33 @@ class FlatController extends AbstractActionController
     public function pdfAction()
     {
         return new ViewModel();
+    }
+
+    public function ajaxFlatsAction(){
+        $page = $this->params()->fromQuery('page', 1);
+        $this->searchFlatManager->init("ClientListSearch");
+
+        $filter = $this->searchFlatManager->getSearch();
+
+        $fromQuery = $this->params()->fromQuery();
+        if (isset($fromQuery['page'])) unset($fromQuery['page']);
+
+        $query = $this->entityManager->getRepository(Flat::class)
+            ->findAllFlat($filter);
+
+        $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
+        $paginator = new Paginator($adapter);
+        $paginator->setDefaultItemCountPerPage(6);
+        $paginator->setCurrentPageNumber($page);
+
+        $view = new ViewModel([
+            'flats' => $paginator,
+            'fromQuery' => $fromQuery,
+        ]);
+
+        $view->setTerminal(true);
+
+        return $view;
     }
 
 

@@ -1,0 +1,14 @@
+<div class="product_block">
+        <?php foreach ($flats as $flat) { ?>
+                <?php echo $this->partial('application/partial/flat_second', ['flat' => $flat]); ?>
+        <?php } ?>
+</div>
+<!-- End .product_block -->
+
+<div id="feedback-modal" class="modal-block btn call_us">Позвоните нам</div>
+
+<?= $this->paginationControl($flats,
+    'Sliding',
+    'application/partial/flat_paginator',
+    array('route' => 'flat', 'fromQuery' => $fromQuery)); ?>
+</div>

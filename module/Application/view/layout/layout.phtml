@@ -22,21 +22,18 @@
             ->prependFile($this->basePath('js/bootstrap.min.js'))
             ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
         ?>
+        <script>
+            $('#myTabs a').click(function (e) {
+                e.preventDefault()
+                $(this).tab('show')
+            })
+        </script>
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?= $this->url('home') ?>">Home</a></li>
-                        <li><a href="<?= $this->url('complex') ?>">Complex</a></li>
-                        <li><a href="<?= $this->url('map') ?>">Map</a></li>
-                        <li><a href="<?= $this->url('flat') ?>">Flat</a></li>
-                        <li><a href="<?= $this->url('favorites') ?>">Favorites</a></li>
-                        <li><a href="<?= $this->url('about') ?>">About</a></li>
-                        <li><a href="<?= $this->url('contacts') ?>">Contacts</a></li>
-                        <li><a href="<?= $this->url('mortgage') ?>">Mortgage</a></li>
-                        <li><a href="<?= $this->url('news') ?>">News</a></li>
-
+                        <li class="active"><a href="<?= $this->url('admin') ?>">Главная</a></li>
 
                         <li><a href="<?= $this->url('resident') ?>">Список ЖК</a></li>
                         <li><a href="<?= $this->url('mapping') ?>">Список карт</a></li>
@@ -59,6 +56,25 @@
                 <p>&copy; 2019               - <?= date('Y') ?> by ATR-MEDIA Ltd. All rights reserved.</p>
             </footer>
         </div>
+
+        <script>
+            function confirmDelete(url, id) {
+                data = {
+                    'id' : id
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/"+url+"/delete",
+                    data: data,
+                    success: function (msg) {
+                        $('#'+url+id).remove();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(XMLHttpRequest)
+                    }
+                });
+            }
+        </script>
         <?= $this->inlineScript() ?>
     </body>
 </html>

@@ -19,7 +19,7 @@
                 <?php
                 $first = 'width-100';
                 foreach ($residents as $resident) {
-                    echo $this->partial('application/partial/complex', ['resident' => $resident, 'first' => $first]);
+                    echo $this->partial('application/partial/complex', ['resident' => $resident, 'first' => $first, 'id' => '', 'disp' => '']);
                     $first = '';
                 }
                 ?>

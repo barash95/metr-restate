@@ -1,8 +1,8 @@
 <?php
-namespace Flat\Service\Factory;
+namespace Admin\Service\Factory;
 
 use Interop\Container\ContainerInterface;
-use Flat\Service\OrderManager;
+use Admin\Service\OrderManager;
 
 /**
  * This is the factory class for OrderManager service. The purpose of the factory

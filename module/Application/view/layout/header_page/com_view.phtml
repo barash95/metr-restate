@@ -1,0 +1,7 @@
+<div class="main-txt">
+    <h1>Помещение № <?=$commertial->getNumber()?></h1>
+    <div class="flex">
+        <a href="/complex/view/<?=$commertial->getResId()?>" class="back name">ЖК “<?= $this->residentialName()->render($commertial->getResId()) ?>”</a>
+        <a href="/commertial" class="back">Вернуться к выбору квартиры</a>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<footer>
+    <div class="container">
+        <div class="footer_container">
+            <div class="footer_menu">
+                <ul>
+                    <li><a href="<?= $this->url('home') ?>">Главная</a></li>
+                    <li><a href="#">Выбор квартиры</a></li>
+                    <li><a href="<?= $this->url('complex') ?>">Жилые комплексы</a></li>
+                    <!--                                <li><a href="#">Ипотека</a></li>-->
+                </ul>
+                <ul>
+                    <li><a href="<?= $this->url('about') ?>">О компании</a></li>
+                    <!--                                <li><a href="<? //= $this->url('news') ?>">Новости</a></li>-->
+                    <li><a href="<?= $this->url('map') ?>">Карта объектов</a></li>
+                    <li><a href="<?= $this->url('contacts') ?>">Контакты</a></li>
+                </ul>
+            </div><!-- .footer_menu -->
+            <div class="footer_contacts contacts-block">
+                <a href="tel:+7 (812) 649-75-34" class="modal-block tel">+7 (812) 649-75-34</a>
+                <a href="mailto:info@site.ru" class="mail">info@site.ru</a>
+            </div><!-- .contacts-block -->
+        </div>
+    </div><!-- End .container -->
+</footer>
+</div>
+<!--/Main-->
+
+<!-- MODAL -->
+<div class="modal" data-id="#feedback-modal">
+    <div class="modal-ov ov-black"></div>
+    <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <div class="feedback_form">
+            <div class="tit">Заказать обратный звонок</div>
+            <p>Оставьте заявку и наш менеджер свяжется<br/>с вами в течение 30 минут</p>
+            <form name="order-form" id="order-form" action="" method="post">
+                <div class="item-form">
+                    <input type="text" id="name" name="name" class="input-form" placeholder="Ваше имя"/>
+                </div>
+                <div class="item-form">
+                    <input type="text" id="phone" name="phone" class="input-form" placeholder="Номер телефона"/>
+                </div>
+                <div class="btn-block">
+                    <a class="btn" onclick="callMe(); return false;">Перезвоните мне</a>
+                </div>
+            </form>
+        </div><!-- .feedback_form -->
+        <script>
+            $(function () {
+                $("#phone").mask("8(999) 999-9999");
+            });
+        </script>
+    </div>
+</div>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/lead.js"></script>

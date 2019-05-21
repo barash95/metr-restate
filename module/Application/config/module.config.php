@@ -189,6 +189,7 @@ return [
             'layout/layout_main'           => __DIR__ . '/../view/layout/layout_main.phtml',
             'layout/layout_second'           => __DIR__ . '/../view/layout/layout_second.phtml',
             'layout/layout_view'           => __DIR__ . '/../view/layout/layout_view.phtml',
+            'layout/empty'           => __DIR__ . '/../view/layout/empty.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',

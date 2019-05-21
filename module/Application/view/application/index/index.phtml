@@ -63,9 +63,14 @@
             <div class="residential-complexes">
                 <?php
                 $first = 'width-100';
+                $i = 0;
+                $disp = 'display: block';
                 foreach ($residents as $resident) {
-                    echo $this->partial('application/partial/complex', ['resident' => $resident, 'first' => $first]);
+                    if ($i > 2) $disp = 'display: none';
+                    $id = 'res'.$i;
+                    echo $this->partial('application/partial/complex', ['resident' => $resident, 'first' => $first, 'id' => $id, 'disp' => $disp]);
                     $first = '';
+                    $i++;
                 }
                 ?>
                 <div class="choice-apartment item fadeEl">
@@ -76,7 +81,7 @@
                     <a href="#" class="link"></a>
                 </div>
             </div>
-            <div class="btn-block display-block"><a href="#">Загрузить еще</a></div>
+            <div class="btn-block display-block"><a href="#" onclick="return loadMore()">Загрузить еще</a></div>
         </div><!-- End .container -->
     </section>
 
@@ -513,3 +518,29 @@
         </div>
     </section>
 </article>
+<script>
+    max_i = <?=$i;?>;
+    cur_i = 3
+    function loadMore() {
+        if (cur_i < max_i){
+            display(cur_i);
+            cur_i++;
+        }
+        if (cur_i < max_i){
+            display(cur_i);
+            cur_i++;
+        }
+        if (cur_i < max_i){
+            display(cur_i);
+            cur_i++;
+        }
+        return false;
+    }
+
+    function display(i) {
+        str = '#res'+i;
+        $(str).show();
+
+        return false;
+    }
+</script>

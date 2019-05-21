@@ -1,38 +1,7 @@
 <?= $this->doctype() ?>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <?= $this->headTitle('metr-restate')->setSeparator(' - ')->setAutoEscape(false) ?>
-
-    <?= $this->headMeta()
-        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-    ?>
-
-    <title></title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])
-        ->prependStylesheet($this->basePath('css/style.css'))
-        ->prependStylesheet($this->basePath('css/fonts.css'))
-        ->prependStylesheet($this->basePath('css/swiper.min.css'))
-        ->prependStylesheet($this->basePath('bootstrap-multiselect/bootstrap-multiselect.css'))
-        ->prependStylesheet($this->basePath('css/ion.rangeSlider.css'))
-    ?>
-
-    <!-- Scripts -->
-    <?= $this->headScript()
-        ->prependFile($this->basePath('js/favorites.js'))
-        ->prependFile($this->basePath('js/js.cookie.js'))
-        ->prependFile($this->basePath('js/swiper.min.js'))
-        ->prependFile($this->basePath('js/jquery.maskedinput.min.js'))
-        ->prependFile($this->basePath('bootstrap-multiselect/bootstrap-multiselect.js'))
-        ->prependFile($this->basePath('js/jquery.js'))
-    ?>
-
-    <link rel="icon" href="/favicon.png" type="image/x-icon">
+    <?php echo $this->partial('head'); ?>
 
 </head>
 
@@ -47,162 +16,14 @@
 </div>
 <!--/Loader-->
 
-<div id="main" class="<?=$this->current()->render();?>">
-    <div id="wrapper">
-        <header>
-            <div class="container c-btn">
-                <div class="feedback-btn">
-                    <div id="feedback-modal" class="modal-block"><img src="/img/ico/phone.png" alt=""/></div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="header_top">
-                    <div class="logo">
-                        <a href="/">
-                            <span class="e">e</span>
-                            <p><span class="metr">МЕТР</span><span class="restate">restate</span></p>
-                        </a>
-                    </div>
-                    <!--.logo-->
+<div id="main" class="<?= $this->current()->render(); ?>">
+    <div id="wrapper"><?php echo $this->partial('header'); ?>
 
-                    <div class="header_top-center">
-                        <div id="menu-main">
-                            <div class="cd-nav-trigger">
-                                <div class="hamburger-menu">
-                                    <div class="bar"></div>
-                                    <div class="bar"></div>
-                                    <div class="bar"></div>
-                                </div>
-                            </div>
-                            <div class="menu-main_container">
-                                <div class="container">
-                                    <div class="menu_serch">
-                                        <label>Поиск</label>
-                                        <input type="search" name="search">
-                                    </div>
-                                    <div class="menu-main_flex">
-                                        <nav class="nav">
-                                            <ul>
-                                                <li><a href="<?= $this->url('home') ?>">Главная</a></li>
-                                                <li><a href="<?= $this->url('flat') ?>">Выбор квартиры</a></li>
-                                                <li><a href="<?= $this->url('complex') ?>">Жилые комплексы</a></li>
-                                                <li><a href="#">Ипотека</a></li>
-                                            </ul>
-                                            <ul>
-                                                <li><a href="<?= $this->url('about') ?>">О компании</a></li>
-                                                <li><a href="<?= $this->url('news') ?>">Новости</a></li>
-                                                <li><a href="<?= $this->url('map') ?>">Карта объектов</a></li>
-                                                <li><a href="<?= $this->url('contacts') ?>">Контакты</a></li>
-                                            </ul>
-                                        </nav>
-                                        <div class="menu_contacts">
-                                            <p>ООО “Агенство недвижимости<br/>МЕТР.restate”</p>
-                                            <p>185014, Петрозаводск,<br/>Максима Горького 25,<br/>офис 308</p>
-                                            <div class="soc">
-                                                <a href="#">Вк</a>
-                                                <a href="#">f</a>
-                                                <a href="#">ok</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!--menu-main_container-->
-                        </div><!-- #menu-main -->
+        <?= $this->content ?>
 
-                        <nav id="menu">
-                            <ul>
-                                <li><a href="<?= $this->url('flat') ?>" <?= $this->activeMenu()->render('flat'); ?>>Выбор квартиры </a></li>
-                                <li class="active"><a href="<?= $this->url('about') ?>" <?= $this->activeMenu()->render('about'); ?>>О компании </a></li>
-                                <li><a href="<?= $this->url('news') ?>" <?= $this->activeMenu()->render('news'); ?>>Новости </a></li>
-                                <li class="mob-none"><a href="<?= $this->url('contacts') ?>" <?= $this->activeMenu()->render('contacts'); ?>>Контакты</a></li>
-                            </ul>
-                        </nav>
+    </div><!-- End #wrapper -->
+    <?php echo $this->partial('footer'); ?>
 
-                        <div class="favorites">
-                            <a href="<?= $this->url('favorites') ?>">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12">
-                                    <path class="heart"
-                                          d="M1078.54,90s-10.3-8.578-5.05-11.384a27.845,27.845,0,0,0,10,0c5.26,2.805-4.95,11.384-4.95,11.384m-0.08-9.344a6.556,6.556,0,0,0-1.06-.869,2.872,2.872,0,0,0-3-.076,1.232,1.232,0,0,0-.74.975,1.977,1.977,0,0,0-.02.248c0,1.891,2.63,4.972,4.9,7.1,2.23-2.117,4.81-5.182,4.81-7.073a2.166,2.166,0,0,0-.01-0.257,1.25,1.25,0,0,0-.76-0.987,2.531,2.531,0,0,0-2.9.008,6.408,6.408,0,0,0-1.22.937"
-                                          transform="translate(-1072 -78)"/>
-                                </svg>
-                                <span class="value like-span">+</span>
-                            </a>
-                        </div>
-                        <!-- .favorites -->
-                    </div>
-                    <!-- .header_top-center -->
-
-                    <div class="header_contacts contacts-block">
-                        <div id="feedback-modal" class="modal-block tel">+7 (812) 649-75-34</div>
-                        <div class="mode">
-                            <p>пн-пт 9:00-21:00</p>
-                            <p>сб-вс 10:00-20:00</p>
-                        </div>
-                    </div>
-                    <!-- .contacts-block -->
-                </div>
-                <!-- End .header_top -->
-                <?= $this->content ?>
-
-            </div><!-- End #wrapper -->
-            <footer>
-                <div class="container">
-                    <div class="footer_container">
-                        <div class="footer_menu">
-                            <ul>
-                                <li><a href="<?= $this->url('home') ?>">Главная</a></li>
-                                <li><a href="#">Выбор квартиры</a></li>
-                                <li><a href="<?= $this->url('complex') ?>">Жилые комплексы</a></li>
-                                <li><a href="#">Ипотека</a></li>
-                            </ul>
-                            <ul>
-                                <li><a href="<?= $this->url('about') ?>">О компании</a></li>
-                                <li><a href="<?= $this->url('news') ?>">Новости</a></li>
-                                <li><a href="<?= $this->url('map') ?>">Карта объектов</a></li>
-                                <li><a href="<?= $this->url('contacts') ?>">Контакты</a></li>
-                            </ul>
-                        </div><!-- .footer_menu -->
-                        <div class="footer_contacts contacts-block">
-                            <a href="tel:+7 (812) 649-75-34" class="tel">+7 (812) 649-75-34</a>
-                            <a href="mailto:info@site.ru" class="mail">info@site.ru</a>
-                        </div><!-- .contacts-block -->
-                    </div>
-                </div><!-- End .container -->
-            </footer>
-    </div>
-    <!--/Main-->
-
-    <!-- MODAL -->
-    <div class="modal" data-id="#feedback-modal">
-        <div class="modal-ov ov-black"></div>
-        <div class="modal-content">
-            <span class="close">&times;</span>
-
-            <div class="feedback_form">
-                <div class="tit">Заказать обратный звонок</div>
-                <p>Оставьте заявку и наш менеджер свяжется<br/>с вами в течение 30 минут</p>
-                <form action="" method="post">
-                    <div class="item-form">
-                        <input type="text" class="input-form" placeholder="Ваше имя"/>
-                    </div>
-                    <div class="item-form">
-                        <input id="phone" type="text" class="input-form" placeholder="Номер телефона"/>
-                    </div>
-                    <div class="btn-block">
-                        <button class="btn">Перезвоните мне</button>
-                    </div>
-                </form>
-            </div><!-- .feedback_form -->
-            <script>
-                $(function () {
-                    $("#phone").mask("8(999) 999-9999");
-                });
-            </script>
-        </div>
-    </div>
-
-
-    <script type="text/javascript" src="/js/main.js"></script>
     <script type="text/javascript" src="/js/ion.rangeSlider.js"></script>
     <script type="text/javascript" src="/js/rangeSlider.js"></script>
 </body>

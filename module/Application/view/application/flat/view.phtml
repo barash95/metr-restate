@@ -3,7 +3,7 @@
         <h1><?php echo str_replace(' ', " <br>", $flat->getSizeTxt())?> № <?=$flat->getNumber()?></h1>
         <div class="flex">
             <a href="/complex/view/<?=$flat->getResId()?>" class="back name">ЖК “<?= $this->residentialName()->render($flat->getResId()) ?>”</a>
-            <a href="#" class="back">Вернуться к выбору квартиры</a>
+            <a onclick="history.back();" class="back">Вернуться к выбору квартиры</a>
         </div>
     </div>
 </div>
@@ -64,8 +64,8 @@
                     <div id="video_modal" class="modal-block plan">План этажа</div>
                 </div>
                 <div class="r-block">
-                    <div class="old-price">2 790 000 <span class="size-smoll">руб.</span></div>
-                    <div class="price">2 245 000 <span class="size-smoll">руб.</span></div>
+<!--                    <div class="old-price">2 790 000 <span class="size-smoll">руб.</span></div>-->
+                    <div class="price"><span id="cost"><?=$flat->getPrice();?></span> <span class="size-smoll">руб.</span></div>
                 </div>
                 <div class="add-block">
                     <a href="#" class="add-f">Добавить в избранное</a>

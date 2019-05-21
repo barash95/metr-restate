@@ -2,127 +2,174 @@
 $this->headTitle('Карточка ЖК');
 ?>
 
-
 <h1>Карточка ЖК</h1>
 <div class="row">
     <div class="col-md-4">
-        <a class="btn btn-default" href="/resident/edit/<?=$resident->getId();?>">
+        <a class="btn btn-default" href="/resident/edit/<?= $resident->getId(); ?>">
             <span class="glyphicon glyphicon-pencil"></span> Редактировать
         </a>
-        <a href="/mapping/add?res_id=<?=$resident->getId();?>";>Добавить карту</a>
-        <a href="/housing/add?res_id=<?=$resident->getId();?>";>Добавить корпус</a>
-        <a href="/video/add?res_id=<?=$resident->getId();?>";>Добавить видео</a>
-        <a href="/resident/parse/<?=$resident->getId();?>";>Обновить квартиры по фиду</a>
+        <a href="/resident/parse/<?= $resident->getId(); ?>" ;>Обновить квартиры по фиду</a>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-6">
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>ID:</th>
-                <td><?= $this->escapeHtml($resident->getId()) ?></td>
-            </tr>
-            <tr>
-                <th>Жк:</th>
-                <td><?= $resident->getName() ?></td>
-            </tr>
-            <tr>
-                <th>Фид:</th>
-                <td><?= $resident->getLink() ?></td>
-            </tr>
-            <tr>
-                <th>Заголовок:</th>
-                <td><?= $this->escapeHtml($resident->getTittle()) ?></td>
-            </tr>
-            <tr>
-                <th>Описание:</th>
-                <td><?= $this->escapeHtml($resident->getDescription()) ?></td>
-            </tr>
-            <tr>
-                <th>Метро:</th>
-                <td><?= $this->escapeHtml($resident->getMetro()) ?></td>
-            </tr>
-            <tr>
-                <th>Адрес:</th>
-                <td><?= $this->escapeHtml($resident->getAddress()) ?></td>
-            </tr>
-            <tr>
-              <th>Корпусов:</th>
-              <td><?= $this->escapeHtml($resident->getHousing()) ?></td>
-            </tr>
-            <tr>
-                <th>Всего кв:</th>
-                <td><?= $this->escapeHtml($resident->getTotalFlat()) ?></td>
-            </tr>
-            <tr>
-              <th>Статус:</th>
-              <td><?= $this->escapeHtml($resident->getStateAsString()) ?></td>
-            </tr>
-        </table>
-    </div>
-    <div class="col-md-6">
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>Заголовок 1:</th>
-                <td><?= $this->escapeHtml($resident->getTittle1()) ?></td>
-            </tr>
-            <tr>
-                <th>Описание 1:</th>
-                <td><?= $this->escapeHtml($resident->getDescription1()) ?></td>
-            </tr>
-            <tr>
-                <th>Заголовок 2:</th>
-                <td><?= $this->escapeHtml($resident->getTittle2()) ?></td>
-            </tr>
-            <tr>
-                <th>Описание 2:</th>
-                <td><?= $this->escapeHtml($resident->getDescription2()) ?></td>
-            </tr>
-            <tr>
-                <th>Заголовок 3:</th>
-                <td><?= $this->escapeHtml($resident->getTittle3()) ?></td>
-            </tr>
-            <tr>
-                <th>Описание 3:</th>
-                <td><?= $this->escapeHtml($resident->getDescription3()) ?></td>
-            </tr>
-        </table>
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th colspan="2">Корпуса:</th>
-            </tr>
-            <?php
-            foreach($housing as $house){
-            ?>
-            <tr>
-                <th colspan="2">
-                    <a href="/housing/view/<?=$this->escapeHtml($house->getId())?>">
-                        Корпус №<?=$this->escapeHtml($house->getHouse());?>
-                    </a>
-                </th>
-            </tr>
-            <?php } ?>
-        </table>
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th colspan="2">Видео:</th>
-            </tr>
-            <?php
-            foreach($videos as $video){
-                ?>
-                <tr>
-                    <th>
-                        <a href="/video/edit/<?=$this->escapeHtml($video->getId())?>">
-                            <?=$this->escapeHtml($video->getDate());?>
-                        </a>
-                    </th>
-                    <th>
-                        <a href="<?=$this->escapeHtml($video->getLink())?>">
-                           <?=$this->escapeHtml($video->getLink());?>
-                        </a>
-                    </th>
-                </tr>
-            <?php } ?>
-        </table>
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#main" aria-controls="main" role="tab" data-toggle="tab">О
+                ЖК</a></li>
+        <li role="presentation"><a href="#house" aria-controls="house" role="tab" data-toggle="tab">Корпуса</a></li>
+        <li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">Карты и видео</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="main">
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>ID:</th>
+                            <td><?= $this->escapeHtml($resident->getId()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Жк:</th>
+                            <td><?= $resident->getName() ?></td>
+                        </tr>
+                        <tr>
+                            <th>Фид:</th>
+                            <td><?= $resident->getLink() ?></td>
+                        </tr>
+                        <tr>
+                            <th>Заголовок:</th>
+                            <td><?= $this->escapeHtml($resident->getTittle()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Описание:</th>
+                            <td><?= $this->escapeHtml($resident->getDescription()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Метро:</th>
+                            <td><?= $this->escapeHtml($resident->getMetro()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Адрес:</th>
+                            <td><?= $this->escapeHtml($resident->getAddress()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Корпусов:</th>
+                            <td><?= $this->escapeHtml($resident->getHousing()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Всего кв:</th>
+                            <td><?= $this->escapeHtml($resident->getTotalFlat()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Статус:</th>
+                            <td><?= $this->escapeHtml($resident->getStateAsString()) ?></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Заголовок 1:</th>
+                            <td><?= $this->escapeHtml($resident->getTittle1()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Описание 1:</th>
+                            <td><?= $this->escapeHtml($resident->getDescription1()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Заголовок 2:</th>
+                            <td><?= $this->escapeHtml($resident->getTittle2()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Описание 2:</th>
+                            <td><?= $this->escapeHtml($resident->getDescription2()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Заголовок 3:</th>
+                            <td><?= $this->escapeHtml($resident->getTittle3()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Описание 3:</th>
+                            <td><?= $this->escapeHtml($resident->getDescription3()) ?></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="house">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/housing/add?res_id=<?= $resident->getId(); ?>" ;>Добавить корпус</a>
+                        <p>Это список корпусов данного ЖК</p>
+                    </div>
+                    <div class="col-md-5">
+                            <table class="table table-striped table-bordered">
+                                <?php
+                                foreach ($housing as $house) {
+                                ?>
+                                <tr id="housing<?=$house->getId()?>">
+                                    <th>
+                                        <a href="/housing/view/<?= $this->escapeHtml($house->getId()) ?>">
+                                            Корпус №<?= $this->escapeHtml($house->getHouse()); ?>
+                                        </a>
+                                    </th>
+                                    <td><a href="/housing/edit/<?= $this->escapeHtml($house->getId()) ?>">Редактировать</a></td>
+                                    <td><a href="#"  onclick="return confirm('Вы уверены?') ? confirmDelete('housing', <?= $house->getId() ?>) : false">Удалить</a></td>
+                                </tr>
+
+                                <?php } ?>
+                            </table>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="about">
+            <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="/video/add?res_id=<?= $resident->getId(); ?>" ;>Добавить видео</a>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th colspan="4">Видео:</th>
+                        </tr>
+                        <?php
+                        foreach ($videos as $video) {
+                            ?>
+                            <tr>
+                                <td>
+                                    <a href="/video/edit/<?= $this->escapeHtml($video->getId()) ?>">
+                                        <?= $this->escapeHtml($video->getDate()); ?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="http://<?= $this->escapeHtml($video->getLink()) ?>">
+                                        <?= $this->escapeHtml($video->getLink()); ?>
+                                    </a>
+                                </td>
+                                <td><a href="/video/edit/<?= $this->escapeHtml($video->getId()) ?>">Редактировать</a></td>
+                                <td><a href="/video/delete/<?= $this->escapeHtml($video->getId()) ?>"  onclick="return confirm('Вы уверены?')">Удалить</a></td>
+                            </tr>
+                        <?php } ?>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <a href="/mapping/add?res_id=<?= $resident->getId(); ?>" ;>Добавить карту</a>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th colspan="2">Карты:</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
 </div>
+

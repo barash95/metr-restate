@@ -1,7 +1,7 @@
 //RANGE price-range
 var $range = $(".price-range"),
     instance,
-    min = 1.5,
+    min = 1,
     max = 25;
 	
 
@@ -10,8 +10,11 @@ $range.ionRangeSlider({
 	type: "single",
     min: min,
     max: max,
-    from: 10,
+    from: $('#cost')[0].innerText/1000000,
 	postfix: ' млн. р.',
+    onChange: function (obj) {
+        getTotal();
+    },
 });
 
 instance = $range.data("ionRangeSlider");
@@ -31,7 +34,10 @@ $payment.ionRangeSlider({
     min: min,
     max: max,
     from: 30,
-	postfix: ' %'
+	postfix: ' %',
+    onChange: function (obj) {
+        getTotal();
+    },
 
 });
 
@@ -50,10 +56,28 @@ $time.ionRangeSlider({
     min: min,
     max: max,
     from: 15,
-	postfix: ' лет'
+	postfix: ' лет',
+    onChange: function (obj) {
+        getTotal();
+    },
 });
 
 instance = $time.data("ionRangeSlider");
 
 
+function changePercent(pr) {
+    $('#percent')[0].textContent = pr;
+    getTotal();
+}
+
+$(document).ready(function () {
+    changePercent($('#percent').text().replace(/,/, '.'));
+})
+
+function getTotal() {
+    cost = $range.val() * 1000000 * ((100 - $payment.val()) / 100);
+    percent = $('#percent').text().replace(/,/, '.');
+    total = (cost + (cost * percent / 100) * $time.val()) / ($time.val() * 12);
+    $('#total')[0].textContent = Math.ceil(total);
+}
 
