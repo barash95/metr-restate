@@ -1,5 +1,5 @@
 <figure class="item fadeEl">
-    <div class="img"><img src="img/product/img-4.jpg" alt="" /></div>
+    <div class="img"><img src="/img/product/img-4.jpg" alt="" /></div>
     <figcaption>
         <div class="top-ico">
             <div class="favorites like-com" data-id="<?=$com->getId()?>">
@@ -24,5 +24,5 @@
         </div>
         <!-- .info -->
     </figcaption>
-    <a href="/commertial/view/<?=$com->getId()?>" class="link"></a>
+    <a href="/commertial/view/<?=$com->getId()?>"  onclick="return getAjax('commertial/view/<?=$com->getId()?>');"  class="link"></a>
 </figure>

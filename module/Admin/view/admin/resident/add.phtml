@@ -30,12 +30,19 @@ $form->get('description')->setAttributes([
 
 $form->get('metro')->setAttributes([
     'class'=>'form-control',
-    'placeholder'=>'Metro'
+    'placeholder'=>'Metro',
+    'list' => 'metroList'
+]);
+
+$form->get('region')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Район',
+    'list' => 'regionList'
 ]);
 
 $form->get('address')->setAttributes([
     'class'=>'form-control',
-    'placeholder'=>'Address'
+    'placeholder'=>'Address',
 ]);
 
 $form->get('housing')->setAttributes([
@@ -146,6 +153,101 @@ $form->prepare();
             <?= $this->formLabel($form->get('metro')); ?>
             <?= $this->formElement($form->get('metro')); ?>
             <?= $this->formElementErrors($form->get('metro')); ?>
+            <datalist id="metroList">
+                <option>Автово </option>
+                <option>Адмиралтейская </option>
+                <option>Академическая </option>
+                <option>Балтийская </option>
+                <option>Бухарестская </option>
+                <option>Василеостровская </option>
+                <option>Владимирская </option>
+                <option>Волковская </option>
+                <option>Выборгская </option>
+                <option>Горьковская </option>
+                <option>Гостиный двор </option>
+                <option>Гражданский проспект </option>
+                <option>Девяткино </option>
+                <option>Достоевская </option>
+                <option>Елизаровская </option>
+                <option>Звёздная </option>
+                <option>Звенигородская </option>
+                <option>Кировский завод </option>
+                <option>Комендантский проспект</option>
+                <option>Крестовский остров </option>
+                <option>Купчино </option>
+                <option>Ладожская </option>
+                <option>Ленинский проспект </option>
+                <option>Лесная </option>
+                <option>Лиговский проспект </option>
+                <option>Ломоносовская </option>
+                <option>Маяковская </option>
+                <option>Международная </option>
+                <option>Московская </option>
+                <option>Московские ворота </option>
+                <option>Нарвская </option>
+                <option>Невский проспект </option>
+                <option>Новочеркасская </option>
+                <option>Обводный канал </option>
+                <option>Обухово </option>
+                <option>Озерки </option>
+                <option>Парк Победы </option>
+                <option>Парнас </option>
+                <option>Петроградская </option>
+                <option>Пионерская </option>
+                <option>Площадь Александра Невского 1 </option>
+                <option>Площадь Александра Невского 2 </option>
+                <option>Площадь Восстания </option>
+                <option>Площадь Ленина </option>
+                <option>Площадь Мужества </option>
+                <option>Политехническая </option>
+                <option>Приморская </option>
+                <option>Пролетарская </option>
+                <option>Проспект Большевиков </option>
+                <option>Проспект Ветеранов </option>
+                <option>Проспект Просвещения </option>
+                <option>Пушкинская </option>
+                <option>Рыбацкое </option>
+                <option>Садовая </option>
+                <option>Сенная площадь </option>
+                <option>Спасская </option>
+                <option>Спортивная </option>
+                <option>Старая Деревня </option>
+                <option>Технологический институт 1 </option>
+                <option>Технологический институт 2 </option>
+                <option>Удельная </option>
+                <option>Улица Дыбенко </option>
+                <option>Фрунзенская </option>
+                <option>Чёрная речка </option>
+                <option>Чернышевская </option>
+                <option>Чкаловская </option>
+                <option>Электросила
+            </datalist>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('region')); ?>
+            <?= $this->formElement($form->get('region')); ?>
+            <?= $this->formElementErrors($form->get('region')); ?>
+            <datalist id="regionList">
+                <option>Адмиралтейский </option>
+                <option>Василеостровский </option>
+                <option>Выборгский</option>
+                <option>Калининский </option>
+                <option>Кировский </option>
+                <option>Колпинский </option>
+                <option>Красногвардейский </option>
+                <option>Красносельский</option>
+                <option>Кронштадтский </option>
+                <option>Курортный </option>
+                <option>Московский </option>
+                <option>Невский </option>
+                <option>Петроградский </option>
+                <option>Петродворцовый </option>
+                <option>Приморский</option>
+                <option>Пушкинский </option>
+                <option>Фрунзенский </option>
+                <option>Центральный</option>
+            </datalist>
         </div>
 
         <div class="form-group">

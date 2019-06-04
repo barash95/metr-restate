@@ -303,8 +303,8 @@ class ResidentController extends AbstractActionController
         if (is_array($flats)) {
             $start = microtime(true);
             foreach ($flats as $flat) {
-                $i++;
-                if($i == 1000) break;
+//                $i++;
+//                if($i == 1000) break;
                 $flat['res_id'] = $res_id;
                 $new_flat = $this->flatManager->addOrUpdateFlat($flat);
 

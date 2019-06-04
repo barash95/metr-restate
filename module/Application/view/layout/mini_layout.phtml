@@ -9,3 +9,25 @@
 <?php echo $this->partial('header'); ?>
 
 <?= $this->content ?>
+
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/lead.js"></script>
+<script type="text/javascript" src="/js/favorites.js"></script>
+<script>
+    $(".close").click(function () {
+        $(".modal-content").addClass('zoom');
+        $(".modal-content.zoom").css({'transform': 'translateY(-100%)'});
+        $(".modal-ov").hide("slow");
+        $("#profit-calculator .sel-tree").removeClass('none');
+
+        function func() {
+            $(".modal").removeClass("open");
+            $("body").removeClass("open-hidden");
+            $(".modal-content").removeClass('zoom');
+            $(".modal-content").css({'transform': 'translateY(0)'});
+        }
+
+        setTimeout(func, 300);
+
+    });
+</script>

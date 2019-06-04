@@ -1,9 +1,10 @@
+<?= $this->headTitle('Коммерческое помещение');?>
 <div class="header_middle">
     <div class="main-txt">
         <h1>Помещение № <?=$commertial->getNumber()?></h1>
         <div class="flex">
-            <a href="/complex/view/<?=$commertial->getResId()?>" class="back name">ЖК “<?= $this->residentialName()->render($commertial->getResId()) ?>”</a>
-            <a href="/commertial" class="back">Вернуться к выбору квартиры</a>
+            <a href="/complex/view/<?=$commertial->getResId()?>" onclick="return getAjax('complex/view/<?=$commertial->getResId()?>');" class="back name">ЖК “<?= $this->residentialName()->render($commertial->getResId()) ?>”</a>
+            <a href="/commertial" onclick="return getAjax('commertial');" class="back">Вернуться к выбору квартиры</a>
         </div>
     </div>
 </div>
@@ -64,8 +65,9 @@
                     <div class="price">2 245 000 <span class="size-smoll">руб.</span></div>
                 </div>
                 <div class="add-block">
-                    <a href="#" class="add-f">Добавить в избранное</a>
+                    <a href="#" id="addFav" class="add-f">Добавить в избранное</a>
                     <a href="#" class="c-mortgage">Рассчитать ипотеку</a>
+                    <div class="like-com" id="checkFav" style="display: none;" data-id="<?=$commertial->getId()?>"></div>
                 </div>
             </div>
             <!--product_bottom-->
@@ -82,3 +84,26 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        var fav_fc = Cookies.get('favorites-com');
+        if (fav_fc){
+            var fc_mas = fav_fc.split(';');
+            var fc_id = $('#checkFav').attr('data-id');
+            var fc_pos = fc_mas.indexOf(fc_id);
+            if (fc_pos === -1){
+                $('#addFav').text('Добавить в избранное');
+            }else{
+                $('#addFav').text('Убрать из избранного');
+            }
+        }});
+</script>
+<script>
+    $('#addFav').on('click', function () {
+        a = $('#checkFav')[0];
+        $('.like-com').trigger('click');
+        if(a.className != "like-com add-favorites") $('#addFav').text('Добавить в избранное');
+        else $('#addFav').text('Убрать из избранного');
+        return false;
+    })
+</script>

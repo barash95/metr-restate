@@ -40,6 +40,7 @@ class ResidentManager
         $resident->setTittle3($data['tittle3']);
         $resident->setDescription3($data['description3']);
         $resident->setMetro($data['metro']);
+        $resident->setRegion($data['region']);
         $resident->setAddress($data['address']);
         $resident->setHousing($data['housing']);
         $resident->setTotalFlat($data['total_flat']);
@@ -70,6 +71,7 @@ class ResidentManager
         $resident->setTittle3($data['tittle3']);
         $resident->setDescription3($data['description3']);
         $resident->setMetro($data['metro']);
+        $resident->setRegion($data['region']);
         $resident->setAddress($data['address']);
         $resident->setHousing($data['housing']);
         $resident->setTotalFlat($data['total_flat']);

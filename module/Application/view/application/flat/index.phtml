@@ -1,7 +1,7 @@
+<?= $this->headTitle('Выбор квартиры');?>
 <div class="header_middle">
     <div class="main-txt">
         <h1>Жилая недвижимость</h1>
-        <p>Подобрать квартиру</p>
     </div>
 
     <div id="menu-filter" class="fadeEl choce-filter">
@@ -16,9 +16,9 @@
 <article id="choce-page" class="inside">
     <section id="product">
         <div class="container">
-            <div class="title-block js-animation">
-                <h2>Квартиры по вашим параметрам(<?= $count ?>)</h2></div>
             <div id="ajax_content">
+                <div class="title-block js-animation">
+                    <h2>Квартиры по вашим параметрам(<?= $count ?>)</h2></div>
                 <div class="product_block">
                     <?php foreach ($flats as $flat) { ?>
                         <?php echo $this->partial('application/partial/flat_second', ['flat' => $flat]); ?>
@@ -38,12 +38,21 @@
     </section>
 </article>
 <script>
-    function getAjax(page) {
+    function getAjaxFlat(page) {
         $.get("/flat/ajax-flats", {
             page: page
         }, function (data) {
             $('#ajax_content').html(data);
-            console.log(data);
+            // console.log(data);
+            setTimeout(function() {
+                $('.fadeEl').each(function () {
+                    $(this).addClass('anim');
+                });
+
+                $('.js-animation').each(function () {
+                    $(this).addClass('start-animation');
+                });
+            }, 100);
         });
     }
 </script>

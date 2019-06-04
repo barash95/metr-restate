@@ -11,9 +11,11 @@ namespace Application\Controller;
 use Admin\Entity\Map;
 use Admin\Entity\Resident;
 use Admin\Entity\Flat;
+use Admin\Entity\Commertial;
 use Admin\Entity\House;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Mvc\MvcEvent;
 
 
 class ComplexController extends AbstractActionController
@@ -39,9 +41,27 @@ class ComplexController extends AbstractActionController
         $this->searchFlatManager = $searchFlatManager;
     }
 
+    public function onDispatch(MvcEvent $e)
+    {
+        // Вызываем метод базового класса onDispatch() и получаем ответ
+        $response = parent::onDispatch($e);
+
+        $ajax = $this->params()->fromQuery('ajax', false);
+
+        if (!$ajax) {
+            $this->layout('layout/layout_second');
+        }
+        if ($ajax) {
+            $this->layout('layout/mini_layout');
+        }
+
+        // Возвращаем ответ
+        return $response;
+    }
+
     public function indexAction()
     {
-        $this->layout('layout/layout_main');
+//        $this->layout('layout/layout_main');
 
         $this->searchFlatManager->init("ClientListSearch");
 
@@ -79,7 +99,7 @@ class ComplexController extends AbstractActionController
 
     public function viewAction()
     {
-        $this->layout('layout/layout_view');
+//        $this->layout('layout/layout_view');
 
         $id = (int)$this->params()->fromRoute('id', -1);
         if ($id<1) {
@@ -96,8 +116,15 @@ class ComplexController extends AbstractActionController
             return;
         }
 
+        $com = $this->entityManager->getRepository(Commertial::class)->findHouse($id);
+
         $flats = $this->entityManager->getRepository(Flat::class)->findBestFlats(15, $resident->getId());
         $houses = $this->entityManager->getRepository(House::class)->findBy(['res_id' => $resident->getId()]);
+        $new_house = array();
+        foreach ($houses as $house){
+            if(in_array($house->getId(), $com)) $new_house[] = $house;
+        }
+        $houses = $new_house;
 
         return new ViewModel([
             'resident' => $resident,
@@ -108,7 +135,7 @@ class ComplexController extends AbstractActionController
 
     public function mapAction()
     {
-        $this->layout('layout/layout_second');
+//        $this->layout('layout/layout_second');
         $query = $this->entityManager->getRepository(Map::class)
             ->findAllMap();
         $maps = $query->execute();

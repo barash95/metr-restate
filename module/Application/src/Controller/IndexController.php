@@ -11,6 +11,7 @@ use Admin\Entity\Resident;
 use Admin\Entity\Flat;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Mvc\MvcEvent;
 
 class IndexController extends AbstractActionController
 {
@@ -35,24 +36,42 @@ class IndexController extends AbstractActionController
         $this->searchFlatManager = $searchFlatManager;
     }
 
+    public function onDispatch(MvcEvent $e)
+    {
+        // Вызываем метод базового класса onDispatch() и получаем ответ
+        $response = parent::onDispatch($e);
+
+        $ajax = $this->params()->fromQuery('ajax', false);
+
+        if (!$ajax) {
+            $this->layout('layout/layout_second');
+        }
+        if ($ajax) {
+            $this->layout('layout/mini_layout');
+        }
+
+        // Возвращаем ответ
+        return $response;
+    }
+
     public function indexAction()
     {
-        $this->layout('layout/layout_main');
-
         $this->searchFlatManager->init("ClientListSearch");
 
         if ($this->getRequest()->isPost()) {
             $data = $formData = $this->params()->fromPost();
             $this->searchFlatManager->saveSearch($data);
-        }else{
+        } else {
             $filter = $this->searchFlatManager->getSearch();
 
-            if (count($filter)==0 || intval($this->params()->fromQuery('reset', 0)) == 1) {
-                $formData = ['size' => '', 'price_min' => 0, 'price_max' => 4500000, 'square_min' => 0, 'square_max' => 250, 'floor' => '', 'year' => '', 'resident' => ''];
+            if (count($filter) == 0 || intval($this->params()->fromQuery('reset', 0)) == 1) {
+                $formData = ['size' => '', 'price_min' => '', 'price_max' => '', 'square_min' => '', 'square_max' => '', 'floor' => '', 'year' => '', 'resident' => '', 'region' => '', 'metro' => ''];
                 $this->searchFlatManager->saveSearch($formData);
             }
-            else
+            else {
                 $formData = $filter;
+                $this->searchFlatManager->saveSearch($formData);
+            }
         }
 
         $filter = $this->searchFlatManager->getSearch();
@@ -76,13 +95,11 @@ class IndexController extends AbstractActionController
 
     public function aboutAction()
     {
-        $this->layout('layout/layout_second');
         return new ViewModel();
     }
 
     public function contactsAction()
     {
-        $this->layout('layout/layout_second');
         return new ViewModel();
     }
 

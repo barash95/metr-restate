@@ -7,11 +7,11 @@
                     $query = array_merge(['page' => $page], $this->fromQuery);
                     ?>
                     <li>
-                        <a id="<?=$page?>" onclick="getAjax(<?=$page?>); return false" href="<?= $this->url($this->route, ['action' => $this->action, 'id' => $this->id], ['query' => $query]); ?>"><?= $this->escapeHtml($page); ?></a>
+                        <a id="<?=$page?>" onclick="getAjaxFlat(<?=$page?>); return false" href="<?= $this->url($this->route, ['action' => $this->action, 'id' => $this->id], ['query' => $query]); ?>"><?= $this->escapeHtml($page); ?></a>
                     </li>
                 <?php else: ?>
                     <li>
-                        <a class="active"
+                        <a class="active" onclick="return false;"
                            href="<?= $this->url($this->route, ['action' => $this->action, 'id' => $this->id], ['query' => $query]); ?>"><?= $this->escapeHtml($page); ?></a>
                     </li>
                 <?php endif; ?>

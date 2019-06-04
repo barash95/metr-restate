@@ -1,3 +1,5 @@
+<div class="title-block js-animation">
+    <h2>Квартиры по вашим параметрам(<?= $count ?>)</h2></div>
 <div class="product_block">
         <?php foreach ($flats as $flat) { ?>
                 <?php echo $this->partial('application/partial/flat_second', ['flat' => $flat]); ?>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Admin\Repository;
 
 use Admin\Entity\Resident;
@@ -23,7 +24,8 @@ class ResidentRepository extends EntityRepository
     }
 
 
-    public function getResidentList(){
+    public function getResidentList()
+    {
         $entityManager = $this->getEntityManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('r.id', 'r.name')
@@ -33,13 +35,54 @@ class ResidentRepository extends EntityRepository
 
         $query = $queryBuilder->getQuery();
         $res = $query->execute();
-        foreach($res as $r)
+        foreach ($res as $r)
             $result[$r['id']] = $r['name'];
 
         return $result;
     }
 
-    public function getNameById($id){
+
+    public function getMetroList()
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('r.metro')
+            ->distinct()
+            ->from(Resident::class, 'r')
+            ->orderBy('r.metro', 'ASC');
+
+        $query = $queryBuilder->getQuery();
+        $res = $query->execute();
+        foreach ($res as $r) {
+            if ($r['metro'] > "")
+                $result[] = $r['metro'];
+        }
+
+        return $result;
+    }
+
+
+    public function getRegionList()
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('r.region')
+            ->distinct()
+            ->from(Resident::class, 'r')
+            ->orderBy('r.region', 'ASC');
+
+        $query = $queryBuilder->getQuery();
+        $res = $query->execute();
+        foreach ($res as $r) {
+            if ($r['region'] > "")
+                $result[] = $r['region'];
+        }
+
+        return $result;
+    }
+
+    public function getNameById($id)
+    {
         $entityManager = $this->getEntityManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('r.name')->from(Resident::class, 'r');

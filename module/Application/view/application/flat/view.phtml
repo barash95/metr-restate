@@ -1,3 +1,4 @@
+<?= $this->headTitle('Квартира');?>
 <div class="header_middle">
     <div class="main-txt">
         <h1><?php echo str_replace(' ', " <br>", $flat->getSizeTxt())?> № <?=$flat->getNumber()?></h1>
@@ -44,7 +45,7 @@
                     </div>
                     <div class="item no-margin">
                         <div class="tit">.pdf</div>
-                        <a href="#">Скачать</a>
+                        <a href="/flat/pdf/<?=$flat->getId()?>" target="_blank">Скачать</a>
                     </div>
                     <div class="item no-margin">
                         <div class="tit">Поделиться</div>
@@ -68,8 +69,10 @@
                     <div class="price"><span id="cost"><?=$flat->getPrice();?></span> <span class="size-smoll">руб.</span></div>
                 </div>
                 <div class="add-block">
-                    <a href="#" class="add-f">Добавить в избранное</a>
+                    <a href="#" id="addFav" class="add-f">Добавить в избранное</a>
                     <a href="#" class="c-mortgage">Рассчитать ипотеку</a>
+                    <div id="video_modal" class="modal-block plan plan-mob">План этажа</div>
+                    <div class="btn-like" style="display: none;" id="checkFav" data-id="<?=$flat->getId()?>"></div>
                 </div>
             </div>
             <!--product_bottom-->
@@ -83,7 +86,34 @@
     <div class="modal-content">
         <span class="close  close-v">&times;</span>
         <div class="video-block">
-            <img src="<?=$flat->getPlan()?>" alt="" />
+<!--            <img src="<?=$flat->getPlan()?>" alt="" />-->
         </div>
     </div>
 </div>
+
+<!--<script type="text/javascript" src="/js/mortgage.js"></script>-->
+<script type="text/javascript" src="/js/ion.rangeSlider.js"></script>
+<script type="text/javascript" src="/js/rangeSlider.js"></script>
+<script>
+    $(document).ready(function () {
+        var fav_fl = Cookies.get('favorites');
+        if (fav_fl){
+            var fl_mas = fav_fl.split(';');
+            var fl_id = $('#checkFav').attr('data-id');
+            var fl_pos = fl_mas.indexOf(fl_id);
+            if (fl_pos === -1){
+                $('#addFav').text('Добавить в избранное');
+            }else{
+                $('#addFav').text('Убрать из избранного');
+            }
+    }});
+</script>
+<script>
+    $('#addFav').on('click', function () {
+        a = $('#checkFav')[0];
+        $('.btn-like').trigger('click');
+        if(a.className != "btn-like add-favorites") $('#addFav').text('Добавить в избранное');
+        else $('#addFav').text('Убрать из избранного');
+        return false;
+    })
+</script>

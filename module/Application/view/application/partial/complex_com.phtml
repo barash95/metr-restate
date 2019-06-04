@@ -2,7 +2,7 @@
     <div class="img"><img src="/img/content/no-image.jpeg" alt="" class="smoll-img"/></div>
     <figcaption>
         <div class="tag">
-            <div class="tag-value value-1">Квартиры от 3 млн. руб.</div>
+            <div class="tag-value value-1">Помещения от <?= $this->houseNumber()->priceFrom($house->getResId(), $house->getId());?> млн. руб.</div>
             <div class="tag-value value-<?=$house->getStatusNum()?>"><?=$house->getStatus()?></div>
         </div>
         <!-- .tag -->
@@ -10,10 +10,10 @@
             <h3>ЖК “<?=$this->residentialName()->render($house->getResId())?>”</h3>
             <p>Помещений <?=$this->houseNumber()->getComCount($house->getId())?></p>
             <p>Проданных квартир <?= $this->saleFlatCount()->render($house->getResId(), $house->getId()); ?></p>
-            <p>Метро звездное</p>
+            <p>Корпус №<?=$house->getHouse();?></p>
             <p>Московское шоссе 13б</p>
         </div>
         <!-- .info -->
     </figcaption>
-    <a href="/commertial?resident=<?=$house->getResId()?>" class="link"></a>
+    <a href="/commertial?resident=<?=$house->getResId()?>" onclick="return getAjax('commertial?resident=<?=$house->getResId()?>');" class="link"></a>
 </figure>

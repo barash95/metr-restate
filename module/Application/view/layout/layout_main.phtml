@@ -15,12 +15,14 @@
 
 <div id="main" class="<?= $this->current()->render(); ?>">
     <div id="wrapper">
-        <div class="bg-top"></div>
-        <div class="bg-bottom"></div>
-        <div class="ball ball-1"><img src="img/ball/ball-1.png" alt=""/></div>
-        <div class="ball ball-2"><img src="img/ball/ball-2.png" alt=""/></div>
-        <div class="ball ball-3"><img src="img/ball/ball-1.png" alt=""/></div>
-        <div class="ball ball-4"><img src="img/ball/ball-1.png" alt=""/></div>
+        <div id="balls">
+            <div class="bg-top"></div>
+            <div class="bg-bottom"></div>
+            <div class="ball ball-1"><img src="img/ball/ball-1.png" alt=""/></div>
+            <div class="ball ball-2"><img src="img/ball/ball-2.png" alt=""/></div>
+            <div class="ball ball-3"><img src="img/ball/ball-1.png" alt=""/></div>
+            <div class="ball ball-4"><img src="img/ball/ball-1.png" alt=""/></div>
+        </div>
         <?php echo $this->partial('header'); ?>
 
         <?= $this->content ?>

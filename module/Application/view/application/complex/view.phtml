@@ -1,3 +1,4 @@
+<?= $this->headTitle('Жилищный комплекс');?>
 <div class="header_middle">
     <div class="flex">
         <div class="main-txt">
@@ -53,7 +54,7 @@
     <section id="best-offer">
         <div class="title-block js-animation">
             <h2>Лучшие предложения</h2>
-            <p>Акция: все квартиры со скидкой 3%</p>
+<!--            <p>Акция: все квартиры со скидкой 3%</p>-->
         </div>
         <div id="slider_product" class="fadeEl slider">
             <div class="swiper-container">
@@ -97,14 +98,16 @@
         </script>
 
         <div class="btn-block">
-            <a href="/flat?resident=<?=$resident->getId()?>" class="btn">Подобрать квартиру</a>
+            <a href="/flat?resident=<?=$resident->getId()?>"  onclick="return getAjax('flat?resident=<?=$resident->getId()?>');"  class="btn">Подобрать квартиру</a>
         </div>
     </section>
 
     <section id="residential-complexes" class="residential_index residential_list">
+        <?php if(count($houses) > 0){?>
         <div class="container">
             <div class="title-block js-animation">
-                <h2>Коммерческая недвижимость</h2></div>
+                <h2>Коммерческая недвижимость</h2>
+            </div>
             <div class="residential-complexes">
 
                 <?php foreach ($houses as $house) { ?>
@@ -115,6 +118,7 @@
             <div class="btn-block"><a href="#">Загрузить еще</a></div>
         </div>
         <!-- End .container -->
+        <?php } ?>
     </section>
 
     <section id="about-project">

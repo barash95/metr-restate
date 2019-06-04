@@ -177,9 +177,11 @@ class Flat
         $this->square = $square;
     }
 
-    public function getPrice()
+    public function getPrice($format = false)
     {
+        if($format)
         return $this->price;
+        else return number_format($this->price, 0, ".", " ");
     }
 
     public function setPrice($price)
@@ -239,12 +241,40 @@ class Flat
         if (file_exists("/var/www/html/metr/metr-restate/public".$plan))
             return $plan;
         else
-            return "/main/images/content/no-plan.jpg";
+            return "/img/content/no-image.jpeg";
     }
 
     public function getSizeAsString()
     {
         return ($this->size==0)?"Студия":$this->size;
+    }
+
+    public function getSizeAsNum()
+    {
+        switch ($this->getSize()) {
+            case 0:
+                return "Студия";
+                break;
+            case 1:
+                return "1 комната";
+                break;
+            case 2:
+                return "2 комнаты";
+                break;
+            case 3:
+                return "3 комнаты";
+                break;
+            case 4:
+                return "4 комнаты";
+                break;
+            case 5:
+                return "5 комнат";
+                break;
+            default:
+                return "Многокомнатная квартира";
+                break;
+        }
+
     }
 
     public function getSizeTxt()

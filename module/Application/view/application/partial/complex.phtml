@@ -4,10 +4,9 @@
     </div>
     <figcaption>
         <div class="tag">
-            <div class="tag-value value-<?= $resident->getState() ?>"
-            ">Квартиры от 3 млн. руб.
+            <div class="tag-value value-<?= $resident->getState() +1?>">Квартиры от <?= $this->residentialName()->priceFrom($resident->getId());?> млн. руб.
         </div>
-        <div class="tag-value value-<?= $resident->getState() ?>"><?= $resident->getStateAsString(); ?></div>
+        <div class="tag-value value-<?= $resident->getState() +1?>"><?= $resident->getStateAsString(); ?></div>
         </div><!-- .tag -->
         <div class="info">
             <h3>ЖК <?= $resident->getName(); ?></h3>
@@ -17,5 +16,5 @@
             <p><?= $resident->getAddress(); ?></p>
         </div><!-- .info -->
     </figcaption>
-    <a href="/complex/view/<?= $resident->getId(); ?>" class="link"></a>
+    <a href="/complex/view/<?= $resident->getId(); ?>" onclick="return getAjax('complex/view/<?= $resident->getId(); ?>');" class="link"></a>
 </figure>

@@ -138,12 +138,19 @@ class ResidentForm extends Form
             ],
         ]);
 
-
         $this->add([            
             'type'  => 'text',
             'name' => 'metro',
             'options' => [
                 'label' => 'Ближайшее метро',
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'text',
+            'name' => 'region',
+            'options' => [
+                'label' => 'Район',
             ],
         ]);
 

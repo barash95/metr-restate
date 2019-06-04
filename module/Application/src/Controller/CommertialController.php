@@ -10,6 +10,7 @@ namespace Application\Controller;
 
 use Admin\Entity\Commertial;
 use Admin\Entity\Resident;
+use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
 
@@ -41,11 +42,30 @@ class CommertialController extends AbstractActionController
         $this->searchFlatManager = $searchFlatManager;
     }
 
+    public function onDispatch(MvcEvent $e)
+    {
+        // Вызываем метод базового класса onDispatch() и получаем ответ
+        $response = parent::onDispatch($e);
+
+        $ajax = $this->params()->fromQuery('ajax', false);
+
+        if (!$ajax) {
+            $this->layout('layout/layout_second');
+        }
+        if ($ajax) {
+            $this->layout('layout/mini_layout');
+        }
+
+        // Возвращаем ответ
+        return $response;
+    }
+
     public function indexAction()
     {
-        $this->layout('layout/layout_second');
+//        $this->layout('layout/layout_second');
         $page = $this->params()->fromQuery('page', 1);
-        $this->searchFlatManager->init("ClientListSearchCom");
+//        $this->searchFlatManager->init("ClientListSearchCom");
+        $this->searchFlatManager->init("ClientListSearch");
 
 
         if ($this->getRequest()->isPost()) {
@@ -55,11 +75,14 @@ class CommertialController extends AbstractActionController
             $filter = $this->searchFlatManager->getSearch();
 
             if (count($filter)==0 || intval($this->params()->fromQuery('reset', 0)) == 1) {
-                $formData = ['price_min_com' => '', 'price_max_com' => '', 'square_min_com' => 1, 'square_max_com' => 1, 'year_com' => '', 'resident_com' => ''];
+                $formData = ['size' => '', 'price_min' => '', 'price_max' => '', 'square_min' => '', 'square_max' => '', 'floor' => '', 'year' => '', 'resident' => '', 'metro' => '', 'region' => ''];
+//                $formData = ['price_min_com' => '', 'price_max_com' => '', 'square_min_com' => '', 'square_max_com' => '', 'year_com' => '', 'resident_com' => ''];
                 $this->searchFlatManager->saveSearch($formData);
             }
-            else
+            else {
                 $formData = $filter;
+                $this->searchFlatManager->saveSearch($formData);
+            }
         }
 
         $filter = $this->searchFlatManager->getSearch();
@@ -89,9 +112,61 @@ class CommertialController extends AbstractActionController
         ]);
     }
 
+
+    public function ajaxComAction(){
+        $page = $this->params()->fromQuery('page', 1);
+//        $this->searchFlatManager->init("ClientListSearchCom");
+        $this->searchFlatManager->init("ClientListSearch");
+
+        if ($this->getRequest()->isPost()) {
+            $data = $formData = $this->params()->fromPost();
+            $this->searchFlatManager->saveSearch($data);
+        }else{
+            $filter = $this->searchFlatManager->getSearch();
+
+            if (count($filter)==0 || intval($this->params()->fromQuery('reset', 0)) == 1) {
+                $formData = ['size' => '', 'price_min' => '', 'price_max' => '', 'square_min' => '', 'square_max' => '', 'floor' => '', 'year' => '', 'resident' => '', 'metro' => '', 'region' => ''];
+//                $formData = ['price_min_com' => '', 'price_max_com' => '', 'square_min_com' => '', 'square_max_com' => '', 'year_com' => '', 'resident_com' => ''];
+                $this->searchFlatManager->saveSearch($formData);
+            }
+            else {
+                $formData = $filter;
+                $this->searchFlatManager->saveSearch($formData);
+            }
+        }
+
+        $filter = $this->searchFlatManager->getSearch();
+
+        $fromQuery = $this->params()->fromQuery();
+        if (isset($fromQuery['page'])) unset($fromQuery['page']);
+
+        $filter = array_merge($filter, $fromQuery);
+        $formData = array_merge($formData, $fromQuery);
+
+        $query = $this->entityManager->getRepository(Commertial::class)
+            ->findAllCommertial($filter, null, 0);
+        $count = count($query->execute());
+
+        $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
+        $paginator = new Paginator($adapter);
+        $paginator->setDefaultItemCountPerPage(10);
+        $paginator->setCurrentPageNumber($page);
+
+        $view = new ViewModel([
+            'coms' => $paginator,
+            'fromQuery' => $fromQuery,
+            'count' => $count,
+            'data' =>$formData
+        ]);
+
+        $view->setTerminal(true);
+
+        return $view;
+    }
+
     public function viewAction()
     {
-        $this->layout('layout/layout_view');
+//        $this->layout('layout/layout_view');
         $id = (int)$this->params()->fromRoute('id', -1);
         if ($id<1) {
             $this->getResponse()->setStatusCode(404);

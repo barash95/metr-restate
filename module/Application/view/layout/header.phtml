@@ -1,8 +1,13 @@
 <header>
+    <div class="container c-btn">
+        <div class="feedback-btn">
+            <div id="feedback-modal" class="modal-block"><img src="/img/ico/phone.png" alt=""/></div>
+        </div>
+    </div>
     <div class="container">
         <div class="header_top">
             <div class="logo">
-                <a href="/">
+                <a href="/"  onclick="return getAjax('');">
                     <span class="e">e</span>
                     <p><span class="metr">МЕТР</span><span class="restate">restate</span></p>
                 </a>
@@ -11,7 +16,7 @@
             <div class="header_top-center">
                 <div id="menu-main">
                     <div class="cd-nav-trigger">
-                        <div class="hamburger-menu">
+                        <div class="hamburger-menu" onclick="openMenu()">
                             <div class="bar"></div>
                             <div class="bar"></div>
                             <div class="bar"></div>
@@ -21,21 +26,32 @@
                         <div class="container">
                             <div class="menu_serch">
                                 <label>Поиск</label>
-                                <input type="search" name="search">
+                                <input type="text" name="search" id="search" aria-label="..."  list="residentList" autocomplete="off">
+                                <datalist id="residentList">
+                                    <?php foreach($this->residentialName()->getResList() as $res) { ?>
+                                        <option class="find" value="ЖК <?=$res->getName();?>" data-id="<?=$res->getId()?>"></option>
+                                    <?php } ?>
+                                </datalist>
                             </div>
                             <div class="menu-main_flex">
                                 <nav class="nav">
                                     <ul>
-                                        <li><a href="<?= $this->url('home') ?>">Главная</a></li>
-                                        <li><a href="<?= $this->url('flat') ?>">Выбор квартиры</a></li>
-                                        <li><a href="<?= $this->url('complex') ?>">Жилые комплексы</a></li>
+                                        <li><a href="<?= $this->url('home') ?>"
+                                               onclick="return getAjax('');">Главная</a></li>
+                                        <li><a href="<?= $this->url('flat') ?>" onclick="return getAjax('flat');">Выбор
+                                                квартиры</a></li>
+                                        <li><a href="<?= $this->url('complex') ?>" onclick="return getAjax('complex');">Жилые
+                                                комплексы</a></li>
                                         <!--                                                <li><a href="#">Ипотека</a></li>-->
                                     </ul>
                                     <ul>
-                                        <li><a href="<?= $this->url('about') ?>">О компании</a></li>
+                                        <li><a href="<?= $this->url('about') ?>" onclick="return getAjax('about');">О
+                                                компании</a></li>
                                         <!--                                                <li><a href="<?= $this->url('news') ?>">Новости</a></li>-->
-                                        <li><a href="<?= $this->url('map') ?>">Карта объектов</a></li>
-                                        <li><a href="<?= $this->url('contacts') ?>">Контакты</a></li>
+                                        <li><a href="<?= $this->url('map') ?>" onclick="return getAjax('map');">Карта
+                                                объектов</a></li>
+                                        <li><a href="<?= $this->url('contacts') ?>"
+                                               onclick="return getAjax('contacts');">Контакты</a></li>
                                     </ul>
                                 </nav>
                                 <div class="menu_contacts">
@@ -54,20 +70,25 @@
 
                 <nav id="menu">
                     <ul>
-                        <li><a href="<?= $this->url('flat') ?>" <?= $this->activeMenu()->render('flat'); ?>>Выбор
+                        <!--<li><a href="<?= $this->url('flat') ?>" <?= $this->activeMenu()->render('flat'); ?>>Выбор
                                 квартиры </a></li>
-                        <li class="active"><a
+                        <li><a
                                 href="<?= $this->url('about') ?>" <?= $this->activeMenu()->render('about'); ?>>О
-                                компании </a></li>
+                                компании </a></li>-->
                         <!--<li><a href="<?= $this->url('news') ?>" <?= $this->activeMenu()->render('news'); ?>>Новости </a></li>-->
-                        <li class="mob-none"><a
-                                href="<?= $this->url('contacts') ?>" <?= $this->activeMenu()->render('contacts'); ?>>Контакты</a>
-                        </li>
+                        <!--<li class="mob-none">
+                            <a href="<?= $this->url('contacts') ?>"<?= $this->activeMenu()->render('contacts'); ?>>Контакты</a>
+                        </li>-->
+
+                        <li><a href="#" onclick="return getAjax('flat');">Выбор квартиры </a></li>
+                        <li><a href="#" onclick="return getAjax('about');">О компании </a></li>
+                        <!--<li><a  href="#"  onclick="getAjax('contacts');">Новости </a></li>-->
+                        <li class="mob-none"><a href="#" onclick="return getAjax('contacts');">Контакты</a></li>
                     </ul>
                 </nav>
 
                 <div class="favorites">
-                    <a href="<?= $this->url('favorites') ?>">
+                    <a href="<?= $this->url('favorites') ?>"   onclick="return getAjax('favorites');">
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12">
                             <path class="heart"
                                   d="M1078.54,90s-10.3-8.578-5.05-11.384a27.845,27.845,0,0,0,10,0c5.26,2.805-4.95,11.384-4.95,11.384m-0.08-9.344a6.556,6.556,0,0,0-1.06-.869,2.872,2.872,0,0,0-3-.076,1.232,1.232,0,0,0-.74.975,1.977,1.977,0,0,0-.02.248c0,1.891,2.63,4.972,4.9,7.1,2.23-2.117,4.81-5.182,4.81-7.073a2.166,2.166,0,0,0-.01-0.257,1.25,1.25,0,0,0-.76-0.987,2.531,2.531,0,0,0-2.9.008,6.408,6.408,0,0,0-1.22.937"
@@ -86,3 +107,16 @@
                 </div>
             </div><!-- .contacts-block -->
         </div><!-- End .header_top -->
+        <script>
+            $("#search").on('input', function () {
+                var val = this.value;
+                if($('#residentList').find('option').filter(function(){
+                    return this.value.toUpperCase() === val.toUpperCase();
+                }).length) {
+                    a = $('#residentList').find('option').filter(function(){
+                        return this.value.toUpperCase() === val.toUpperCase();
+                    }).attr('data-id');
+                    getAjax('complex/view/'+a);
+                }
+            });
+        </script>

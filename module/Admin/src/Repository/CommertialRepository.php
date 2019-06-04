@@ -2,6 +2,7 @@
 namespace Admin\Repository;
 
 use Admin\Entity\Commertial;
+use Admin\Entity\Resident;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -13,52 +14,60 @@ class CommertialRepository extends EntityRepository
     {
         $filter = array_filter($filter);
 
+        $array_res = array();
+        if (!isset($filter['metro'])) $filter['metro'] = array();
+        if (!isset($filter['region'])) $filter['region'] = array();
 
-        if (isset($filter['resident_com']))
-            $array_res = array_filter(explode(",", $filter['resident_com']));
-        else
-            $array_res = array();
-        if (isset($filter['resident_com']))
-            $array_res[] = $filter['resident_com'];
+        if (isset($filter['resident']))
+            $array_res = array_filter(explode(",", $filter['resident']));
+        else if(count($filter['metro']) > 0 || count($filter['region']) > 0) {
+            $newEntityManager = $this->getEntityManager();
+            $newQueryBuilder = $newEntityManager->createQueryBuilder();
+            $newQueryBuilder->select('r.id')->from(Resident::class, 'r');
+            $newQueryBuilder->where('r.metro IN (:metro)')->setParameter('metro', $filter['metro']);
+            $newQueryBuilder->orWhere('r.region IN (:region)')->setParameter('region', $filter['region']);
+            $metro = $newQueryBuilder->getQuery()->execute();
 
+            if((isset($filter['metro']) && is_array($filter['metro'])) || (isset($filter['region']) && is_array($filter['region']))){
+                foreach ($metro as $m)
+                    $array_res[] = $m;
+            }
+        }
 
-        if (isset($filter['id_com'])) {
-            $ids = explode(",", $filter['id_com']);
+        if (isset($filter['id'])) {
+            $ids = explode(",", $filter['id']);
             $queryBuilder->andWhere('c.id IN (:id)')->setParameter('id', $ids);
         }
-        if (isset($filter['not_id_com'])) {
-            $ids = explode(",", $filter['not_id_com']);
+        if (isset($filter['not_id'])) {
+            $ids = explode(",", $filter['not_id']);
             $queryBuilder->andWhere('c.id NOT IN (:id)')->setParameter('id', $ids);
         }
         if (count($array_res) > 0) {
             $queryBuilder->andWhere('c.res_id IN (:res_id)')->setParameter('res_id', $array_res);
         }
-        if (isset($filter['number_min_com'])) {
-            $queryBuilder->andWhere('c.number >= :number_min')->setParameter('number_min', $filter['number_min_com']);
+        if (isset($filter['number_min'])) {
+            $queryBuilder->andWhere('c.number >= :number_min')->setParameter('number_min', $filter['number_min']);
         }
-        if (isset($filter['number_max_com'])) {
-            $queryBuilder->andWhere('c.number <= :number_max')->setParameter('number_max', $filter['number_max_com']);
+        if (isset($filter['number_max'])) {
+            $queryBuilder->andWhere('c.number <= :number_max')->setParameter('number_max', $filter['number_max']);
         }
-        if (isset($filter['square_min_com'])) {
-            $queryBuilder->andWhere('c.square >= :square_min')->setParameter('square_min', $filter['square_min_com']);
+        if (isset($filter['square_min'])) {
+            $queryBuilder->andWhere('c.square >= :square_min')->setParameter('square_min', $filter['square_min']);
         }
-        if (isset($filter['square_max_com'])) {
-            $queryBuilder->andWhere('c.square <= :square_max')->setParameter('square_max', $filter['square_max_com']);
+        if (isset($filter['square_max'])) {
+            $queryBuilder->andWhere('c.square <= :square_max')->setParameter('square_max', $filter['square_max']);
         }
-        if (isset($filter['floor_com'])) {
-            $queryBuilder->andWhere('c.floor = :floor')->setParameter('floor', $filter['floor_com']);
+        if (isset($filter['year'])) {
+            $queryBuilder->andWhere('c.year = :year')->setParameter('year', $filter['year']);
         }
-        if (isset($filter['year_com'])) {
-            $queryBuilder->andWhere('c.year = :year')->setParameter('year', $filter['year_com']);
+        if (isset($filter['price_min'])) {
+            $queryBuilder->andWhere('c.price >= :price_min')->setParameter('price_min', $filter['price_min']);
         }
-        if (isset($filter['price_min_com'])) {
-            $queryBuilder->andWhere('c.price >= :price_min')->setParameter('price_min', $filter['price_min_com']);
+        if (isset($filter['price_max'])) {
+            $queryBuilder->andWhere('c.price <= :price_max')->setParameter('price_max', $filter['price_max']);
         }
-        if (isset($filter['price_max_com'])) {
-            $queryBuilder->andWhere('c.price <= :price_max')->setParameter('price_max', $filter['price_max_com']);
-        }
-        if (isset($filter['state_com'])) {
-            $queryBuilder->andWhere('c.state = :state')->setParameter('state', $filter['state_com']);
+        if (isset($filter['state'])) {
+            $queryBuilder->andWhere('c.state = :state')->setParameter('state', $filter['state']);
         }
     }
 
@@ -77,6 +86,27 @@ class CommertialRepository extends EntityRepository
             $queryBuilder->setMaxResults($limit);
 
         return $queryBuilder->getQuery();
+    }
+
+    public function findHouse($res, $limit = null)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('c.house')->from(Commertial::class, 'c')
+            ->distinct();
+        $queryBuilder->andWhere('c.state = :state')->setParameter('state', 0);
+        $queryBuilder->andWhere('c.res_id = :res_id')->setParameter('res_id', $res);
+
+        if (!is_null($limit))
+            $queryBuilder->setMaxResults($limit);
+
+        $query = $queryBuilder->getQuery();
+        $res = $query->execute();
+        $result = [];
+        foreach ($res as $r)
+            $result[] = $r['house'];
+
+        return $result;
     }
 
 }

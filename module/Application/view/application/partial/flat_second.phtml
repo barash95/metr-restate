@@ -1,5 +1,5 @@
 <figure class="item fadeEl">
-    <div class="img"><img src="img/product/img-1.jpg" alt="" /></div>
+    <div class="img"><img src="/img/product/img-1.jpg" alt="" /></div>
     <figcaption>
         <div class="top-ico">
             <div class="favorites btn-like"  data-id="<?=$flat->getId()?>">
@@ -14,13 +14,13 @@
             <h3><?=$flat->getSizeTxt()?></h3>
             <p><?=$this->residentialName()->render($flat->getResId())?></p>
             <div class="flex">
-                <p>1 комната</p>
+                <p><?=$flat->getSizeAsNum()?></p>
                 <p><?=$flat->getSquare()?> м2</p>
                 <p><?=$flat->getFloor()?> этаж</p>
             </div>
-            <div class="price"><p><?=$this->formatPrice()->render($flat->getPrice())?><span>руб.</span></p></div>
+            <div class="price"><p><?=$flat->getPrice()?><span>руб.</span></p></div>
         </div><!-- .info -->
         <!-- .info -->
     </figcaption>
-    <a href="/flat/view/<?=$flat->getId()?>" class="link"></a>
+    <a href="/flat/view/<?=$flat->getId()?>" onclick="return getAjax('flat/view/<?=$flat->getId()?>');" class="link"></a>
 </figure>

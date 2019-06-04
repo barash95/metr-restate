@@ -1,5 +1,5 @@
 <?= $this->doctype() ?>
-<html lang="en">
+<html lang="ru">
 <head>
     <?php echo $this->partial('head'); ?>
 </head>
@@ -16,18 +16,141 @@
 
 <div id="main" class="<?= $this->current()->render(); ?>">
     <div id="wrapper">
-        <div class="bg-top bg-top-ins"></div>
-
-        <div class="ball ball-1"><img src="img/ball/ball-1.png" alt=""/></div>
-        <div class="ball ball-2"><img src="img/ball/ball-2.png" alt=""/></div>
-        <div class="ball ball-3"><img src="img/ball/ball-1.png" alt=""/></div>
-        <div class="ball ball-4"><img src="img/ball/ball-1.png" alt=""/></div><?php echo $this->partial('header'); ?>
+        <div id="balls">
+            <div class="bg-top bg-top-ins"></div>
+            <div class="ball ball-1"><img src="/img/ball/ball-1.png" alt=""/></div>
+            <div class="ball ball-2"><img src="/img/ball/ball-2.png" alt=""/></div>
+            <div class="ball ball-3"><img src="/img/ball/ball-1.png" alt=""/></div>
+            <div class="ball ball-4"><img src="/img/ball/ball-1.png" alt=""/></div>
+        </div>
+        <?php echo $this->partial('header'); ?>
 
         <?= $this->content ?>
 
+        <script type="text/javascript" src="/js/main.js"></script>
+        <script type="text/javascript" src="/js/lead.js"></script>
+        <script type="text/javascript" src="/js/favorites.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".close").click(function () {
+                    $(".modal-content").addClass('zoom');
+                    $(".modal-content.zoom").css({'transform': 'translateY(-100%)'});
+                    $(".modal-ov").hide("slow");
+                    $("#profit-calculator .sel-tree").removeClass('none');
+
+                    function func() {
+                        $(".modal").removeClass("open");
+                        $("body").removeClass("open-hidden");
+                        $(".modal-content").removeClass('zoom');
+                        $(".modal-content").css({'transform': 'translateY(0)'});
+                    }
+
+                    setTimeout(func, 300);
+
+                });
+            })
+        </script>
     </div><!-- End #wrapper -->
+
     <?php echo $this->partial('footer'); ?>
 
+    <script>
+        var link = {
+            '/': '',
+            '/favorites': 'inside-page',
+            '/contacts': 'inside-page',
+            '/about': 'inside-page',
+            '/flat/view/': 'header-smoll product_header',
+            '/flat': 'inside-page choce-p',
+            '/commertial': 'inside-page choce-p',
+            '/map': 'inside-page',
+            '/complex/view/': 'header-smoll',
+            '/commertial/view/': 'header-smoll product_header',
+        };
+        var title = {
+            '/': 'Главная',
+            '/favorites': 'Избранное',
+            '/contacts': 'Контакты',
+            '/about': 'О нас',
+            '/flat/view/': 'Квартира',
+            '/flat': 'Выбор квартиры',
+            '/commertial': 'Выбор коммерческого помещения',
+            '/map': 'Карта обьектов',
+            '/complex/view/': 'Жилищный комплекс',
+            '/complex': 'Выбор ЖК',
+            '/commertial/view/': 'Коммерческое помещение',
+        };
+
+        balls = {
+            '/': true,
+            '/favorites': true,
+            '/contacts': true,
+            '/about': true,
+            '/flat/view/': 'none',
+            '/flat': true,
+            '/commertial': true,
+            '/map': true,
+            '/complex/view/': 'none',
+            '/commertial/view/': 'none',
+        }
+
+
+        function getAjax(url) {
+            res = "";
+            if (url.indexOf("?") > -1) {
+                get_param = url.slice(url.indexOf("?"));
+                url = url.slice(0, url.indexOf("?"));
+                res = get_param.slice(get_param.indexOf('=') + 1);
+                // console.log(url + ' ' + res);
+            }
+
+            $.get("/" + url, {
+                    ajax: true,
+                    resident_com: res,
+                    resident: res,
+                },
+                function (data) {
+                    $('#wrapper').html(data);
+                    var stateObj = {foo: "bar"};
+                    history.pushState(stateObj, "", "/" + url);
+                    // console.log(window.location.pathname.replace(/[0-9]/g, ''));
+                    $('#main').removeClass();
+                    $('#main').addClass(link[window.location.pathname.replace(/[0-9]/g, '')]);
+                    $('body').removeClass('open-menu');
+                    $('#balls')[0].style.display = balls[window.location.pathname.replace(/[0-9]/g, '')];
+                    document.title = title[window.location.pathname.replace(/[0-9]/g, '')] + ' - МЕТР';
+                    document.body.scrollTop = 0; // For Safari
+                    document.documentElement.scrollTop = 0;
+                }
+            );
+            return false;
+        }
+
+        function simpleAjax(url) {
+            $.get(url, {
+                    ajax: true,
+                },
+                function (data) {
+                    $('#wrapper').html(data);
+                    $('#main').removeClass();
+                    $('#main').addClass(link[window.location.pathname.replace(/[0-9]/g, '')]);
+                    $('body').removeClass('open-menu');
+                    $('#balls')[0].style.display = balls[window.location.pathname.replace(/[0-9]/g, '')];
+                    document.title = title[window.location.pathname.replace(/[0-9]/g, '')] + ' - МЕТР';
+                    document.body.scrollTop = 0; // For Safari
+                    document.documentElement.scrollTop = 0;
+                }
+            );
+            return false;
+        }
+
+        addEventListener("popstate", function (e) {
+            simpleAjax(window.location.pathname);
+        }, false);
+        $(document).ready(function () {
+            $('#balls')[0].style.display = balls[window.location.pathname.replace(/[0-9]/g, '')];
+        })
+    </script>
 </body>
 
 </html>

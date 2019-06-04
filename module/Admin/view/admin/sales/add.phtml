@@ -1,0 +1,79 @@
+<?php
+$this->headTitle('Добавить Новость');
+
+$form->get('res_id')->setAttributes([
+    'class'=>'form-control',
+    'id' => 'res_id'
+]);
+
+$form->get('tittle')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'tittle'
+]);
+
+$form->get('description')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'description'
+]);
+
+$form->get('date')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'date'
+]);
+
+$form->get('image')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'image'
+]);
+
+$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
+
+$form->prepare();
+?>
+
+<h1>Добавить Новость</h1>
+
+<p>
+    Пожалуйста заполните следующую форму и нажмите кнопку <i>Добавить</i>.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('res_id')); ?>
+            <?= $this->formElement($form->get('res_id')); ?>
+            <?= $this->formElementErrors($form->get('res_id')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('tittle')); ?>
+            <?= $this->formElement($form->get('tittle')); ?>
+            <?= $this->formElementErrors($form->get('tittle')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('description')); ?>
+            <?= $this->formElement($form->get('description')); ?>
+            <?= $this->formElementErrors($form->get('description')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('date')); ?>
+            <?= $this->formElement($form->get('date')); ?>
+            <?= $this->formElementErrors($form->get('date')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('image')); ?>
+            <?= $this->formElement($form->get('image')); ?>
+            <?= $this->formElementErrors($form->get('image')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+        
+        <?= $this->form()->closeTag(); ?>
+    </div>    
+</div>   
+

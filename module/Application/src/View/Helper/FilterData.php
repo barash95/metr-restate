@@ -37,4 +37,18 @@ class FilterData extends AbstractHelper
 
         return $year;
     }
+
+    public function getMetro()
+    {
+        $metro = $this->entityManager->getRepository(Resident::class)->getMetroList();
+
+        return $metro;
+    }
+
+    public function getRegion()
+    {
+        $region = $this->entityManager->getRepository(Resident::class)->getRegionList();
+
+        return $region;
+    }
 }

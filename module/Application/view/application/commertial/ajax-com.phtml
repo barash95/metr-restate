@@ -1,0 +1,14 @@
+
+<div class="title-block js-animation">
+    <h2>Помещения по вашим параметрам(<?=$count?>)</h2></div>
+<div class="product_block">
+    <?php foreach ($coms as $com){?>
+        <?php echo $this->partial('application/partial/com', ['com' => $com]); ?>
+    <?php } ?>
+</div>
+<!-- End .product_block -->
+<div id="feedback-modal" class="modal-block btn call_us">Позвоните нам</div>
+<?= $this->paginationControl($coms,
+    'Sliding',
+    'application/partial/flat_paginator',
+    array('route' => 'commertial', 'fromQuery' => $fromQuery)); ?>

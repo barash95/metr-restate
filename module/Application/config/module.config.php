@@ -186,6 +186,7 @@ return [
         'exception_template'       => 'error/index',
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/mini_layout'           => __DIR__ . '/../view/layout/mini_layout.phtml',
             'layout/layout_main'           => __DIR__ . '/../view/layout/layout_main.phtml',
             'layout/layout_second'           => __DIR__ . '/../view/layout/layout_second.phtml',
             'layout/layout_view'           => __DIR__ . '/../view/layout/layout_view.phtml',

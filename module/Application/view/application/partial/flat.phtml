@@ -16,13 +16,13 @@
                 <h3><?=$flat->getSizeTxt()?></h3>
                 <p><?=$this->residentialName()->render($flat->getResId())?></p>
                 <div class="flex">
-                    <p>1 комната</p>
+                    <p><?=$flat->getSizeAsNum()?></p>
                     <p><?=$flat->getSquare()?> м2</p>
                     <p><?=$flat->getFloor()?> этаж</p>
                 </div>
-                <div class="price"><p><?=$this->formatPrice()->render($flat->getPrice())?><span>руб.</span></p></div>
+                <div class="price"><p><?=$flat->getPrice()?><span>руб.</span></p></div>
             </div><!-- .info -->
         </figcaption>
-        <a href="/flat/view/<?=$flat->getId()?>" class="link"></a>
+        <a href="/flat/view/<?=$flat->getId()?>" onclick="return getAjax('flat/view/<?=$flat->getId()?>');" class="link"></a>
     </figure>
 </div><!-- End .product_block -->

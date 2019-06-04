@@ -18,18 +18,27 @@ class FlatRepository extends EntityRepository
             $array_size = array_filter(explode(",", $filter['size']));
         else
             $array_size = array();
-        if(isset($filter['size']) && is_array($filter['size'])){
-            foreach ($filter['size'] as $room)
-                $array_size[] = $room;
-        }
+        if(isset($filter['size']) && is_array($filter['size']))
+            $array_size = $filter['size'];
+        if (!isset($filter['metro'])) $filter['metro'] = array();
+        if (!isset($filter['region'])) $filter['region'] = array();
 
+        $array_res = array();
         if (isset($filter['resident']))
             $array_res = array_filter(explode(",", $filter['resident']));
-        else
-            $array_res = array();
-        if (isset($filter['resident']))
-            $array_res[] = $filter['resident'];
+        else if(count($filter['metro']) > 0 || count($filter['region']) > 0) {
+            $newEntityManager = $this->getEntityManager();
+            $newQueryBuilder = $newEntityManager->createQueryBuilder();
+            $newQueryBuilder->select('r.id')->from(Resident::class, 'r');
+            $newQueryBuilder->where('r.metro IN (:metro)')->setParameter('metro', $filter['metro']);
+            $newQueryBuilder->orWhere('r.region IN (:region)')->setParameter('region', $filter['region']);
+            $metro = $newQueryBuilder->getQuery()->execute();
 
+            if((isset($filter['metro']) && is_array($filter['metro'])) || (isset($filter['region']) && is_array($filter['region']))){
+                foreach ($metro as $m)
+                    $array_res[] = $m;
+            }
+        }
 
         if (isset($filter['id'])) {
             $ids = explode(",", $filter['id']);
@@ -131,12 +140,15 @@ class FlatRepository extends EntityRepository
         return count($res);
     }
 
-    public function findBestFlats($limit = 10, $res_id = null)
+
+
+    public function findBestCostFlats($limit = 10, $size, $res_id = null)
     {
         $entityManager = $this->getEntityManager();
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select("f")->from(Flat::class, "f");
-        $queryBuilder->orderBy('f.price', 'DESC');
+        $queryBuilder->orderBy('f.price', 'ASC');
+        $queryBuilder->where('f.size = :size')->setParameter('size', $size);
 
         if(!is_null($res_id)){
             $queryBuilder->andWhere('f.res_id = :res_id')->setParameter('res_id', $res_id);
@@ -147,6 +159,18 @@ class FlatRepository extends EntityRepository
         $query = $queryBuilder->getQuery();
 
         $result = $query->execute();
+
+        return $result;
+    }
+
+    public function findBestFlats($limit = 10, $res_id = null)
+    {
+        $f0 = $this->findBestCostFlats(4, 0);
+        $f1 = $this->findBestCostFlats(4, 1);
+        $f2 = $this->findBestCostFlats(4, 2);
+        $f3 = $this->findBestCostFlats(4, 3);
+
+        $result = array_merge($f0, $f1, $f2, $f3);
 
         return $result;
     }

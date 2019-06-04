@@ -37,8 +37,19 @@ class HouseNumber extends AbstractHelper
     public function getComCount($id)
     {
         if(!is_null($id))
-            $count = count($this->entityManager->getRepository(Commertial::class)->findBy(['house' => $id]));
+            $count = count($this->entityManager->getRepository(Commertial::class)->findBy(['house' => $id, 'state' => 0]));
 
         return $count;
+    }
+
+    public function priceFrom($residential_id, $house)
+    {
+        $price = 0;
+        $flat = null;
+        if(!is_null($residential_id))
+            $flat = $this->entityManager->getRepository(Commertial::class)->findOneBy(['res_id' => $residential_id, 'house' => $house, "state" => 0], ['price' => 'ASC']);
+        if(!is_null($flat))
+            $price = round($flat->getPrice(true) / 1000000, 1);
+        return $price;
     }
 }

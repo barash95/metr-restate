@@ -9,7 +9,9 @@
 namespace Application\Controller;
 
 use Admin\Entity\Commertial;
+use Admin\Entity\Resident;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
 use Admin\Entity\Flat;
 use Admin\Entity\Mortgage;
@@ -41,10 +43,26 @@ class FlatController extends AbstractActionController
         $this->searchFlatManager = $searchFlatManager;
     }
 
+    public function onDispatch(MvcEvent $e)
+    {
+        // Вызываем метод базового класса onDispatch() и получаем ответ
+        $response = parent::onDispatch($e);
+
+        $ajax = $this->params()->fromQuery('ajax', false);
+
+        if (!$ajax) {
+            $this->layout('layout/layout_second');
+        }
+        if ($ajax) {
+            $this->layout('layout/mini_layout');
+        }
+
+        // Возвращаем ответ
+        return $response;
+    }
+
     public function indexAction()
     {
-        $this->layout('layout/layout_second');
-
         $page = $this->params()->fromQuery('page', 1);
         $this->searchFlatManager->init("ClientListSearch");
 
@@ -56,10 +74,13 @@ class FlatController extends AbstractActionController
             $filter = $this->searchFlatManager->getSearch();
 
             if (count($filter) == 0 || intval($this->params()->fromQuery('reset', 0)) == 1) {
-                $formData = ['size' => '', 'price_min' => 0, 'price_max' => 4500000, 'square_min' => 0, 'square_max' => 250, 'floor' => '', 'year' => '', 'resident' => ''];
+                $formData = ['size' => '', 'price_min' => '', 'price_max' => '', 'square_min' => '', 'square_max' => '', 'floor' => '', 'year' => '', 'resident' => '', 'metro' => '', 'region' => ''];
                 $this->searchFlatManager->saveSearch($formData);
-            } else
+            }
+            else {
                 $formData = $filter;
+                $this->searchFlatManager->saveSearch($formData);
+            }
         }
 
         $filter = $this->searchFlatManager->getSearch();
@@ -88,10 +109,58 @@ class FlatController extends AbstractActionController
         ]);
     }
 
+    public function ajaxFlatsAction()
+    {
+    $page = $this->params()->fromQuery('page', 1);
+    $this->searchFlatManager->init("ClientListSearch");
+
+    if ($this->getRequest()->isPost()) {
+        $data = $formData = $this->params()->fromPost();
+        $this->searchFlatManager->saveSearch($data);
+    } else {
+        $filter = $this->searchFlatManager->getSearch();
+
+        if (count($filter) == 0 || intval($this->params()->fromQuery('reset', 0)) == 1) {
+            $formData = ['size' => '', 'price_min' => '', 'price_max' => '', 'square_min' => '', 'square_max' => '', 'floor' => '', 'year' => '', 'resident' => '', 'metro' => '', 'region' => ''];
+            $this->searchFlatManager->saveSearch($formData);
+        }
+        else {
+            $formData = $filter;
+            $this->searchFlatManager->saveSearch($formData);
+        }
+    }
+
+    $filter = $this->searchFlatManager->getSearch();
+
+    $fromQuery = $this->params()->fromQuery();
+    if (isset($fromQuery['page'])) unset($fromQuery['page']);
+
+    $filter = array_merge($filter, $fromQuery);
+    $formData = array_merge($formData, $fromQuery);
+    $query = $this->entityManager->getRepository(Flat::class)
+        ->findAllFlat($filter);
+    $count = count($query->execute());
+
+    $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
+    $paginator = new Paginator($adapter);
+    $paginator->setDefaultItemCountPerPage(6);
+    $paginator->setCurrentPageNumber($page);
+
+    $view = new ViewModel([
+        'flats' => $paginator,
+        'fromQuery' => $fromQuery,
+        'count' => $count,
+        'data' => $formData
+    ]);
+
+    $view->setTerminal(true);
+
+    return $view;
+}
+
     public function viewAction()
     {
 //        $this->layout('layout/layout_view');
-        $this->layout('layout/layout_view');
 
         $id = (int)$this->params()->fromRoute('id', -1);
         if ($id < 1) {
@@ -119,7 +188,7 @@ class FlatController extends AbstractActionController
 
     public function favoritesAction()
     {
-        $this->layout('layout/layout_view');
+//        $this->layout('layout/layout_view');
         $flats = $commertials = array();
         $flats_fav = $commertials_fav = false;
         if (isset($_COOKIE['favorites']))
@@ -144,36 +213,54 @@ class FlatController extends AbstractActionController
 
     public function pdfAction()
     {
-        return new ViewModel();
+        $id = (int)$this->params()->fromRoute('id', -1);
+        if ($id<1) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        // Find a flat with such ID.
+        $flat = $this->entityManager->getRepository(Flat::class)
+            ->find($id);
+        $res = $this->entityManager->getRepository(Resident::class)->find($flat->getResId());
+
+        $pdf = new \tFPDF();
+
+        $pdf->AddFont('DejaVu','','DejaVuSansCondensed-Bold.ttf',true);
+        $pdf->SetFont('DejaVu','',14);
+
+        $pdf->AddPage();
+//        $pdf->Cell( 145, 40, $pdf->Image(ROOT_PATH."/public/main/images/content/logo.png", $pdf->GetX(), $pdf->GetY(), 33.78), 0, 0, 'L', false );
+        $pdf->Cell( 0, 3, "+7999999999", 0, 2, 'R', false );
+        $pdf->Cell( 0, 3, "ЖК ".$res->getName(), 0, 2, 'C', false );
+
+        $pdf->SetFont('DejaVu','',12);
+        $pdf->Cell( 0, 10, "metr-restate.ru", 0, 1, 'R', false );
+        $pdf->Line(0, 30, 220, 30);
+
+        $flat_txt = $flat->getSizeTxt();
+
+        $pdf->Cell( 0, 30, "$flat_txt №".$flat->getNumber(), 0, 1, 'C', false );
+        $pdf->Cell( 45, 0, "Площадь: ".$flat->getSquare(), 0, 0, 'L', false );
+        $pdf->Cell( 45, 0, "Комнат: ".$flat->getSizeAsString(), 0, 0, 'L', false );
+        $pdf->Cell( 35, 0, "Этаж: ".$flat->getFloor(), 0, 0, 'L', false );
+        $pdf->Cell( 35, 0, "Сдача: ".$flat->getYear(), 0, 0, 'L', false );
+        $pdf->Cell( 35, 0, "Цена: ".$flat->getPrice(), 0, 1, 'L', false );
+
+        $pdf->Cell( 100, 0, $pdf->Image(ROOT_PATH."/public".$flat->getPlan(), $pdf->GetX(), $pdf->GetY()+10, 100), 0, 0, 'L', false );
+//        $pdf->Cell( 100, 0, $pdf->Image(ROOT_PATH."/public/".$flat->getEtagPlanImage(), 100, $pdf->GetY()+30, 100), 0, 0, 'L', false );
+
+        $pdf->Ln(100);
+//        $pdf->Cell( 100, 0, $pdf->Image(ROOT_PATH."/public/main/images/forpdf/".$flat->getHousing().".jpg", $pdf->getX()+50, $pdf->getY()+10, 100), 0, 0, 'L', false);
+
+        $pdf->Ln(100);
+        $pdf->SetFont('DejaVu','',16);
+        $pdf->Cell( 0, 20, "Офис продаж", 0, 1, 'C', false );
+        $pdf->SetFont('DejaVu','',12);
+        $pdf->Cell( 0, 0, "г. Петрозаводск", 0, 1, 'C', false );
+
+        $pdf->Output();
     }
-
-    public function ajaxFlatsAction(){
-        $page = $this->params()->fromQuery('page', 1);
-        $this->searchFlatManager->init("ClientListSearch");
-
-        $filter = $this->searchFlatManager->getSearch();
-
-        $fromQuery = $this->params()->fromQuery();
-        if (isset($fromQuery['page'])) unset($fromQuery['page']);
-
-        $query = $this->entityManager->getRepository(Flat::class)
-            ->findAllFlat($filter);
-
-        $adapter = new DoctrineAdapter(new ORMPaginator($query, false));
-        $paginator = new Paginator($adapter);
-        $paginator->setDefaultItemCountPerPage(6);
-        $paginator->setCurrentPageNumber($page);
-
-        $view = new ViewModel([
-            'flats' => $paginator,
-            'fromQuery' => $fromQuery,
-        ]);
-
-        $view->setTerminal(true);
-
-        return $view;
-    }
-
 
     private function checkData($data)
     {

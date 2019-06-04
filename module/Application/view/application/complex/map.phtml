@@ -1,3 +1,4 @@
+<?= $this->headTitle('Карта обьектов');?>
 <div class="header_middle">
     <div class="main-txt">
         <h1>Карта объектов</h1>
@@ -25,7 +26,7 @@
                 foreach ($maps as $map) {
                     echo "coordinates{$map->getId()} = {lat: {$map->getX()}, lng: {$map->getY()}},
 //             name{$map->getId()}= '<a href=\"/complex/view/{$map->getResId()}\" class=\"content\">{$this->residentialName()->render($map->getResId())}</a>',
-             name{$map->getId()}= '<div class=\"map-object\"><div class=\"tit\">ЖК “{$this->residentialName()->render($map->getResId())}”</div><p>Квартиры от 6 млн. руб.</p><p>Свободных квартир {$this->residentialName()->flatCount($map->getResId())}</p><a href=\"/complex/view/{$map->getResId()}\" class=\"more\">Подробнее</a></div>',
+             name{$map->getId()}= '<div class=\"map-object\"><div class=\"tit\">ЖК “{$this->residentialName()->render($map->getResId())}”</div><p>Квартиры от 6 млн. руб.</p><p>Свободных квартир {$this->residentialName()->flatCount($map->getResId())}</p><a href=\"/complex/view/{$map->getResId()}\" onclick=\"return getAjax(\'complex\/view\/{$map->getResId()}\')\" class=\"more\">Подробнее</a></div>',
              marker{$map->getId()} = new google.maps.Marker({
                 position: coordinates{$map->getId()},
                 map: map,

@@ -53,6 +53,10 @@ $this->headTitle('Карточка ЖК');
                             <td><?= $this->escapeHtml($resident->getMetro()) ?></td>
                         </tr>
                         <tr>
+                            <th>Район:</th>
+                            <td><?= $this->escapeHtml($resident->getRegion()) ?></td>
+                        </tr>
+                        <tr>
                             <th>Адрес:</th>
                             <td><?= $this->escapeHtml($resident->getAddress()) ?></td>
                         </tr>

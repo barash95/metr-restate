@@ -1,11 +1,12 @@
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#price_min_com').val(<?=$data['price_min_com'];?>);
-        $('#price_max_com').val(<?=$data['price_max_com'];?>);
-        $('#square_min_com').val(<?=$data['square_min_com'];?>);
-        $('#square_max_com').val(<?=$data['square_max_com'];?>);
-        $('#year_com').val(<?=$data['year_com'];?>);
-        $('#res_com').val(<?=$data['resident_com'];?>);
+        $('#price_min').val(<?=$data['price_min'];?>);
+        $('#price_max').val(<?=$data['price_max'];?>);
+        $('#square_min').val(<?=$data['square_min'];?>);
+        $('#square_max').val(<?=$data['square_max'];?>);
+        $('#year').val(<?=$data['year'];?>);
+        $('#floor').val(<?=$data['floor'];?>);
+        $('#res').val(<?=$data['resident'];?>);
 
     });
 </script>
@@ -13,12 +14,44 @@
     <li class="menu_li li_select type-s">
         <div class="tit-choce"><span>Коммерческая недвижимость</span></div>
     </li>
+    
+    <li class="menu_li li_select size-select" style="display:none;">
+        <form method="post" class="form_select" name="form1" id="form1">
+            <div>
+                <select id="size" multiple="multiple">
+                    <option value="0">Студия</option>
+                    <option value="1">1 комнатная</option>
+                    <option value="2">2 комнатная</option>
+                    <option value="3">3 комнатная</option>
+                    <option value="4">4 комнатная</option>
+                </select>
+            </div>
+        </form>
+        <script>
+            var arr = [];
+            $(function () {
+                $('#size').multiselect({
+                    includeSelectAllOption: true,
+                    selectAllText: 'Все',
+                    allSelectedText: 'Все',
+                    nonSelectedText: 'Кол-во комнат'
+                });
+                <?php
+                if(isset($data['size']) && is_array($data['size'])) {
+                foreach ($data['size'] as $s){
+                ?>
+                arr.push(<?=$s;?>);
+                <?php } } ?>
+                $('#size').multiselect('select', arr);
+            });
+        </script>
+    </li>
 
     <li class="menu_li li_select no-arrow square-select">
         <form class="form_select">
             <span class="tit">Площадь</span>
             <div>
-                <select id="square_min_com">
+                <select id="square_min">
                     <option selected class="t-tit" value="">от</option>
                     <option value="1">1 м.</option>
                     <option value="10">10 м.</option>
@@ -31,7 +64,7 @@
         </form>
         <script>
             $(function() {
-                $('#square_min_com').multiselect({
+                $('#square_min').multiselect({
                     includeSelectAllOption: true
                 });
             });
@@ -41,7 +74,7 @@
 
         <form class="form_select">
             <div>
-                <select id="square_max_com">
+                <select id="square_max">
                     <option selected class="t-tit" value="">до</option>
                     <option value="1">1 м.</option>
                     <option value="10">10 м.</option>
@@ -54,7 +87,7 @@
         </form>
         <script>
             $(function() {
-                $('#square_max_com').multiselect({
+                $('#square_max').multiselect({
                     includeSelectAllOption: true
                 });
             });
@@ -65,7 +98,7 @@
         <form class="form_select">
             <span class="tit">Цена</span>
             <div>
-                <select id="price_min_com">
+                <select id="price_min">
                     <option selected class="t-tit" value="">от</option>
                     <option value="0">0 млн.руб.</option>
                     <option value="1000000">1 млн.руб.</option>
@@ -76,12 +109,22 @@
                     <option value="3500000">3,5 млн.руб.</option>
                     <option value="4000000">4,0 млн.руб.</option>
                     <option value="4500000">4,5 млн.руб.</option>
+                    <option value="5000000">5,0 млн.руб.</option>
+                    <option value="5500000">5,5 млн.руб.</option>
+                    <option value="6000000">6,0 млн.руб.</option>
+                    <option value="6500000">6,5 млн.руб.</option>
+                    <option value="7000000">7,0 млн.руб.</option>
+                    <option value="7500000">7,5 млн.руб.</option>
+                    <option value="8000000">8,0 млн.руб.</option>
+                    <option value="8500000">8,5 млн.руб.</option>
+                    <option value="9000000">9,0 млн.руб.</option>
+                    <option value="9500000">9,5 млн.руб.</option>
                 </select>
             </div>
         </form>
         <script>
             $(function() {
-                $('#price_min_com').multiselect({
+                $('#price_min').multiselect({
                     includeSelectAllOption: true
                 });
             });
@@ -91,7 +134,7 @@
 
         <form class="form_select">
             <div>
-                <select id="price_max_com">
+                <select id="price_max">
                     <option selected class="t-tit" value="">до</option>
                     <option value="1000000">1 млн.руб.</option>
                     <option value="1500000">1,5 млн.руб.</option>
@@ -101,12 +144,23 @@
                     <option value="3500000">3,5 млн.руб.</option>
                     <option value="4000000">4,0 млн.руб.</option>
                     <option value="4500000">4,5 млн.руб.</option>
+                    <option value="5000000">5,0 млн.руб.</option>
+                    <option value="5500000">5,5 млн.руб.</option>
+                    <option value="6000000">6,0 млн.руб.</option>
+                    <option value="6500000">6,5 млн.руб.</option>
+                    <option value="7000000">7,0 млн.руб.</option>
+                    <option value="7500000">7,5 млн.руб.</option>
+                    <option value="8000000">8,0 млн.руб.</option>
+                    <option value="8500000">8,5 млн.руб.</option>
+                    <option value="9000000">9,0 млн.руб.</option>
+                    <option value="9500000">9,5 млн.руб.</option>
+                    <option value="10000000">10,0 млн.руб.</option>
                 </select>
             </div>
         </form>
         <script>
             $(function() {
-                $('#price_max_com').multiselect({
+                $('#price_max').multiselect({
                     includeSelectAllOption: true
                 });
             });
@@ -114,125 +168,61 @@
     </li>
 
     <li class="menu_li li_select">
-        <form class="form_select">
+        <form method="post" class="form_select" name="form4">
             <div>
                 <select id="metro" multiple="multiple">
-                    <option>Автово </option>
-                    <option>Адмиралтейская </option>
-                    <option>Академическая </option>
-                    <option>Балтийская </option>
-                    <option>Бухарестская </option>
-                    <option>Василеостровская </option>
-                    <option>Владимирская </option>
-                    <option>Волковская </option>
-                    <option>Выборгская </option>
-                    <option>Горьковская </option>
-                    <option>Гостиный двор </option>
-                    <option>Гражданский проспект </option>
-                    <option>Девяткино </option>
-                    <option>Достоевская </option>
-                    <option>Елизаровская </option>
-                    <option>Звёздная </option>
-                    <option>Звенигородская </option>
-                    <option>Кировский завод </option>
-                    <option>Комендантский проспект</option>
-                    <option>Крестовский остров </option>
-                    <option>Купчино </option>
-                    <option>Ладожская </option>
-                    <option>Ленинский проспект </option>
-                    <option>Лесная </option>
-                    <option>Лиговский проспект </option>
-                    <option>Ломоносовская </option>
-                    <option>Маяковская </option>
-                    <option>Международная </option>
-                    <option>Московская </option>
-                    <option>Московские ворота </option>
-                    <option>Нарвская </option>
-                    <option>Невский проспект </option>
-                    <option>Новочеркасская </option>
-                    <option>Обводный канал </option>
-                    <option>Обухово </option>
-                    <option>Озерки </option>
-                    <option>Парк Победы </option>
-                    <option>Парнас </option>
-                    <option>Петроградская </option>
-                    <option>Пионерская </option>
-                    <option>Площадь Александра Невского 1 </option>
-                    <option>Площадь Александра Невского 2 </option>
-                    <option>Площадь Восстания </option>
-                    <option>Площадь Ленина </option>
-                    <option>Площадь Мужества </option>
-                    <option>Политехническая </option>
-                    <option>Приморская </option>
-                    <option>Пролетарская </option>
-                    <option>Проспект Большевиков </option>
-                    <option>Проспект Ветеранов </option>
-                    <option>Проспект Просвещения </option>
-                    <option>Пушкинская </option>
-                    <option>Рыбацкое </option>
-                    <option>Садовая </option>
-                    <option>Сенная площадь </option>
-                    <option>Спасская </option>
-                    <option>Спортивная </option>
-                    <option>Старая Деревня </option>
-                    <option>Технологический институт 1 </option>
-                    <option>Технологический институт 2 </option>
-                    <option>Удельная </option>
-                    <option>Улица Дыбенко </option>
-                    <option>Фрунзенская </option>
-                    <option>Чёрная речка </option>
-                    <option>Чернышевская </option>
-                    <option>Чкаловская </option>
-                    <option>Электросила</option>
-
+                    <?php foreach ($this->filterData()->getmetro() as $metro) { ?>
+                        <option value="<?= $metro ?>"><?= $metro ?></option>
+                    <?php } ?>
                 </select>
             </div>
         </form>
         <script>
-            $(function() {
+            $(function () {
                 $('#metro').multiselect({
                     includeSelectAllOption: true,
                     selectAllText: 'Все',
                     allSelectedText: 'Все',
                     nonSelectedText: 'Метро'
                 });
+                arr = [];
+                <?php
+                if(isset($data['metro']) && is_array($data['metro'])) {
+                foreach ($data['metro'] as $m){
+                ?>
+                arr.push('<?=$m;?>');
+                <?php } } ?>
+                $('#metro').multiselect('select', arr);
             });
         </script>
     </li>
 
     <li class="menu_li li_select">
-        <form class="form_select">
+        <form method="post" class="form_select" name="form5">
             <div>
                 <select id="region" multiple="multiple">
-                    <option>Адмиралтейский </option>
-                    <option>Василеостровский </option>
-                    <option>Выборгский</option>
-                    <option>Калининский </option>
-                    <option>Кировский </option>
-                    <option>Колпинский </option>
-                    <option>Красногвардейский </option>
-                    <option>Красносельский</option>
-                    <option>Кронштадтский </option>
-                    <option>Курортный </option>
-                    <option>Московский </option>
-                    <option>Невский </option>
-                    <option>Петроградский </option>
-                    <option>Петродворцовый </option>
-                    <option>Приморский</option>
-                    <option>Пушкинский </option>
-                    <option>Фрунзенский </option>
-                    <option>Центральный</option>
+                    <?php foreach ($this->filterData()->getRegion() as $region) { ?>
+                        <option value="<?= $region ?>"><?= $region ?></option>
+                    <?php } ?>
                 </select>
             </div>
         </form>
         <script>
-            $(function() {
+            $(function () {
                 $('#region').multiselect({
                     includeSelectAllOption: true,
                     selectAllText: 'Все',
                     allSelectedText: 'Все',
                     nonSelectedText: 'Район'
                 });
+                arr = [];
+                <?php
+                if(isset($data['region']) && is_array($data['region'])) {
+                foreach ($data['region'] as $reg){
+                ?>
+                arr.push('<?=$reg;?>');
+                <?php } } ?>
+                $('#region').multiselect('select', arr);
             });
         </script>
     </li>
@@ -241,10 +231,32 @@
 <div class="menu-filter_bottom">
     <div class="flex">
         <div class="l-block">
+
+            <div class="menu_li li_select" style="display:none;">
+                <form method="post" class="form_select" name="form6">
+                    <div>
+                        <select id="floor">
+                            <option selected class="t-tit" value="">Этаж</option>
+                            <?php for ($i = 1; $i < 18; $i++) { ?>
+                                <option value="<?= $i ?>"><?= $i ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </form>
+                <script>
+                    $(function () {
+                        $('#floor').multiselect({
+                            includeSelectAllOption: true
+                        });
+                    });
+                </script>
+            </div>
+            <!-- ITEM -->
+            
             <div class="menu_li li_select">
                 <form class="form_select">
                     <div>
-                        <select id="year_com">
+                        <select id="year">
                             <option selected class="t-tit" value="">Год сдачи</option>
                             <?php
                             $years = $this->filterData()->getYear();
@@ -258,7 +270,7 @@
                 </form>
                 <script>
                     $(function() {
-                        $('#year_com').multiselect({
+                        $('#year').multiselect({
                             includeSelectAllOption: true
                         });
                     });
@@ -269,7 +281,7 @@
             <div class="menu_li li_select">
                 <form class="form_select">
                     <div>
-                        <select id="res_com">
+                        <select id="res">
                             <option selected class="t-tit" value="">ЖК</option>
                             <?php
                             $residents = $this->filterData()->getResident();
@@ -282,7 +294,7 @@
                 </form>
                 <script>
                     $(function() {
-                        $('#res_com').multiselect({
+                        $('#res').multiselect({
                             includeSelectAllOption: true
                         });
                     });
@@ -292,38 +304,67 @@
         </div>
 
         <div class="btn-block">
-            <a href="#" onclick="sendForm()" class="btn">Подобрать квартиру</a>
+            <a onclick="sendForm()" class="btn">Подобрать квартиру</a>
         </div>
     </div>
     <!-- flex -->
 </div>
 <!-- menu-filter_bottom -->
+
+<!--<script>-->
+<!--    function sendForm() {-->
+<!--        url = '/commertial';-->
+<!--        data_Send = {-->
+<!--            square_min: $('#square_min').val(),-->
+<!--            square_max: $('#square_max').val(),-->
+<!--            price_min: $('#price_min').val(),-->
+<!--            price_max: $('#price_max').val(),-->
+<!--            metro: $('#metro').val(),-->
+<!--            region: $('#region').val(),-->
+<!--            year: $('#year').val(),-->
+<!--            resident: $('#res').val(),-->
+<!--        };-->
+<!--        var json = JSON.stringify(data_Send);-->
+<!--        // console.table(data);-->
+<!--        // console.log(json);-->
+<!--        $.ajax({-->
+<!--            type: "POST",-->
+<!--            url: "/commertial",-->
+<!--            data: data_Send,-->
+<!--            success: function (msg) {-->
+<!--                document.location.reload();-->
+<!--            },-->
+<!--            error: function (XMLHttpRequest, textStatus, errorThrown) {-->
+<!--                alert("error");-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
+
 <script>
     function sendForm() {
-        url = '/commertial';
-        data_Send = {
-            square_min_com: $('#square_min_com').val(),
-            square_max_com: $('#square_max_com').val(),
-            price_min_com: $('#price_min_com').val(),
-            price_max_com: $('#price_max_com').val(),
-            metro: $('#metro').val(),
-            region: $('#region').val(),
-            year_com: $('#year_com').val(),
-            resident_com: $('#res_com').val(),
-        };
-        var json = JSON.stringify(data_Send);
-        // console.table(data);
-        // console.log(json);
-        $.ajax({
-            type: "POST",
-            url: "/commertial",
-            data: data_Send,
-            success: function (msg) {
-                document.location.reload();
+        $.post("/commertial/ajax-com",
+            {
+                size: $('#size').val(),
+                square_min: $('#square_min').val(),
+                square_max: $('#square_max').val(),
+                price_min: $('#price_min').val(),
+                price_max: $('#price_max').val(),
+                floor: $('#floor').val(),
+                metro: $('#metro').val(),
+                region: $('#region').val(),
+                year: $('#year').val(),
+                resident: $('#res').val(),
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("error");
-            }
-        });
+            function (data) {
+                $('#ajax_content').html(data);
+                // console.log(data);
+                $('.fadeEl').each(function () {
+                    $(this).addClass('anim');
+                });
+                $('.js-animation').each(function () {
+                    $(this).addClass('start-animation');
+                });
+            });
     }
 </script>

@@ -115,6 +115,16 @@ return [
                     ],
                 ],
             ],
+            'sales' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/sales[/:action[/:id]]',
+                    'defaults' => [
+                        'controller' => Controller\SalesController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -129,6 +139,7 @@ return [
             Controller\FlatController::class => Controller\Factory\FlatControllerFactory::class,
             Controller\CommertialController::class => Controller\Factory\CommertialControllerFactory::class,
             Controller\OrderController::class => Controller\Factory\OrderControllerFactory::class,
+            Controller\SalesController::class => Controller\Factory\SalesControllerFactory::class,
         ],
     ],
     'access_filter' => [
@@ -173,6 +184,10 @@ return [
                 ['actions' => ["index", 'edit', 'delete'], 'allow' => '@'],
                 ['actions' => ["add"], 'allow' => '*']
             ],
+            Controller\SalesController::class => [
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ["index", 'view' ,'edit', 'delete', 'add'], 'allow' => '@']
+            ],
         ],
     ],
     'service_manager' => [
@@ -187,6 +202,7 @@ return [
             Service\CommertialManager::class => Service\Factory\CommertialManagerFactory::class,
             Service\SearchFlatManager::class => Service\Factory\SearchFlatManagerFactory::class,
             Service\OrderManager::class => Service\Factory\OrderManagerFactory::class,
+            Service\SalesManager::class => Service\Factory\SalesManagerFactory::class,
         ],
     ],
     'view_manager' => [

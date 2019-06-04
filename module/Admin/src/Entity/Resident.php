@@ -84,6 +84,11 @@ class Resident
     protected $metro;
 
     /**
+     * @ORM\Column(name="region")
+     */
+    protected $region;
+
+    /**
      * @ORM\Column(name="address")
      */
     protected $address;
@@ -233,6 +238,16 @@ class Resident
     public function setMetro($metro)
     {
         $this->metro = $metro;
+    }
+
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    public function setRegion($region)
+    {
+        $this->region = $region;
     }
 
     public function getAddress()

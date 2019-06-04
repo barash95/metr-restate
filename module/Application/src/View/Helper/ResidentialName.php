@@ -42,4 +42,19 @@ class ResidentialName extends AbstractHelper
 
         return $count;
     }
+
+    public function priceFrom($residential_id)
+    {
+        $price = 0;
+        $flat = null;
+        if(!is_null($residential_id))
+            $flat = $this->entityManager->getRepository(Flat::class)->findOneBy(['res_id' => $residential_id,], ['price' => 'ASC']);
+        if(!is_null($flat))
+            $price = round($flat->getPrice(true) / 1000000, 1);
+        return $price;
+    }
+
+    public function getResList(){
+        return $this->entityManager->getRepository(Resident::class)->findAll();
+    }
 }
